@@ -73,14 +73,16 @@
 						    <li><a href="{{ url('/category') }}">Categories</a></li>
 						    <li><a href="{{ url('/defecttype') }}">Defect Types</a></li>
 						    <li><a href="{{ url('/position') }}">Positions</a></li>
-						    <li><a href="{{ url('/machine') }}">Machines</a></li>
-						    <li><a href="{{ url('/model') }}">Models</a></li>
-
+						    
 						    <li role="separator" class="divider"></li>
 						    <li><a href="{{ url('/categorydefecttype') }}">Category-DefectType Link</a></li>
 						    <li><a href="{{ url('/categoryposition') }}">Category-Position Link</a></li>
 
-						    <!-- <li role="separator" class="divider"></li> -->
+						    <li role="separator" class="divider"></li>
+						    <li><a href="{{ url('/machine') }}">Machines</a></li>
+						    <li><a href="{{ url('/model') }}">Models</a></li>
+
+						    <li role="separator" class="divider"></li>
 						    
 						  </ul>
 						</div>

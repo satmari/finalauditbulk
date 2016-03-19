@@ -15,10 +15,12 @@
 						<span>Id:</span>
 						{{--  {!! Form::input('number', 'id', null, ['class' => 'form-control']) !!} --}}
 						</div> -->
-						<div class="panel-body">
+						<!-- <div class="panel-body">
 						<p>Category ID:  <span style="color:red;">*</span></p>
-							{!! Form::input('string', 'category_id', null, ['class' => 'form-control']) !!}
-						</div>
+							{{-- {!! Form::input('string', 'category_id', null, ['class' => 'form-control']) !!} --}}
+						</div> -->
+						{!! Form::hidden('category_id', $category->category_id, ['class' => 'form-control']) !!}
+						
 						<div class="panel-body">
 						<p>Category Name:  <span style="color:red;">*</span></p>
 							{!! Form::input('string', 'category_name', null, ['class' => 'form-control']) !!}
