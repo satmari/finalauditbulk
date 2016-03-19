@@ -12,6 +12,7 @@ return array(
     'CreateDefectLevelsTable' => $baseDir . '/database/migrations/2016_03_15_140424_create_defect_levels_table.php',
     'CreateDefectTypesTable' => $baseDir . '/database/migrations/2016_03_15_141846_create_defect_types_table.php',
     'CreateMachinesTable' => $baseDir . '/database/migrations/2016_03_19_131552_create_machines_table.php',
+    'CreateModelsTable' => $baseDir . '/database/migrations/2016_03_19_201256_create_models_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePermissionRoleTable' => $baseDir . '/database/migrations/2015_01_26_115523_create_permission_role_table.php',
     'CreatePermissionUserTable' => $baseDir . '/database/migrations/2015_02_09_132439_create_permission_user_table.php',

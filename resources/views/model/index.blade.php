@@ -5,11 +5,11 @@
     <div class="row vertical-center-row">
         <div class="text-center">
             <div class="panel panel-default">
-				<div class="panel-heading">Defect Level Table</div>
+				<div class="panel-heading">Model Table</div>
 				
 				<div class="panel-body">
 					<div class="">
-						<a href="{{url('/defectlevel_new')}}" class="btn btn-default btn-info">Add new Defect Level</a>
+						<a href="{{url('/model_new')}}" class="btn btn-default btn-info">Add new Model</a>
 					</div>
 				</div>
 
@@ -44,22 +44,21 @@
                     <thead>
                     	<tr>
 	                        <td>Id</td>
-	                        <td>Defect Level Id</td>
-	                        <td>Defect Name</td>
-	                        <td>Defect Redjected</td>
-	                        <!-- <td>Defect Redjected (Bool)</td> -->
+	                        <td>Model Name</td>
+                            <td>Model Brand</td>
+                            <td>Model Category</td>
                             <td></td>
                         </tr>
                     </thead>
                     <tbody class="searchable">
-			        @foreach ($defect_levels as $req)
+			        @foreach ($model as $req)
                         <tr>
                             <td>{{ $req->id }}</td>
-                            <td>{{ $req->defect_level_id }}</td>
-                            <td>{{ $req->defect_level_name }}</td>
-                            <td>{{ $req->defect_level_rejected }}</td>
-                            <!-- <td>{{-- $req->pcs_rejected --}}</td> -->
-                            <td><a href="{{ url('/defectlevel/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                            <td>{{ $req->model_name }}</td>
+                            <td>{{ $req->model_brand }}</td>
+                            <td>{{ $req->category_name }}</td>
+                            
+                            <td><a href="{{ url('/model/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
                         </tr>
                     @endforeach
                     

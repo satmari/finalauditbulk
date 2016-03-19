@@ -5,7 +5,7 @@
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4">
 			<div class="panel panel-default">
-				<div class="panel-heading h-b">Edit Category:</div>
+				<div class="panel-heading">Edit Category:</div>
 				<br>
 					{!! Form::model($category , ['method' => 'POST', 'url' => 'category/'.$category->id /*, 'class' => 'form-inline'*/]) !!}
 
