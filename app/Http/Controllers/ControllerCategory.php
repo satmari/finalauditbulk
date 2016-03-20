@@ -34,7 +34,7 @@ class ControllerCategory extends Controller {
 	public function insert(Request $request)
 	{
 		//
-		$this->validate($request, ['category_id'=>'required','category_name'=>'required','category_description'=>'required']);
+		$this->validate($request, ['category_id'=>'required','category_name'=>'required']);
 
 		$category_input = $request->all(); 
 		
@@ -119,7 +119,7 @@ class ControllerCategory extends Controller {
 
 	public function update($id, Request $request) {
 		//
-		$this->validate($request, ['category_id'=>'required','category_name'=>'required','category_description' => 'required']);
+		$this->validate($request, ['category_id'=>'required','category_name'=>'required']);
 
 		$category = Category::findOrFail($id);		
 		//$category->update($request->all());

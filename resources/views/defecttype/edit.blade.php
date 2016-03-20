@@ -33,7 +33,7 @@
 						</div>
 
 						<div class="panel-body">
-						<p>Defect Type Description:  <span style="color:red;">*</span></p>
+						<p>Defect Type Description: </p>
 							{!! Form::input('string', 'defect_type_description', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="panel-body">

@@ -31,7 +31,7 @@ class ControllerDefectType extends Controller {
 	public function insert(Request $request)
 	{
 		//
-		$this->validate($request, ['defect_type_id'=>'required','defect_type_name'=>'required','defect_type_description'=>'required','defect_level_id'=>'required','defect_applay_to_all'=>'required']);
+		$this->validate($request, ['defect_type_id'=>'required','defect_type_name'=>'required','defect_level_id'=>'required','defect_applay_to_all'=>'required']);
 
 		$defect_type_input = $request->all(); 
 		
@@ -123,7 +123,7 @@ class ControllerDefectType extends Controller {
 
 	public function update($id, Request $request) {
 		//
-		$this->validate($request, ['defect_type_id'=>'required','defect_type_name'=>'required','defect_type_description' => 'required', 'defect_level_id' => 'required', 'defect_applay_to_all' => 'required']);
+		$this->validate($request, ['defect_type_id'=>'required','defect_type_name'=>'required','defect_level_id' => 'required','defect_applay_to_all' => 'required']);
 
 		$defect_type = DefectType::findOrFail($id);		
 		//$defect_type->update($request->all());

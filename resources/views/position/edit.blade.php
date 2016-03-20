@@ -33,7 +33,7 @@
 						</div>
 
 						<div class="panel-body">
-						<p>Position Description:  <span style="color:red;">*</span></p>
+						<p>Position Description: </p>
 							{!! Form::input('string', 'position_description', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="panel-body">

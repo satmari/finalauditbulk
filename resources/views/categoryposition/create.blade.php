@@ -11,12 +11,12 @@
 					{!! Form::open(['method'=>'POST', 'url'=>'/categoryposition_insert']) !!}
 
 						<div class="panel-body">
-						<p>Position Name: </p>
+						<p>Position Name: <span style="color:red;">*</span></p>
 							{!! Form::select('position_id', $positions, null,['class' => 'form-control']) !!}
 						</div>
 					
 						<div class="panel-body">
-						<p>Category Name: </p>
+						<p>Category Name: <span style="color:red;">*</span></p>
 							{!! Form::select('category_id', $category, null,['class' => 'form-control']) !!}
 						</div>
 

@@ -11,15 +11,15 @@
 					{!! Form::open(['method'=>'POST', 'url'=>'/defectlevel_insert']) !!}
 
 						<div class="panel-body">
-						<p>Defect Level ID: </p>
-							{!! Form::text('defect_level_id', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
+						<p>Defect Level ID: <span style="color:red;">*</span></p>
+							{!! Form::text('defect_level_id', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="panel-body">
-						<p>Defect Level Name: </p>
+						<p>Defect Level Name: <span style="color:red;">*</span></p>
 							{!! Form::text('defect_level_name', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="panel-body">
-						<p>Pcs Rejected:</p>
+						<p>Pcs Rejected: <span style="color:red;">*</span></p>
 							{!! Form::select('defect_level_rejected', array('NO'=>'NO','YES'=>'YES'), null, array('class' => 'form-control')); !!} 
 						</div>
 						<!-- <div class="panel-body">

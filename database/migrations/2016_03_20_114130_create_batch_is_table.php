@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDefectLevelsTable extends Migration {
+class CreateBatchIsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,15 @@ class CreateDefectLevelsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('defect_levels', function(Blueprint $table)
+		Schema::create('batch_is', function(Blueprint $table)
 		{
 			$table->increments('id');
 
-			$table->string('defect_level_id')->unique();
-			$table->string('defect_level_name')->unique();
-			$table->string('defect_level_rejected', 3);
+			$table->string('batch_id')->unique();
+			$table->integer('batch_min');
+			$table->integer('batch_max');
+			$table->integer('batch_check');
+			$table->integer('batch_reject');
 			
 			$table->timestamps();
 		});
@@ -31,7 +33,7 @@ class CreateDefectLevelsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('defect_levels');
+		Schema::drop('batch_i');
 	}
 
 }

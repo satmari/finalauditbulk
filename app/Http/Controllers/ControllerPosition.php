@@ -28,7 +28,7 @@ class ControllerPosition extends Controller {
 	public function insert(Request $request)
 	{
 		//
-		$this->validate($request, ['position_id'=>'required','position_name'=>'required','position_description'=>'required','position_applay_to_all'=>'required']);
+		$this->validate($request, ['position_id'=>'required','position_name'=>'required','position_applay_to_all'=>'required']);
 
 		$input = $request->all(); 
 		
@@ -110,7 +110,7 @@ class ControllerPosition extends Controller {
 
 	public function update($id, Request $request) {
 		//
-		$this->validate($request, ['position_id'=>'required','position_name'=>'required','position_description' => 'required', 'position_applay_to_all' => 'required']);
+		$this->validate($request, ['position_id'=>'required','position_name'=>'required','position_applay_to_all' => 'required']);
 
 		$position = Position::findOrFail($id);		
 		//$position->update($request->all());

@@ -80,6 +80,30 @@ Route::post('/model/{id}', 'ControllerModel@update');
 Route::get('/model/delete/{id}', 'ControllerModel@delete');
 Route::post('/model/delete/{id}', 'ControllerModel@delete');
 
+Route::get('/batch_t', 'ControllerBatch_t@index');
+Route::get('/batch_t_new', 'ControllerBatch_t@create');
+Route::post('/batch_t_insert', 'ControllerBatch_t@insert');
+Route::get('/batch_t/edit/{id}', 'ControllerBatch_t@edit');
+Route::post('/batch_t/{id}', 'ControllerBatch_t@update');
+Route::get('/batch_t/delete/{id}', 'ControllerBatch_t@delete');
+Route::post('/batch_t/delete/{id}', 'ControllerBatch_t@delete');
+
+Route::get('/batch_i', 'ControllerBatch_i@index');
+Route::get('/batch_i_new', 'ControllerBatch_i@create');
+Route::post('/batch_i_insert', 'ControllerBatch_i@insert');
+Route::get('/batch_i/edit/{id}', 'ControllerBatch_i@edit');
+Route::post('/batch_i/{id}', 'ControllerBatch_i@update');
+Route::get('/batch_i/delete/{id}', 'ControllerBatch_i@delete');
+Route::post('/batch_i/delete/{id}', 'ControllerBatch_i@delete');
+
+Route::get('/batch_c', 'ControllerBatch_c@index');
+Route::get('/batch_c_new', 'ControllerBatch_c@create');
+Route::post('/batch_c_insert', 'ControllerBatch_c@insert');
+Route::get('/batch_c/edit/{id}', 'ControllerBatch_c@edit');
+Route::post('/batch_c/{id}', 'ControllerBatch_c@update');
+Route::get('/batch_c/delete/{id}', 'ControllerBatch_c@delete');
+Route::post('/batch_c/delete/{id}', 'ControllerBatch_c@delete');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

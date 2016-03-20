@@ -5,15 +5,15 @@
     <div class="row vertical-center-row">
         <div class="text-center">
             <div class="panel panel-default">
-				<div class="panel-heading">Position Table</div>
-				
-				<div class="panel-body">
-					<div class="">
-						<a href="{{url('/position_new')}}" class="btn btn-default btn-info">Add new Position</a>
-					</div>
-				</div>
+                <div class="panel-heading">Batch Intimissimi Table</div>
+                
+                <div class="panel-body">
+                    <div class="">
+                        <a href="{{url('/batch_i_new')}}" class="btn btn-default btn-info">Add Batch</a>
+                    </div>
+                </div>
 
-				<div class="input-group"> <span class="input-group-addon">Filter</span>
+                <div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">
                 </div>
 
@@ -42,38 +42,32 @@
                        }'
                 -->
                     <thead>
-                    	<tr>
-	                        <td>Id</td>
-	                        <td><b>Position Id</b></td>
-	                        <td><b>Position Name</b></td>
-                            <td>Position Name 1</td>
-                            <td>Position Name 2</td>
-                            <td>Position Description</td>
-                            <td>Position Description 1</td>
-                            <td>Position Description 2</td>
-                            <td>Position Applay to all</td>
+                        <tr>
+                            <td>Id</td>
+                            <td><b>Batch Id</b></td>
+                            <td><b>Pcs Box MIN</b></td>
+                            <td><b>Pcs Box MAX</b></td>
+                            <td><b>Batch (Pcs to Check)</b></td>
+                            <td><b>Max Rejected Pcs Accepted</b></td>
                             <td></td>
                         </tr>
                     </thead>
                     <tbody class="searchable">
-			        @foreach ($position as $req)
+                    @foreach ($batch_i as $req)
                         <tr>
                             <td>{{ $req->id }}</td>
-                            <td>{{ $req->position_id }}</td>
-                            <td>{{ $req->position_name }}</td>
-                            <td>{{ $req->position_name_1 }}</td>
-                            <td>{{ $req->position_name_2 }}</td>
-                            <td>{{ $req->position_description }}</td>
-                            <td>{{ $req->position_description_1 }}</td>
-                            <td>{{ $req->position_description_2 }}</td>
-                            <td>{{ $req->position_applay_to_all }}</td>
-                            <td><a href="{{ url('/position/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                            <td>{{ $req->batch_id }}</td>
+                            <td>{{ $req->batch_min }}</td>
+                            <td>{{ $req->batch_max }}</td>
+                            <td>{{ $req->batch_check }}</td>
+                            <td>{{ $req->batch_reject }}</td>
+                            <td><a href="{{ url('/batch_i/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
                         </tr>
                     @endforeach
                     
-                    </tbody>				
-			</div>
-		</div>
-	</div>
+                    </tbody>                
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

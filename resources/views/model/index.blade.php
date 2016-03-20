@@ -44,8 +44,8 @@
                     <thead>
                     	<tr>
 	                        <td>Id</td>
-	                        <td>Model Name</td>
-                            <td>Model Brand</td>
+	                        <td><b>Model Name</b></td>
+                            <td><b>Model Brand</b></td>
                             <td>Model Category</td>
                             <td></td>
                         </tr>

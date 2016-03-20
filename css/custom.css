@@ -1,12 +1,12 @@
 body {
 	font-size: 12px !important;
 
-    background-image: url("images/8.png");
-    background-repeat: repeat;
+    /*background-image: url("images/8.png");
+    background-repeat: repeat;*/
 }
-.navbar {
+.nav/*bar {
     background-image: url("images/3.png");
-    background-repeat: repeat;
+    background-repeat: repeat;*/
 }
 .table {
     /*font-size: 16px !important;*/
@@ -15,8 +15,13 @@ body {
     font-size: 12px !important;
     /*font-stretch: semi-condensed;*/
 }
+.navbar {
+    background-image: linear-gradient(#FFFFFF, #F1F1F1 60%, #EAEAEA) !important;
+
+}
 .navbar-default {
     border-color: #6EBDEA !important;
+    background-image: linear-gradient(#FFFFFF, #F1F1F1 60%, #EAEAEA) !important;
 }
 .dataTables_wrapper .dataTables_filter {
     float: left;

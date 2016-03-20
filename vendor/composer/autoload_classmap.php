@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CreateBatchCsTable' => $baseDir . '/database/migrations/2016_03_20_114137_create_batch_cs_table.php',
+    'CreateBatchIsTable' => $baseDir . '/database/migrations/2016_03_20_114130_create_batch_is_table.php',
+    'CreateBatchTsTable' => $baseDir . '/database/migrations/2016_03_20_113425_create_batch_ts_table.php',
     'CreateCategoriesTable' => $baseDir . '/database/migrations/2016_03_18_161412_create_categories_table.php',
     'CreateCategoryDefectTypesTable' => $baseDir . '/database/migrations/2016_03_18_161312_create_category_defect_types_table.php',
     'CreateCategoryPositionsTable' => $baseDir . '/database/migrations/2016_03_19_103925_create_category_positions_table.php',

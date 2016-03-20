@@ -83,6 +83,9 @@
 						    <li><a href="{{ url('/model') }}">Models</a></li>
 
 						    <li role="separator" class="divider"></li>
+						    <li><a href="{{ url('/batch_t') }}">Batch Tezenis</a></li>
+						    <li><a href="{{ url('/batch_i') }}">Batch Intimissimi</a></li>
+						    <li><a href="{{ url('/batch_c') }}">Batch Calzedonia</a></li>
 						    
 						  </ul>
 						</div>
