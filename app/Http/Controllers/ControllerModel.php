@@ -34,7 +34,7 @@ class ControllerModel extends Controller {
 	public function insert(Request $request)
 	{
 		//
-		$this->validate($request, ['model_name'=>'required','model_brand'=>'required']);
+		$this->validate($request, ['model_name'=>'required','model_brand'=>'required','category_id' => 'required']);
 
 		$model_input = $request->all(); 
 		

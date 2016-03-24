@@ -19,9 +19,14 @@ body {
     background-image: linear-gradient(#FFFFFF, #F1F1F1 60%, #EAEAEA) !important;
 
 }
+.navbar-default .navbar-brand {
+    color: #777777;
+}
 .navbar-default {
-    border-color: #6EBDEA !important;
-    background-image: linear-gradient(#FFFFFF, #F1F1F1 60%, #EAEAEA) !important;
+    /*border-color: #6EBDEA !important;*/
+    /*background-image: linear-gradient(#FFFFFF, #F1F1F1 60%, #EAEAEA) !important;*/
+    border-color: #286F08 !important;
+    background-image: linear-gradient(rgb(225, 255, 222), rgba(254, 255, 253, 0.37) 60%, rgb(173, 255, 179)) !important;
 }
 .dataTables_wrapper .dataTables_filter {
     float: left;

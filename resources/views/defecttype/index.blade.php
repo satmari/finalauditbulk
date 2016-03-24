@@ -52,8 +52,8 @@
                             <td>Defect Type Description 1</td>
                             <td>Defect Type Description 2</td>
                             <td style="color:green;">Defect Level Name</td>
-                            <td style="color:green;">Pcs Redjected</td>
-                            <td>Defect Applay to all</td>
+                            <td style="color:green;">Pcs Rejected</td>
+                            <td style="color:palevioletred;">Defect Applay to all</td>
                             <td></td>
                         </tr>
                     </thead>

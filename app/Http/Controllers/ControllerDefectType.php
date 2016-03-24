@@ -25,6 +25,7 @@ class ControllerDefectType extends Controller {
 		//
 		//$defect_levels = DefectLevel::all(['id', 'defect_level_name']);
 		$defect_levels = DefectLevel::orderBy('defect_level_id')->lists('defect_level_name','defect_level_id'); //pluck
+		//dd($defect_levels);
 		return view('defecttype.create', compact('defect_levels'));	
 	}
 
@@ -188,7 +189,7 @@ class ControllerDefectType extends Controller {
 			}
 		} elseif ($defect_applay_to_all == "NO") {
 
-			DB::table('category_defect_types')->where('defect_type_id', '=', $defect_type_id)->delete();
+			// DB::table('category_defect_types')->where('defect_type_id', '=', $defect_type_id)->delete();
 		}
 		
 		return Redirect::to('/defecttype');

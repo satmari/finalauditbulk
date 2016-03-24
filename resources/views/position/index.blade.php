@@ -51,7 +51,7 @@
                             <td>Position Description</td>
                             <td>Position Description 1</td>
                             <td>Position Description 2</td>
-                            <td>Position Applay to all</td>
+                            <td style="color:palevioletred;">Position Applay to all</td>
                             <td></td>
                         </tr>
                     </thead>

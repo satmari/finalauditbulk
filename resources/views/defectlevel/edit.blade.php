@@ -24,7 +24,7 @@
 					<div class="panel-body">
 						<span>Defect Level Rejected: <span style="color:red;">*</span></span>
 						{{-- {!! Form::input('string', 'defect_level_rejected', null, ['class' => 'form-control']) !!} --}}
-						{!! Form::select('defect_level_rejected', array('NO'=>'NO','YES'=>'YES'), null, array('class' => 'form-control')); !!} 
+						{!! Form::select('defect_level_rejected', array(''=>'','NO'=>'NO','YES'=>'YES'), null, array('class' => 'form-control')); !!} 
 					</div>
 					<!-- <div class="panel-body">
 						<span>Defect Level Rejected (Bool):</span>

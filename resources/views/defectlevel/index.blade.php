@@ -46,7 +46,7 @@
 	                        <td>Id</td>
 	                        <td><b>Defect Level Id</b></td>
 	                        <td><b>Defect Name</b></td>
-	                        <td>Defect Redjected</td>
+	                        <td>Defect Rejected</td>
 	                        <!-- <td>Defect Redjected (Bool)</td> -->
                             <td></td>
                         </tr>

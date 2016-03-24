@@ -19,6 +19,7 @@
 						<p>Category ID:  <span style="color:red;">*</span></p>
 							{{-- {!! Form::input('string', 'category_id', null, ['class' => 'form-control']) !!} --}}
 						</div> -->
+
 						{!! Form::hidden('category_id', $category->category_id, ['class' => 'form-control']) !!}
 						
 						<div class="panel-body">
@@ -33,7 +34,6 @@
 						<p>Category Name 2: </p>
 							{!! Form::input('string', 'category_name_2', null, ['class' => 'form-control']) !!}
 						</div>
-
 						<div class="panel-body">
 						<p>Category Description: </p>
 							{!! Form::input('string', 'category_description', null, ['class' => 'form-control']) !!}

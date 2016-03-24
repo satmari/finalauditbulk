@@ -20,7 +20,7 @@
 						</div>
 						<div class="panel-body">
 						<p>Pcs Rejected: <span style="color:red;">*</span></p>
-							{!! Form::select('defect_level_rejected', array('NO'=>'NO','YES'=>'YES'), null, array('class' => 'form-control')); !!} 
+							{!! Form::select('defect_level_rejected', array(''=>'','NO'=>'NO','YES'=>'YES'), null, array('class' => 'form-control')); !!} 
 						</div>
 						<!-- <div class="panel-body">
 						<p>Pcs Rejected (bool):</p>

@@ -168,7 +168,7 @@ class ControllerPosition extends Controller {
 			}
 		} elseif ($position_applay_to_all == "NO") {
 
-			DB::table('category_positions')->where('position_id', '=', $position_id)->delete();
+			//DB::table('category_positions')->where('position_id', '=', $position_id)->delete();
 		}
 		
 		return Redirect::to('/position');
