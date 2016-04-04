@@ -92,11 +92,11 @@
 					</li>
 				</ul>
 
-				<!-- <ul class="nav navbar-nav">
-					<li><a href="{{ url('/defectlevel') }}">Defect Levels</a></li>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/batch') }}">Batch Table</a></li>
 				</ul>
 
-				<ul class="nav navbar-nav">
+				<!-- <ul class="nav navbar-nav">
 					<li><a href="{{ url('/category') }}">Categories</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
@@ -171,6 +171,13 @@ $(function() {
             return rex.test($(this).text());
         }).show();
 	});
+
+
+	$('#myTabs a').click(function (e) {
+  		e.preventDefault()
+  		$(this).tab('show')
+	});
+	$('#myTabs a:first').tab('show') // Select first tab
 
 	// $('#sort').bootstrapTable({
     

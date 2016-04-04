@@ -104,6 +104,38 @@ Route::post('/batch_c/{id}', 'ControllerBatch_c@update');
 Route::get('/batch_c/delete/{id}', 'ControllerBatch_c@delete');
 Route::post('/batch_c/delete/{id}', 'ControllerBatch_c@delete');
 
+Route::get('/batch', 'ControllerBatch@index');
+//Route::get('/batch_new', 'ControllerBatch@create');
+//Route::post('/batch_insert', 'ControllerBatch@insert');
+Route::get('/batch/edit/{id}', 'ControllerBatch@edit');
+Route::post('/batch/{id}', 'ControllerBatch@update');
+Route::get('/batch/delete/{id}', 'ControllerBatch@delete');
+Route::post('/batch/delete/{id}', 'ControllerBatch@delete');
+Route::get('/searchinteos', 'ControllerBatch@searchinteos');
+Route::post('/searchinteos_store', 'ControllerBatch@searchinteos_store');
+
+Route::get('/garment', 'ControllerGarment@index');
+//Route::get('/garment_new', 'ControllerGarment@create');
+//Route::post('/garment_insert', 'ControllerGarment@insert');
+Route::get('/garment/edit/{id}', 'ControllerGarment@edit');
+Route::get('/garment/by_batch/{batch_name}', 'ControllerGarment@by_batch');
+
+Route::get('/defect', 'ControllerDefect@index');
+Route::get('/defect_new/{garment_name}', 'ControllerDefect@newdefect');
+Route::post('/defect_insert', 'ControllerDefect@insert');
+Route::get('/defect/edit/{id}', 'ControllerDefect@edit');
+Route::get('/defect/by_garment/{garment_name}', 'ControllerDefect@by_garment');
+Route::get('/defect/delete/{id}', 'ControllerDefect@delete');
+Route::post('/defect/delete/{id}', 'ControllerDefect@delete');
+
+
+// Import
+Route::get('/import', 'ControllerImport@index');
+Route::post('/import2', 'ControllerImport@postImportUser');
+Route::post('/import3', 'ControllerImport@postImportRoll');
+Route::post('/import4', 'ControllerImport@postImportUserRole');
+
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

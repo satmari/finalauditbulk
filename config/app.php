@@ -151,6 +151,7 @@ return [
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
     	'Illuminate\Auth\AuthServiceProvider',
     	'Bican\Roles\RolesServiceProvider',
+    	'Maatwebsite\Excel\ExcelServiceProvider',
 
 	],
 
@@ -202,6 +203,7 @@ return [
 
 		'Form' 		=> 'Collective\Html\FormFacade',
       	'Html' 		=> 'Collective\Html\HtmlFacade',
+      	'Excel'		=> 'Maatwebsite\Excel\Facades\Excel',
 
 	],
 
