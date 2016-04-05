@@ -5,7 +5,7 @@
     <div class="row vertical-center-row">
         <div class="text-center">
             <div class="panel panel-default">
-                <div class="panel-heading">Batch Table</div>
+                <!-- <div class="panel-heading">Batch Table</div> -->
                 
                 <div class="panel-body">
                     <div class="">
@@ -43,7 +43,7 @@
                 -->
                     <thead>
                         <tr>
-                            <td>Id</td>
+                            <!-- <td>Id</td> -->
                             <td><b>Batch Name</b></td>
                             <td>SKU</td>
                             <td>Module</td>
@@ -51,13 +51,13 @@
                             <td>Rejected Pcs</td>
                             <td><b>Final Status</b></td>
                             <td></td>
-                            <td></td>
+                            <!-- <td></td> -->
                         </tr>
                     </thead>
                     <tbody class="searchable">
                     @foreach ($batch as $req)
                         <tr>
-                            <td>{{ $req->id }}</td>
+                            {{-- <td>{{ $req->id }}</td> --}}
                             <td>{{ $req->batch_name }}</td>
                             <td>{{ $req->sku }}</td>
                             <td>{{ $req->module_name }}</td>
@@ -65,7 +65,7 @@
                             <td>{{ $req->rejected }}</td>
                             <td>{{ $req->batch_status }}</td>
                             <td><a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block">Batch Details</a></td>
-                            <td><a href="{{ url('/batch/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                            {{-- <td><a href="{{ url('/batch/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td> --}}
                         </tr>
                     @endforeach
                     

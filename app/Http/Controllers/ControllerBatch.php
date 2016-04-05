@@ -153,7 +153,7 @@ class ControllerBatch extends Controller {
 			$category_name = $models[0]->category_name;
 			$category_id = $models[0]->category_id;
 		} else {
-        	$msg = 'Cannot find Style in Model table';
+        	$msg = 'Cannot find Style  '.$style.'  in Model table';
         	return view('batch.error', compact('msg'));
     	}
 
@@ -302,8 +302,6 @@ class ControllerBatch extends Controller {
 			}
 		}
 
-
-		//
 		return Redirect::to('/batch');
 
 	}

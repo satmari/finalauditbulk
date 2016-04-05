@@ -128,13 +128,11 @@ Route::get('/defect/by_garment/{garment_name}', 'ControllerDefect@by_garment');
 Route::get('/defect/delete/{id}', 'ControllerDefect@delete');
 Route::post('/defect/delete/{id}', 'ControllerDefect@delete');
 
-
 // Import
 Route::get('/import', 'ControllerImport@index');
 Route::post('/import2', 'ControllerImport@postImportUser');
 Route::post('/import3', 'ControllerImport@postImportRoll');
 Route::post('/import4', 'ControllerImport@postImportUserRole');
-
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

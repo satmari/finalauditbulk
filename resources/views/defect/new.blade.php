@@ -4,139 +4,158 @@
 <div class="container-fluid">
     <div class="row vertical-center-row">
         <div class="text-center">
-            <div class="panel panel-default">
-                <div class="panel-heading">Batch Details</div>
+           <div class="panel panel-default">
+                <!-- <div class="panel-heading">Batch Details</div> -->
                 <br>
                 <div class="row">
                  @foreach ($batch as $req)
-                      <div class="col-md-2">Batch Name: <big><b>{{ $req->batch_name }}</b></big></div>
-                      <div class="col-md-2">SKU: <big><b>{{ $req->sku}}</b></big></div>
-                      <div class="col-md-2">Module: <big><b>{{ $req->module_name }}</b></big></div>
-                      <div class="col-md-2">CB Qty: <big><b>{{ $req->cartonbox_produced }}</b></big></div>
-                      <div class="col-md-2">CB: <big><b>{{ $req->cartonbox }}</b></big></div>
-                      <div class="col-md-2">CB finished: <big><b>{{ $req->cartonbox_finish_date }}</b></big></div>
-                      <br>
-                      <br>
-                      <br>
-                      <div class="col-md-4">Batch Qty: <big><b>{{ $req->batch_qty }}</b></big></div>
-                      <div class="col-md-4">MAX Rejected: <big><b>{{ $req->batch_brand_max_reject}}</b></big></div>
-                      <div class="col-md-4">Category: <big><b>{{ $req->category_name }}</b></big></div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                            <td><b>Batch Name</b></td>
+                            <td>SKU</td>
+                            <td>Module</td>
+                            <td>CB Qty</td>
+                            <td>CB Code</td>
+                            <td>CB finished</td>
+                            <td>Batch Qty</td>
+                            <td>MAX Rejected</td>
+                            <td>Category</td>
+                        </tr>
+                      </thead>
+                      <tbody class="searchable">
+                        <tr>
+                            <td>{{ $req->batch_name }}</td>
+                            <td>{{ $req->sku }}</td>
+                            <td>{{ $req->module_name }}</td>
+                            <td>{{ $req->cartonbox_produced }}</td>
+                            <td>{{ $req->cartonbox }}</td>
+                            <td>{{ $req->cartonbox_finish_date }}</td>
+                            <td>{{ $req->batch_qty }}</td>
+                            <td>{{ $req->batch_brand_max_reject }}</td>
+                            <td>{{ $req->category_name }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                 @endforeach
                 </div>
-                <br>
             </div>
 
+            {{--
             <div class="panel panel-default">
                 <div class="panel-heading">Garment Details</div>
                 <br>
                 <div class="row">
-                 @foreach ($garment as $req)
+                  @foreach ($garment as $req)
                       <div class="col-md-6">Garment Name: <big><b>{{ $req->garment_name }}</b></big></div>
                       <div class="col-md-6">Garment Status: <big><b>{{ $req->garment_status }}</b></big></div>
                   @endforeach
                 </div>
                 <br>
             </div>
+            --}}
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Defect Details</div>
-                <br>
-                
+            <div class="row">
+              <div class="col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Defect Details</div>
+                    <br>
+                    {!! Form::open(['method'=>'POST', 'url'=>'/defect_insert']) !!}
+                    @include('errors.list')
+                      
+                      @foreach ($garment as $req)
+                        {!! Form::hidden('garment_name', $req->garment_name, ['class' => 'form-control']) !!}
+                        {!! Form::hidden('garment_order', $req->garment_order, ['class' => 'form-control']) !!}
+                      @endforeach
 
-                  <!-- Nav tabs -->
-                  <ul class="nav nav-tabs nav-justified" role="tablist">
-                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Defects</a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Positions</a></li>
-                    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Machines</a></li>
-                  </ul>
+                      @foreach ($batch as $req)
+                        {!! Form::hidden('batch_name', $req->batch_name, ['class' => 'form-control']) !!}
+                        {!! Form::hidden('batch_date', $req->batch_date, ['class' => 'form-control']) !!}
+                        {!! Form::hidden('batch_user', $req->batch_user, ['class' => 'form-control']) !!}
+                        {!! Form::hidden('batch_order', $req->batch_order, ['class' => 'form-control']) !!}
+                      @endforeach
 
-                  <!-- Tab panes -->
-                  <div class="tab-content">
+                      <ul class="nav nav-tabs nav-justified" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><big><b>Defects <span style="color:red">*</span></b></big></a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><big><b>Positions</b></big></a></li>
+                        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><big><b>Machines</b></big></a></li>
+                      </ul>
 
-                    <div role="tabpanel" class="tab-pane fade in active" id="home">
-                      <div class="row">
-                        <div class="col-md-3">
-                          <br><br>
-                          <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-primary active">
-                              <input type="radio" name="options" id="option11" autocomplete="off" checked> Radio 1
-                            </label>
-                            <label class="btn btn-primary">
-                              <input type="radio" name="options" id="option12" autocomplete="off"> Radio 2
-                            </label>
-                            <label class="btn btn-primary">
-                              <input type="radio" name="options" id="option13" autocomplete="off"> Radio 3
-                            </label>
-                          </div>
+                      <!-- Tab panes -->
+                      <div class="tab-content">
+
+                        <div role="tabpanel" class="tab-pane fade in active" id="home">
+                          <div class="row">
+                            <br><br>
+                                <div class="panel-body">
+                                  @foreach ($defect_types as $type)
+                                    <div class="col-md-2 visina">
+                                       <div class="visina_text">{{ $type->defect_type_name }}</div>
+                                      {!! Form::radio('defect_type_id', $type->defect_type_id, null, ['id' => 'check', 'class' => 'form-control']); !!}
+                                      <br>
+                                    </div>
+                                  @endforeach
+                                    
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                    
-                    <div role="tabpanel" class="tab-pane fade" id="profile">
-                      <div class="row">
-                        <div class="col-md-3">
-                          <br><br>
-                          <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-success active">
-                              <input type="radio" name="options1" id="option21" autocomplete="off" checked> Radio 1
-                            </label>
-                            <label class="btn btn-success">
-                              <input type="radio" name="options1" id="option22" autocomplete="off"> Radio 2
-                            </label>
-                            <label class="btn btn-success">
-                              <input type="radio" name="options1" id="option23" autocomplete="off"> Radio 3
-                            </label>
-                          </div>
+                        
+                        <div role="tabpanel" class="tab-pane fade" id="profile">
+                          <div class="row">
+                            <br><br>
+                                <div class="panel-body">
+                                  @foreach ($positions as $position)
+                                    <div class="col-md-1 visina">
+                                       <div class="visina_text">{{ $position->position_name }}</div>
+                                      {!! Form::radio('position_id', $position->position_id, null, ['id' => 'check', 'class' => 'form-control']); !!}
+                                      <br>
+                                    </div>
+                                  @endforeach
+                                    
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
 
-                    <div role="tabpanel" class="tab-pane fade" id="messages">
-                      <div class="row">
-                        <div class="col-md-3">
-                          <br><br>
-                          <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-warning active">
-                              <input type="radio" name="options2" id="option31" autocomplete="off" checked> Radio 1
-                            </label>
-                            <label class="btn btn-warning">
-                              <input type="radio" name="options2" id="option32" autocomplete="off"> Radio 2
-                            </label>
-                            <label class="btn btn-warning">
-                              <input type="radio" name="options2" id="option33" autocomplete="off"> Radio 3
-                            </label>
-                          </div>
+                        <div role="tabpanel" class="tab-pane fade" id="messages">
+                          <div class="row">
+                            <br><br>
+                                <div class="panel-body">
+                                  @foreach ($machines as $machine)
+                                    <div class="col-md-1 visina">
+                                      <div class="visina_text">{{ $machine->machine_type }}</div>
+                                      {!! Form::radio('machine_id', $machine->machine_id, null, ['id' => 'check', 'class' => 'form-control']); !!}
+                                      <br>
+                                    </div>
+                                  @endforeach
+                                    
+                                </div>
+                            </div>
                         </div>
+
                       </div>
-                    </div>
+                    <br>
+                </div>
+              </div>
 
-                  </div>
-
-                
-                
-                <br>
-            </div>
-
-            <div class="panel panel-primary">
-                <div class="row">
+              <div class="col-md-2">
+                <div class="panel panel-default">
+                   <div class="panel-heading">Options</div>
                   <br>
-                  
-                  <div class="col-md-6">
-                    <a href="{{ url('#') }}" class="btn btn-success">Confirm Defect</a>
+                  <br>
+                  <div class="row">  
+                    {!! Form::submit('Confirm Defect', ['class' => 'btn  btn-success center-block side-button']) !!}
+                    {!! Form::close() !!}
                   </div>
                   
-                  <div class="col-md-6">
+                  <div class="row">
                     @foreach ($garment as $req)
-                      <a href="{{url('/defect/by_garment/'.$req->garment_name)}}" class="btn btn-danger">Cancel Defect</a>
+                      <a href="{{url('/defect/by_garment/'.$req->garment_name)}}" class="btn btn-warning side-button"><br>Cancel Defect</a>
                     @endforeach
                   </div>
                   
                 </div>
-                <div class="row">
-                  <br>
-                </div>
+              </div>
             </div>
-           
 
         </div>
     </div>

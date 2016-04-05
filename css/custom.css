@@ -42,6 +42,12 @@ body {
     margin-left: 0px !important;
     margin-right: 0px !important;
 }
+.visina {
+  height: 100px !important;
+}
+.visina_text {
+  min-height: 35px !important;
+}
 .panel-primary {
     border-color: #286F08 !important;
     background-color: #DDEADD !important;
@@ -70,6 +76,11 @@ table.dataTable tbody td {
 }
 #check {
     box-shadow: inset 0 0px 0px rgba(0,0,0,0.075);
+}
+.side-button {
+  width: 120px !important;
+  height: 70px !important;
+  margin-bottom: 40px !important;
 }
 .btn-info {
     color: #333333 !important;
@@ -217,3 +228,91 @@ th.h-ct {
 .table-hover>tbody>tr:hover {
     background-color: #D0D4E2 !important;
 }
+
+
+/* */
+/*label.btn span {
+  font-size: 1.5em;
+}
+
+label input[type="radio"] ~ i.fa.fa-circle-o {
+  color: #c8c8c8;
+  display: inline;
+}
+
+label input[type="radio"] ~ i.fa.fa-check-circle-o {
+  display: none;
+}
+
+label input[type="radio"]:checked ~ i.fa.fa-circle-o {
+  display: none;
+}
+
+label input[type="radio"]:checked ~ i.fa.fa-check-circle-o {
+  color: #7AA3CC;
+  display: inline;
+}
+
+label:hover input[type="radio"] ~ i.fa {
+  color: #7AA3CC;
+}
+
+label input[type="checkbox"] ~ i.fa.fa-square-o {
+  color: #c8c8c8;
+  display: inline;
+}
+
+label input[type="checkbox"] ~ i.fa.fa-check-square-o {
+  display: none;
+}
+
+label input[type="checkbox"]:checked ~ i.fa.fa-square-o {
+  display: none;
+}
+
+label input[type="checkbox"]:checked ~ i.fa.fa-check-square-o {
+  color: #7AA3CC;
+  display: inline;
+}
+
+label:hover input[type="checkbox"] ~ i.fa {
+  color: #7AA3CC;
+}
+
+div[data-toggle="buttons"] label.active {
+  color: #7AA3CC;
+}
+
+div[data-toggle="buttons"] label {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 2em;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  background-color: none;
+  border: 0px solid #c8c8c8;
+  border-radius: 3px;
+  color: #c8c8c8;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+div[data-toggle="buttons"] label:hover {
+  color: #7AA3CC;
+}
+
+div[data-toggle="buttons"] label:active,
+div[data-toggle="buttons"] label.active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}*/
+
+/* */
