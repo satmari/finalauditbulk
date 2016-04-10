@@ -9,7 +9,7 @@
                 
                 <div class="panel-body">
                     <div class="">
-                        <a href="{{url('/searchinteos')}}" class="btn btn-default btn-info">New Batch</a>
+                        <a href="{{url('/searchinteos')}}" class="btn btn-default btn-info side-button"><br>New Batch</a>
                     </div>
                 </div>
 

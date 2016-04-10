@@ -6,7 +6,7 @@
         <div class="text-center">
             <div class="panel panel-default">
                 <!-- <div class="panel-heading">Batch Details</div> -->
-                <br>
+                <!-- <br> -->
                 <div class="row">
                  @foreach ($batch as $req)
                     <table class="table">
@@ -45,9 +45,9 @@
               <div class="col-md-10">
                   <div class="panel panel-default">
                       <div class="panel-heading">Garments in this Batch</div>
-                      <div class="input-group"> <span class="input-group-addon">Filter</span>
+                      <!-- <div class="input-group"> <span class="input-group-addon">Filter</span>
                           <input id="filter" type="text" class="form-control" placeholder="Type here...">
-                      </div>
+                      </div> -->
                 
                       <table class="table table-striped table-bordered" id="sort" 
                       >
@@ -108,7 +108,7 @@
                   <div class="panel panel-default">
                     <div class="panel-heading">Options</div>
                       <br>
-                      <br>
+                      <!-- <br> -->
                       @foreach ($batch as $req)
                         <div class="row">
                           <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-default side-button"><br>Suspend Batch <br><br></a>
@@ -117,9 +117,13 @@
                         <div class="row">
                           <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-success side-button"><br>Confirm Batch <br><br></a>
                         </div>
-                        
+
                         <div class="row">
                           <a href="{{ url('/batch/delete/'.$req->id) }}" class="btn btn-danger side-button"><br>Delete Batch <br><br></a>
+                        </div>
+
+                        <div class="row">
+                          <a href="{{ url('/batch') }}" class="btn btn-warning side-button"><br>Back<br><br></a>
                         </div>
                         
                       @endforeach

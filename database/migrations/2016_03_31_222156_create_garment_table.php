@@ -19,9 +19,6 @@ class CreateGarmentTable extends Migration {
 			$table->string('garment_name')->unique();
 			$table->string('garment_order');
 
-			$table->string('batch_date');
-			$table->string('batch_user');
-			$table->string('batch_order');
 			$table->string('batch_name');
 
 			$table->string('cartonbox');
@@ -33,9 +30,9 @@ class CreateGarmentTable extends Migration {
 			$table->string('category_id');
 			$table->string('category_name');
 
-			//$table->string('defect_qty');
-			//$table->string('defect_critical_qty');
 			$table->string('garment_status');
+
+			$table->boolean('deleted')->nullable();
 
 			$table->timestamps();
 		});

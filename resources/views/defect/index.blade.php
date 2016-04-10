@@ -6,7 +6,7 @@
         <div class="text-center">
             <div class="panel panel-default">
                 <!-- <div class="panel-heading">Batch Details</div> -->
-                <br>
+                <!-- <br> -->
                 <div class="row">
                  @foreach ($batch as $req)
                     <table class="table">
@@ -54,16 +54,22 @@
                 <br>
             </div>
             --}}
-
+  
             
           <div class="row">
             <div class="col-md-10">
               @if (count($defects) > 0)
                   <div class="panel panel-default">
-                    <div class="panel-heading">Defects in this garment</div>
-                    <div class="input-group"><span class="input-group-addon">Filter</span>
-                        <input id="filter" type="text" class="form-control" placeholder="Type here...">
+                    <div class="panel-heading">Defects in this garment
+                     
+                      <span class="span-right">
+                        <b>Number of Rejected:   {{ $num }}</b>
+                      </span>
+                      
                     </div>
+                    <!-- <div class="input-group"><span class="input-group-addon">Filter</span>
+                        <input id="filter" type="text" class="form-control" placeholder="Type here...">
+                    </div> -->
                     
                     <table class="table table-striped table-bordered" id="sort" 
                     >
@@ -135,7 +141,7 @@
                   @endforeach
                   @foreach ($batch as $req)
                   <div class="row">
-                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-warning side-button"><br>Back to Batch</a>
+                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-warning side-button"><br>Back</a>
                   </div>
                   @endforeach
               </div>  

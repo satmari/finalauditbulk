@@ -16,15 +16,11 @@ class CreateDefectTable extends Migration {
 		{
 			$table->increments('id');
 
-			$table->string('defect_name');	
+			$table->string('defect_name')->unique();	
 			$table->string('defect_order');
 			
 			$table->string('garment_name');
 			$table->string('batch_name');
-
-			$table->string('batch_date');
-			$table->string('batch_user');
-			$table->string('batch_order');
 
 			$table->string('defect_type_id');
 			$table->string('defect_type_name');
@@ -37,6 +33,8 @@ class CreateDefectTable extends Migration {
 
 			$table->string('machine_id');
 			$table->string('machine_type');
+
+			$table->boolean('deleted')->nullable();
 
 			$table->timestamps();
 		});

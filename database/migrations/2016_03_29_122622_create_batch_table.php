@@ -16,9 +16,6 @@ class CreateBatchTable extends Migration {
 		{
 			$table->increments('id');
 
-			$table->string('checked_by_name');
-			$table->string('checked_by_id');
-
 			$table->string('batch_name')->unique();
 			$table->string('batch_date');
 			$table->string('batch_user');
@@ -50,9 +47,14 @@ class CreateBatchTable extends Migration {
 			$table->integer('batch_brand_min');
 			$table->integer('batch_brand_max');
 			$table->integer('batch_brand_max_reject');
-			
-			$table->integer('rejected');
+
+			$table->string('checked_by_id');
+			$table->string('checked_by_name');
+						
+			$table->integer('rejected'); //exist but ?
 			$table->string('batch_status');
+
+			$table->boolean('deleted')->nullable();
 			
 			$table->timestamps();
 		});

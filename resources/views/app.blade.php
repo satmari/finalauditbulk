@@ -114,11 +114,17 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/machine') }}">Machines</a></li>
 				</ul> -->
+				@if (Auth::guest())
+				@else
+				<ul class="nav navbar-nav navoperator">
+					<li>Operator: <big><b><span style="color:red">{{ Auth::user()->username }}</span></b></big></li>
+				</ul>
+				@endif
 				
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
 						<li><a href="{{ url('/auth/login') }}">Login</a></li>
-						<li><a href="{{ url('/auth/register') }}">Register</a></li>
+						<!-- <li><a href="{{ url('/auth/register') }}">Register</a></li> -->
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>

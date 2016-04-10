@@ -6,7 +6,7 @@
         <div class="text-center">
            <div class="panel panel-default">
                 <!-- <div class="panel-heading">Batch Details</div> -->
-                <br>
+                <!-- <br> -->
                 <div class="row">
                  @foreach ($batch as $req)
                     <table class="table">
@@ -70,24 +70,26 @@
 
                       @foreach ($batch as $req)
                         {!! Form::hidden('batch_name', $req->batch_name, ['class' => 'form-control']) !!}
+                        {{-- 
                         {!! Form::hidden('batch_date', $req->batch_date, ['class' => 'form-control']) !!}
                         {!! Form::hidden('batch_user', $req->batch_user, ['class' => 'form-control']) !!}
                         {!! Form::hidden('batch_order', $req->batch_order, ['class' => 'form-control']) !!}
+                        --}}
                       @endforeach
 
                       <ul class="nav nav-tabs nav-justified" role="tablist">
-                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><big><b>Defects <span style="color:red">*</span></b></big></a></li>
-                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><big><b>Positions</b></big></a></li>
-                        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><big><b>Machines</b></big></a></li>
+                        <li id="lidefects" role="presentation" class="active"><a href="#defects" aria-controls="defects" role="tab" data-toggle="tab"><big><b>Defects <span style="color:red">*</span></b></big></a></li>
+                        <li id="lipositions" role="presentation"><a href="#positions" aria-controls="positions" role="tab" data-toggle="tab"><big><b>Positions</b></big></a></li>
+                        <li id="limachines"  role="presentation"><a href="#machines" aria-controls="machines" role="tab" data-toggle="tab"><big><b>Machines</b></big></a></li>
                       </ul>
 
                       <!-- Tab panes -->
                       <div class="tab-content">
 
-                        <div role="tabpanel" class="tab-pane fade in active" id="home">
+                        <div role="tabpanel" class="tab-pane fade in active" id="defects">
                           <div class="row">
-                            <br><br>
-                                <div class="panel-body">
+                            <!-- <br><br> -->
+                                <div class="panel-body visina-panel">
                                   @foreach ($defect_types as $type)
                                     <div class="col-md-2 visina">
                                        <div class="visina_text">{{ $type->defect_type_name }}</div>
@@ -100,10 +102,10 @@
                             </div>
                         </div>
                         
-                        <div role="tabpanel" class="tab-pane fade" id="profile">
+                        <div role="tabpanel" class="tab-pane fade" id="positions">
                           <div class="row">
-                            <br><br>
-                                <div class="panel-body">
+                            <!-- <br> -->
+                                <div class="panel-body visina-panel">
                                   @foreach ($positions as $position)
                                     <div class="col-md-1 visina">
                                        <div class="visina_text">{{ $position->position_name }}</div>
@@ -116,10 +118,10 @@
                             </div>
                         </div>
 
-                        <div role="tabpanel" class="tab-pane fade" id="messages">
+                        <div role="tabpanel" class="tab-pane fade" id="machines">
                           <div class="row">
-                            <br><br>
-                                <div class="panel-body">
+                            <!-- <br> -->
+                                <div class="panel-body visina-panel">
                                   @foreach ($machines as $machine)
                                     <div class="col-md-1 visina">
                                       <div class="visina_text">{{ $machine->machine_type }}</div>
@@ -133,7 +135,7 @@
                         </div>
 
                       </div>
-                    <br>
+                    <!-- <br> -->
                 </div>
               </div>
 
@@ -149,7 +151,7 @@
                   
                   <div class="row">
                     @foreach ($garment as $req)
-                      <a href="{{url('/defect/by_garment/'.$req->garment_name)}}" class="btn btn-warning side-button"><br>Cancel Defect</a>
+                      <a href="{{url('/defect/by_garment/'.$req->garment_name)}}" class="btn btn-warning side-button"><br>Back</a>
                     @endforeach
                   </div>
                   
