@@ -78,7 +78,7 @@
                                   <!-- <td>Id</td> -->
                                   <td><b>Garment Name</b></td>
                                   <td>SKU</td>
-                                  <td>Po</td>
+                                  <td>Prod Order</td>
                                   <td>Brand</td>
                                   <td><b>Final Status</b></td>
                                   <td></td>

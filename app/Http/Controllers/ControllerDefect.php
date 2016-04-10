@@ -170,9 +170,7 @@ class ControllerDefect extends Controller {
 				$machine_type = '';
 			}
 
-			$defect_order_bygarment = DB::table('defect')
-			                    ->where('garment_name', '=', $garment_name)
-			                    ->count();
+			$defect_order_bygarment = DB::table('defect')->where('garment_name', '=', $garment_name)->count();
 
 		   	$defect_order_num = $defect_order_bygarment + 1;
 		   	$defect_order = str_pad($defect_order_num, 3, "0", STR_PAD_LEFT);
@@ -207,10 +205,26 @@ class ControllerDefect extends Controller {
 				$table->deleted = FALSE;
 						
 				$table->save();
+
+				// if ($defect_level_rejected == "YES") {
+				// 	$affectedRows = Garment::where('garment_name', '=', $garment_name)->update(array('garment_status' => "Rejected"));
+				// }
+				
 			}
 			catch (\Illuminate\Database\QueryException $e) {
 				$msg = "Problem to save defect in table";
 				return view('defect.error',compact('msg'));
+			}
+
+			$garment_rejected_count = DB::table('defect')
+			->where('garment_name', '=', $garment_name)
+			->where('deleted', '=', FALSE)
+			->where('defect_level_rejected', '=', "YES")->count();
+
+			if ($garment_rejected_count > 0) {
+				$affectedRows = Garment::where('garment_name', '=', $garment_name)->update(array('garment_status' => "Rejected"));
+			} else {
+				$affectedRows = Garment::where('garment_name', '=', $garment_name)->update(array('garment_status' => "Accepted"));
 			}
 
 			return Redirect::to('/defect/by_garment/'.$garment_name);
@@ -229,6 +243,21 @@ class ControllerDefect extends Controller {
 			$defect = Defect::findOrFail($id);
 			$defect->deleted = TRUE;
 			$defect->save();
+
+
+			$garment_rejected_count = DB::table('defect')
+			->where('garment_name', '=', $defect->garment_name)
+			->where('deleted', '=', FALSE)
+			->where('defect_level_rejected', '=', "YES")->count();
+
+			// dd($garment_rejected_count);
+
+			if ($garment_rejected_count > 0) {
+				$affectedRows = Garment::where('garment_name', '=', $defect->garment_name)->update(array('garment_status' => "Rejected"));
+			} else {
+				$affectedRows = Garment::where('garment_name', '=', $defect->garment_name)->update(array('garment_status' => "Accepted"));
+			}
+
 			return Redirect::to('/defect/by_garment/'.$defect->garment_name);
 		}
 		catch (\Illuminate\Database\QueryException $e) {
