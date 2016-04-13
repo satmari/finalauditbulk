@@ -12,6 +12,7 @@ use App\Defect;
 use App\Category;
 use DB;
 use Auth;
+use App\User;
 
 class ControllerBatch extends Controller {
 
@@ -24,8 +25,22 @@ class ControllerBatch extends Controller {
 	{
 		//
 		try {
-			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE deleted = 0 ORDER BY id asc"));
-			return view('batch.index', compact('batch'));
+			$name_id = Auth::user()->name_id;
+			// dd($name_id);
+			$user = User::find(Auth::id());
+			
+			if (($user->is('admin')) OR ($user->is('guest'))) { 
+			    
+			    $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE deleted = 0 ORDER BY id asc"));
+				return view('batch.index', compact('batch'));
+			}
+			if ($user->is('operator')) { 
+			    
+			    $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_user = '".$name_id."' AND deleted = 0 ORDER BY id asc"));
+				return view('batch.index', compact('batch'));
+			}
+			
+			
 		}
 		catch (\Illuminate\Database\QueryException $e) {
 			return Redirect::to('/batch');
@@ -317,15 +332,14 @@ class ControllerBatch extends Controller {
 					return view('batch.error',compact('msg'));
 				}
 			}
-			return Redirect::to('/batch');
+			// return Redirect::to('/batch');
+			return Redirect::to('/garment/by_batch/'.$batch_name);
 		}
 		catch (\Illuminate\Database\QueryException $e) {
 			//return Redirect::to('/searchinteos');
 			$msg = "Problem to save batch in table. try agan.";
 			return view('batch.error',compact('msg'));
-		}
-		
-
+		}	
 	}
 
 	public function inside()
@@ -336,6 +350,96 @@ class ControllerBatch extends Controller {
 		}
 		catch (\Illuminate\Database\QueryException $e) {
 			return view('batch.searchinteos');		
+		}
+	}
+
+	public function confirm($id) {
+
+		// 
+		try {
+			$batchid = Batch::findOrFail($id);
+			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_name = '".$batchid->batch_name."'"));
+			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batchid->batch_name."'"));
+			$defects = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM defect WHERE batch_name = '".$batchid->batch_name."'"));
+
+			$total_defects = DB::table('defect')
+			                    ->where('batch_name', '=', $batchid->batch_name)
+			                    ->where('deleted', '=', FALSE)
+			                    ->count();
+
+			$total_rejected_defects = DB::table('defect')
+			                    	->where('batch_name', '=', $batchid->batch_name)
+			                    	->where('deleted', '=', FALSE)
+			                    	->where('defect_level_rejected', '=', "YES")
+			                    	->count();
+
+			$total_rejected_garments = DB::table('garment')
+			                    	->where('batch_name', '=', $batchid->batch_name)
+			                    	->where('deleted', '=', FALSE)
+			                    	->where('garment_status', '=', "Rejected")
+			                    	->count();
+
+			foreach ($batch as $b) {
+				$batch_brand_max_reject = $b->batch_brand_max_reject;
+			}
+
+			if ($batch_brand_max_reject < $total_rejected_garments) {
+				$suggestion = "Reject";
+			} else {
+				$suggestion = "Accept";
+			}
+
+			return view('batch.confirm',compact('batch','batchid','garments','defects','total_defects','total_rejected_defects','total_rejected_garments','suggestion'));		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return Redirect::to('/batch/confirm/'.$id);
+		}
+	}
+
+	public function accept($id) {
+		try {
+			$batch = Batch::findOrFail($id);
+			$batch->batch_status = "Accept";
+			$batch->save();
+			return Redirect::to('/batch/');
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return Redirect::to('/batch/accept/'.$id);
+		}
+	}
+
+	public function acceptwithreservetion($id) {
+		try {
+			$batch = Batch::findOrFail($id);
+			$batch->batch_status = "Accept with reservation";
+			$batch->save();
+			return Redirect::to('/batch/');
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return Redirect::to('/batch/acceptwithreservetion/'.$id);
+		}
+	}
+
+	public function reject($id) {
+		try {
+			$batch = Batch::findOrFail($id);
+			$batch->batch_status = "Reject";
+			$batch->save();
+			return Redirect::to('/batch/');
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return Redirect::to('/batch/reject/'.$id);
+		}
+	}
+
+	public function suspend($id) {
+		try {
+			$batch = Batch::findOrFail($id);
+			$batch->batch_status = "Suspend";
+			$batch->save();
+			return Redirect::to('/batch/');
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return Redirect::to('/batch/suspend/'.$id);
 		}
 	}
 
@@ -366,7 +470,5 @@ class ControllerBatch extends Controller {
 		catch (\Illuminate\Database\QueryException $e) {
 			return Redirect::to('/batch/delete/'.$id);
 		}
-
-		
 	}
 }

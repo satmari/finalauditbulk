@@ -35,6 +35,8 @@
 					               	<option name="email" value="audit3">Audit3 - Klementina Nikolajević</option>
 					               	<option name="email" value="audit4">Audit4 - Jelena Šeritović</option>
 					               	<option name="email" value="audit5">Audit5 - Dragana Živanović</option>
+					               	<option name="email" value="admin">Admin</option>
+					               	<option name="email" value="guest">Guest</option>
 					            </select>
 							</div>
 						</div>

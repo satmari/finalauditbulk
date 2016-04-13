@@ -42,7 +42,9 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Home</a></li>
+					@if(Auth::check() && Auth::user()->level() == 1)
+						<li><a href="{{ url('/') }}">Home</a></li>
+					@endif
 
 					<!-- <li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -61,10 +63,12 @@
 				<ul class="nav navbar-nav">
 					<li>
 						<div class="dropdown">
-						  <button class="btn btn-default dropdown-toggle" style="margin: 8px 5px !important;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						    Settings
-						    <span class="caret"></span>
-						  </button>
+							@if(Auth::check() && ((Auth::user()->level() == 1) || (Auth::user()->level() == 3)))
+								  <button class="btn btn-default dropdown-toggle" style="margin: 8px 5px !important;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								    Settings
+								    <span class="caret"></span>
+								  </button>
+						  	@endif
 						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						    
 						    <li><a href="{{ url('/defectlevel') }}">Defect Levels</a></li>

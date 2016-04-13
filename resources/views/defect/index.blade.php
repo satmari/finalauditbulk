@@ -114,7 +114,11 @@
                                 <td>{{ $req->defect_name }}</td>
                                 <td>{{ $req->defect_type_name }}</td>
                                 <td>{{ $req->defect_level_name }}</td>
+                                @if ($req->defect_level_rejected == "YES")
+                                <td><span style="color:red;">{{ $req->defect_level_rejected }}</span></td>
+                                @else
                                 <td>{{ $req->defect_level_rejected }}</td>
+                                @endif
                                 <td>{{ $req->position_name }}</td>
                                 <td>{{ $req->machine_type }}</td>
                                 <td><a href="{{ url('/defect/delete/'.$req->id) }}" class="btn btn-danger btn-xs center-block">Delete</a></td>

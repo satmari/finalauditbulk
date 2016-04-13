@@ -16,6 +16,10 @@
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 
+Route::get('/addadmin', 'addRollController@addadmin');
+Route::get('/addoperator', 'addRollController@addoperator');
+Route::get('/addguest', 'addRollController@addguest');
+
 Route::get('/defectlevel', 'ControllerDefectLevel@index');
 Route::get('/defectlevel_new', 'ControllerDefectLevel@create');
 Route::post('/defectlevel_insert', 'ControllerDefectLevel@insert');
@@ -113,6 +117,11 @@ Route::get('/batch/delete/{id}', 'ControllerBatch@delete');
 Route::post('/batch/delete/{id}', 'ControllerBatch@delete');
 Route::get('/searchinteos', 'ControllerBatch@searchinteos');
 Route::post('/searchinteos_store', 'ControllerBatch@searchinteos_store');
+Route::get('/batch/confirm/{id}', 'ControllerBatch@confirm');
+Route::get('/batch/accept/{id}', 'ControllerBatch@accept');
+Route::get('/batch/acceptwithreservetion/{id}', 'ControllerBatch@acceptwithreservetion');
+Route::get('/batch/reject/{id}', 'ControllerBatch@reject');
+Route::get('/batch/suspend/{id}', 'ControllerBatch@suspend');
 
 Route::get('/garment', 'ControllerGarment@index');
 //Route::get('/garment_new', 'ControllerGarment@create');

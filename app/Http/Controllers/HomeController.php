@@ -1,5 +1,11 @@
 <?php namespace App\Http\Controllers;
 
+use App\User;
+use Bican\Roles\Models\Role;
+use Bican\Roles\Models\Permission;
+use Illuminate\Support\Facades\Redirect;
+use Auth;
+
 class HomeController extends Controller {
 
 	/*
@@ -29,8 +35,38 @@ class HomeController extends Controller {
 	 * @return Response
 	 */
 	public function index()
-	{
-		return view('home');
+	{	
+		//
+		$msg = '';
+		$user = User::find(Auth::id());
+		// dd($user->username);
+		// if ($user->is('admin')) { // you can pass an id or slug
+		//     // or alternatively $user->hasRole('admin')
+		//     $msg = "I am Admin";
+		// }
+		
+		// dd($user);
+
+		// if ($user->isAdmin()) {
+		//     $msg = $msg + " admin";
+		// }
+
+		if ($user->is('admin')) { 
+		    // if user has at least one role
+		    $msg = "Hi admin";
+		}
+		if ($user->is('operator')) { 
+		    // if user has at least one role
+		    $msg = "Hi statistica operator";
+		    return redirect('/batch');
+		}
+		if ($user->is('guest')) { 
+		    // if user has at least one role
+		    $msg = "Hi Guest";
+		    //return redirect('/');
+		}
+		
+		return view('home', compact('msg'));
 	}
 
 }

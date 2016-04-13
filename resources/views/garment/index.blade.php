@@ -93,7 +93,11 @@
                                   <td>{{ $req->sku }}</td>
                                   <td>{{ $req->po }}</td>
                                   <td>{{ $req->brand }}</td>
-                                  <td>{{ $req->garment_status }}</td>
+                                  @if ($req->garment_status == "Rejected")
+                                  <td><span style="color:red;">{{ $req->garment_status }}</span></td>
+                                  @else 
+                                  <td><span style="color:green;">{{ $req->garment_status }}</span></td>
+                                  @endif
                                   <td><a href="{{ url('/defect/by_garment/'.$req->garment_name) }}" class="btn btn-info btn-xs center-block">Garment Details</a></td>
                                   {{-- <td><a href="{{ url('/garment/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td> --}}
                               </tr>
@@ -111,11 +115,11 @@
                       <!-- <br> -->
                       @foreach ($batch as $req)
                         <div class="row">
-                          <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-default side-button"><br>Suspend Batch <br><br></a>
+                          <a href="{{url('/batch/suspend/'.$req->id)}}" class="btn btn-default side-button"><br>Suspend Batch <br><br></a>
                         </div>
                         
                         <div class="row">
-                          <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-success side-button"><br>Confirm Batch <br><br></a>
+                          <a href="{{ url('/batch/confirm/'.$req->id) }}" class="btn btn-success side-button"><br>Confirm Batch <br><br></a>
                         </div>
 
                         <div class="row">
