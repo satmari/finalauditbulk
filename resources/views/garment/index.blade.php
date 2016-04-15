@@ -77,9 +77,11 @@
                               <tr>
                                   <!-- <td>Id</td> -->
                                   <td><b>Garment Name</b></td>
-                                  <td>SKU</td>
-                                  <td>Prod Order</td>
-                                  <td>Brand</td>
+                                  <!-- <td>SKU</td> -->
+                                  <!-- <td>Prod Order</td> -->
+                                  <!-- <td>Brand</td> -->
+                                  <td>Total Defects</td>
+                                  <td>Total Critical Defects</td>
                                   <td><b>Final Status</b></td>
                                   <td></td>
                                   <!-- <td></td> -->
@@ -90,15 +92,17 @@
                               <tr>
                                   {{-- <td>{{ $req->id }}</td> --}}
                                   <td>{{ $req->garment_name }}</td>
-                                  <td>{{ $req->sku }}</td>
-                                  <td>{{ $req->po }}</td>
-                                  <td>{{ $req->brand }}</td>
+                                  {{-- <td>{{ $req->sku }}</td> --}}
+                                  {{-- <td>{{ $req->po }}</td> --}}
+                                  {{-- <td>{{ $req->brand }}</td> --}}
+                                  <td>{{ $req->CountDefects }}</td> 
+                                  <td>{{ $req->CountCriticalDefects }}</td>
                                   @if ($req->garment_status == "Rejected")
                                   <td><span style="color:red;">{{ $req->garment_status }}</span></td>
                                   @else 
                                   <td><span style="color:green;">{{ $req->garment_status }}</span></td>
                                   @endif
-                                  <td><a href="{{ url('/defect/by_garment/'.$req->garment_name) }}" class="btn btn-info btn-xs center-block">Garment Details</a></td>
+                                  <td><a href="{{ url('/defect/by_garment/'.$req->garment_name) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
                                   {{-- <td><a href="{{ url('/garment/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td> --}}
                               </tr>
                           @endforeach
@@ -119,16 +123,16 @@
                         </div>
                         
                         <div class="row">
-                          <a href="{{ url('/batch/confirm/'.$req->id) }}" class="btn btn-success side-button"><br>Confirm Batch <br><br></a>
+                          <a href="{{ url('/batch/confirm/'.$req->id) }}" class="btn btn-success side-button"><br>Close Batch <br><br></a>
                         </div>
 
                         <div class="row">
                           <a href="{{ url('/batch/delete/'.$req->id) }}" class="btn btn-danger side-button"><br>Delete Batch <br><br></a>
                         </div>
 
-                        <div class="row">
+                       <!--  <div class="row">
                           <a href="{{ url('/batch') }}" class="btn btn-warning side-button"><br>Back<br><br></a>
-                        </div>
+                        </div> -->
                         
                       @endforeach
                     </div>

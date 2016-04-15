@@ -12,11 +12,6 @@ use DB;
 
 class ControllerModel extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
 	public function index()
 	{
 		//

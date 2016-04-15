@@ -30,7 +30,7 @@
 								<!-- <label>Select operator</label> -->
 					            <select id = "email" class="form-control" name="email">
 					            	<option name="email" value=""></option>
-					               	<option name="email" value="audit1">Audit1 - Žeklja Majoroš</option>
+					               	<option name="email" value="audit1">Audit1 - Željka Majoroš</option>
 					               	<option name="email" value="audit2">Audit2 - Biljana Živanović</option>
 					               	<option name="email" value="audit3">Audit3 - Klementina Nikolajević</option>
 					               	<option name="email" value="audit4">Audit4 - Jelena Šeritović</option>

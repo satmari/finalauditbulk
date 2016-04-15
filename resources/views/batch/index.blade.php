@@ -44,7 +44,7 @@
                                         <td>SKU</td>
                                         <td>Module</td>
                                         <td>Batch qty</td>
-                                        <!-- <td>Rejected Pcs</td> -->
+                                        <td>Rejected Garments</td>
                                         <td>Final Status</td>
                                         <td></td>
                                         <!-- <td></td> -->
@@ -58,11 +58,18 @@
                                         <td>{{ $req->sku }}</td>
                                         <td>{{ $req->module_name }}</td>
                                         <td>{{ $req->batch_qty }}</td>
-                                        {{-- <td>{{ $req->rejected }}</td> --}}
-                                        <td><b>{{ $req->batch_status }}</b></td>
+                                        <td>{{ $req->RejectedCount }}</td>
+                                        {{-- <td><b>{{ $req->batch_status }}</b></td> --}}
+                                        @if ($req->batch_status == "Reject")
+                                          <td><span style="color:red;"><b>{{ $req->batch_status }}</b></span></td>
+                                          @elseif ($req->batch_status == "Accept") 
+                                          <td><span style="color:green;"><b>{{ $req->batch_status }}</b></span></td>
+                                          @else 
+                                           <td><span><b>{{ $req->batch_status }}</b></span></td>
+                                          @endif 
                                         <td>
                                         @if( $req->batch_status == "Pending" || $req->batch_status == "Suspend")
-                                            <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block">Batch Details</a>
+                                            <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block">Edit</a>
                                         @endif
                                         </td>
                                         {{-- <td><a href="{{ url('/batch/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td> --}}
@@ -74,23 +81,64 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
-                      <div class="panel panel-default">
+                    
+                    <div class="col-md-2 pull-right">
+                      
+
+                        @if(Auth::check() && Auth::user()->level() == 2)
+                        <div class="panel panel-default">
                         <div class="panel-heading">Options</div>
-                            @if(Auth::check() && Auth::user()->level() == 2)
                             <div class="panel-body">
                                 <div class="">
                                     <a href="{{url('/searchinteos')}}" class="btn btn-default btn-info side-button"><br>New Batch</a>
                                 </div>
                             </div>
-                            @endif
-                        
-                      </div>
-                    </div>
-                
+                        </div>
+                        @endif
 
-            
-        </div>
+
+                        <div class="panel panel-default">
+                        <div class="panel-heading">Batch Details</div>
+                            <div class="panel-body">
+                                <table class="table" id="sort">
+                                    <tr style="border:2px solid #555; !important">
+                                        <td>Total checked <b>today</b></td>
+                                        <td>{{ $total_checked_batch }}</td>
+                                   </tr>
+                                    <tr>
+                                        <td>Accepted</td>
+                                        <td>{{ $total_accept_batch }}</td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>Accepted with reserveation</td>
+                                        <td>3</td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>Rejected</td>
+                                        <td>{{ $total_reject_batch}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Suspended</td>
+                                        <td> {{ $total_suspend_batch }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                        <div class="panel-heading">Garment Details</div>
+                            <div class="panel-body">
+                                <table class="table" id="sort">
+                                    <tr style="border:2px solid #555; !important">
+                                        <td>Total checked <b>today</b></td>
+                                        <td>{{ $total_garments_today }}</td>
+                                   </tr>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+         </div>
     </div>
 </div>
 @endsection

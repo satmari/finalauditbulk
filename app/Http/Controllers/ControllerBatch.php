@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -17,7 +18,8 @@ use App\User;
 class ControllerBatch extends Controller {
 
 	public function __construct()
-	{
+	{	
+		// Auth::loginUsingId(5);
 		$this->middleware('auth');
 	}
 
@@ -31,13 +33,113 @@ class ControllerBatch extends Controller {
 			
 			if (($user->is('admin')) OR ($user->is('guest'))) { 
 			    
-			    $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE deleted = 0 ORDER BY id asc"));
-				return view('batch.index', compact('batch'));
+			    //$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE deleted = 0 ORDER BY id asc"));
+
+			     $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT 
+																*,
+																(SELECT COUNT(garment.batch_name) FROM garment WHERE garment.batch_name = batch.batch_name AND garment.garment_status = 'Rejected') as RejectedCount
+																FROM batch 
+																WHERE (batch.deleted = 0)
+																ORDER BY batch.id asc"));
+
+			    $batch_date = date("Ymd");
+	    		
+			    $total_checked_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('deleted', '=', 0)
+			                    ->count();
+				// dd($total_checked_batch);
+
+			    $total_accept_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('deleted', '=', 0)
+			                    ->where('batch_status', '=', 'Accept')
+			                    ->count();
+				// dd($total_accept_batch);
+
+			    $total_reject_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('deleted', '=', 0)
+			                    ->where('batch_status', '=', 'Reject')
+			                    ->count();
+				// dd($total_reject_batch);
+
+			    $total_suspend_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('deleted', '=', 0)
+			                    ->where('batch_status', '=', 'Suspend')
+			                    ->count();
+				// dd($total_suspend_batch);
+
+				$total_garments_today = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('deleted', '=', 0)
+			                    ->sum('batch_qty');
+				// dd($total_suspend_batch);			                    
+
+				return view('batch.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch','total_garments_today'));
 			}
 			if ($user->is('operator')) { 
 			    
-			    $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_user = '".$name_id."' AND deleted = 0 ORDER BY id asc"));
-				return view('batch.index', compact('batch'));
+			    //$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_user = '".$name_id."' AND deleted = 0 ORDER BY id asc"));
+
+			    $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT 
+																*,
+																(SELECT COUNT(garment.batch_name) FROM garment WHERE garment.batch_name = batch.batch_name AND garment.garment_status = 'Rejected') as RejectedCount
+																FROM batch 
+																WHERE (batch.batch_user = '".$name_id."') AND 
+																(batch.deleted = 0) AND 
+																((CAST(batch.created_at AS DATE) = CAST(GETDATE() AS DATE)) OR ((batch.batch_status = 'Pending') OR (batch.batch_status = 'Suspend')))
+																ORDER BY batch.id asc"));
+
+			    // dd($name_id);
+				// $total_checked_garments =  DB::connection('sqlsrv')->select(DB::raw("SELECT (COUNT(*))
+				//  											    FROM garment
+				//  												JOIN batch ON batch.batch_name = garment.batch_name
+				//  											    WHERE (CAST(garment.created_at AS DATE) = CAST(GETDATE() AS DATE)) AND batch.batch_user = '".$name_id."')"));
+
+			    $batch_date = date("Ymd");
+	    		$batch_user = $name_id;
+
+			    $total_checked_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('batch_user', '=', $batch_user)
+			                    ->where('deleted', '=', 0)
+			                    ->count();
+				// dd($total_checked_batch);
+
+			    $total_accept_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('batch_user', '=', $batch_user)
+			                    ->where('deleted', '=', 0)
+			                    ->where('batch_status', '=', 'Accept')
+			                    ->count();
+				// dd($total_accept_batch);
+
+			    $total_reject_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('batch_user', '=', $batch_user)
+			                    ->where('deleted', '=', 0)
+			                    ->where('batch_status', '=', 'Reject')
+			                    ->count();
+				// dd($total_reject_batch);
+
+			    $total_suspend_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('batch_user', '=', $batch_user)
+			                    ->where('deleted', '=', 0)
+			                    ->where('batch_status', '=', 'Suspend')
+			                    ->count();
+				// dd($total_suspend_batch);
+
+			    $total_garments_today = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('batch_user', '=', $batch_user)
+			                    ->where('deleted', '=', 0)
+			                    ->sum('batch_qty');
+				// dd($total_suspend_batch);
+
+				return view('batch.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch','total_garments_today'));
 			}
 			
 			
@@ -241,7 +343,8 @@ class ControllerBatch extends Controller {
 		  	}
 
 			$rejected = 0; // exist but ?
-			$batch_status = "Pending"; // new batch
+			//$batch_status = "Pending"; // new batch
+			$batch_status = "Suspend"; // new batch
 			
 			try {
 				$table = new Batch;

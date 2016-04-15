@@ -31,7 +31,7 @@
 						</div>
 
 					<div class="panel-body">
-						{!! Form::submit('Edit', ['class' => 'btn btn-success center-block']) !!}
+						{!! Form::submit('Save', ['class' => 'btn btn-success center-block']) !!}
 					</div>
 
 					@include('errors.list')

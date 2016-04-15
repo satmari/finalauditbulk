@@ -110,6 +110,12 @@ table.dataTable tbody td {
   height: 70px !important;
   margin-bottom: 20px !important;
 }
+.final-button {
+  width: 150px !important;
+  height: 90px !important;
+  margin-bottom: 20px !important;
+  font-size: 19px !important;
+}
 .btn-info {
     color: #333333 !important;
     background-color: #AFFFB4 !important;

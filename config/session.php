@@ -16,7 +16,7 @@ return [
 	|
 	*/
 
-	'driver' => env('SESSION_DRIVER', 'database'),
+	'driver' => env('SESSION_DRIVER', 'cookie'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ return [
 	|
 	*/
 
-	'files' => storage_path().'/framework/sessions',
+	'files' => storage_path().'/framework/sessions_fa',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -83,7 +83,7 @@ return [
 	|
 	*/
 
-	'table' => 'sessions1',
+	'table' => 'sessions_fa',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -109,7 +109,7 @@ return [
 	|
 	*/
 
-	'cookie' => 'laravel_session1',
+	'cookie' => 'laravel_sessions_fa',
 
 	/*
 	|--------------------------------------------------------------------------

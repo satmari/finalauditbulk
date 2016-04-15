@@ -14,8 +14,10 @@ use DB;
 use Auth;
 
 class ControllerDefect extends Controller {
+
 	public function __construct()
 	{
+		// Auth::loginUsingId(5);
 		$this->middleware('auth');
 	}
 
@@ -212,6 +214,8 @@ class ControllerDefect extends Controller {
 				
 			}
 			catch (\Illuminate\Database\QueryException $e) {
+
+				// return Redirect::to('/defect/by_garment/'.$garment_name);
 				$msg = "Problem to save defect in table";
 				return view('defect.error',compact('msg'));
 			}
@@ -231,6 +235,7 @@ class ControllerDefect extends Controller {
 		}
 		catch (\Illuminate\Database\QueryException $e) {
 			//return Redirect::to('/defect/by_garment/'.$garment_name);
+
 			$msg = "Problem to save defect in table, try again.";
 			return view('defect.error',compact('msg'));
 		}

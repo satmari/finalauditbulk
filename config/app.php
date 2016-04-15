@@ -26,7 +26,8 @@ return [
 	|
 	*/
 
-	'url' => 'http://localhost',
+	//'url' => 'http://localhost',
+	'url' => 'http://172.27.161.171/finalaudit',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -38,8 +39,9 @@ return [
 	| ahead and set this to a sensible default for you out of the box.
 	|
 	*/
-	'timezone' => 'CET',
+	
 	//'timezone' => 'UTC',
+	'timezone' => 'CET',
 
 	/*
 	|--------------------------------------------------------------------------

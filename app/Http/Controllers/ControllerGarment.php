@@ -13,8 +13,10 @@ use DB;
 use Auth;
 
 class ControllerGarment extends Controller {
+
 	public function __construct()
 	{
+		// Auth::loginUsingId(5);
 		$this->middleware('auth');
 	}
 
@@ -28,7 +30,6 @@ class ControllerGarment extends Controller {
 		catch (\Illuminate\Database\QueryException $e) {
 			return Redirect::to('/garment');
 		}
-
 	}
 
 	public function by_batch($batch_name)
@@ -36,7 +37,15 @@ class ControllerGarment extends Controller {
 		//
 		try {
 			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_name = '".$batch_name."'"));
-			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batch_name."' ORDER BY id asc"));
+			
+			//$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batch_name."' ORDER BY id asc"));
+
+			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT *,
+				(SELECT COUNT(defect.garment_name) FROM defect WHERE ((defect.garment_name = garment.garment_name) AND (defect.deleted = 0))) as CountDefects,
+				(SELECT COUNT(defect.garment_name) FROM defect WHERE ((defect.garment_name = garment.garment_name) AND (defect.defect_level_rejected = 'YES') AND (defect.deleted = 0))) as CountCriticalDefects
+				FROM garment
+				WHERE garment.batch_name = '".$batch_name."'
+				ORDER BY garment.id asc "));
 
 			return view('garment.index', compact('garments','batch'));
 		}

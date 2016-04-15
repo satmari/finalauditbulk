@@ -107,7 +107,7 @@
                             <!-- <br> -->
                                 <div class="panel-body visina-panel">
                                   @foreach ($positions as $position)
-                                    <div class="col-md-1 visina">
+                                    <div class="col-md-2 visina">
                                        <div class="visina_text">{{ $position->position_name }}</div>
                                       {!! Form::radio('position_id', $position->position_id, null, ['id' => 'check', 'class' => 'form-control']); !!}
                                       <br>

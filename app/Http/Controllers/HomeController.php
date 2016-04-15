@@ -25,7 +25,8 @@ class HomeController extends Controller {
 	 * @return void
 	 */
 	public function __construct()
-	{
+	{	
+		// Auth::loginUsingId(5);
 		$this->middleware('auth');
 	}
 
@@ -51,6 +52,8 @@ class HomeController extends Controller {
 		//     $msg = $msg + " admin";
 		// }
 
+		// return redirect('/batch');
+		
 		if ($user->is('admin')) { 
 		    // if user has at least one role
 		    $msg = "Hi admin";
