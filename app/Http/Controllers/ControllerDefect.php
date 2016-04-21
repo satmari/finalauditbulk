@@ -76,6 +76,7 @@ class ControllerDefect extends Controller {
 			g.id,
 			dt.defect_type_id,
 			dt.defect_type_name,
+			dt.defect_level_rejected,
 			c.category_name
 			FROM defect_types as dt
 
@@ -89,6 +90,7 @@ class ControllerDefect extends Controller {
 			g.id,
 			dt.defect_type_id,
 			dt.defect_type_name,
+			dt.defect_level_rejected,
 			c.category_name 
 			"));
 			//dd($defect_types);

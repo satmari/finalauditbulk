@@ -90,9 +90,16 @@
                           <div class="row">
                             <!-- <br><br> -->
                                 <div class="panel-body visina-panel">
+
                                   @foreach ($defect_types as $type)
-                                    <div class="col-md-2 visina">
-                                       <div class="visina_text">{{ $type->defect_type_name }}</div>
+                                    
+                                    @if ($type->defect_level_rejected == "YES") 
+                                      <div class="col-md-2 visina-critical">
+                                    @else
+                                      <div class="col-md-2 visina-basic">
+                                    @endif
+                                    
+                                       <div class="visina_text"><b>{{ $type->defect_type_name }}</b></div>
                                       {!! Form::radio('defect_type_id', $type->defect_type_id, null, ['id' => 'check', 'class' => 'form-control']); !!}
                                       <br>
                                     </div>
@@ -108,7 +115,7 @@
                                 <div class="panel-body visina-panel">
                                   @foreach ($positions as $position)
                                     <div class="col-md-2 visina">
-                                       <div class="visina_text">{{ $position->position_name }}</div>
+                                       <div class="visina_text"><b>{{ $position->position_name }}</b></div>
                                       {!! Form::radio('position_id', $position->position_id, null, ['id' => 'check', 'class' => 'form-control']); !!}
                                       <br>
                                     </div>
@@ -124,7 +131,7 @@
                                 <div class="panel-body visina-panel">
                                   @foreach ($machines as $machine)
                                     <div class="col-md-1 visina">
-                                      <div class="visina_text">{{ $machine->machine_type }}</div>
+                                      <div class="visina_text"><b>{{ $machine->machine_type }}</b></div>
                                       {!! Form::radio('machine_id', $machine->machine_id, null, ['id' => 'check', 'class' => 'form-control']); !!}
                                       <br>
                                     </div>

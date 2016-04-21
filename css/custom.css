@@ -67,6 +67,24 @@ body {
     -moz-box-shadow:inset 0px 0px 10px 1px #eee;
     box-shadow: inset 0px 0px 20px 1px #EAEAEA;
 }
+.visina-basic {
+    height: 100px !important;
+    /*border: 1px #eee solid;*/
+    /*margin: 1px;*/
+    padding: 3px;
+    -webkit-box-shadow:inset 0px 0px 10px 1px #9F9;
+    -moz-box-shadow:inset 0px 0px 10px 1px #9F9;
+    box-shadow: inset 0px 0px 20px 1px #9F9;
+}
+.visina-critical {
+    height: 100px !important;
+    /*border: 1px #eee solid;*/
+    /*margin: 1px;*/
+    padding: 3px;
+    -webkit-box-shadow:inset 0px 0px 10px 1px #FBB;
+    -moz-box-shadow:inset 0px 0px 10px 1px #FBB;
+    box-shadow: inset 0px 0px 20px 1px #FBB;
+}
 .visina-panel{
     padding: 0px !important;
 }
