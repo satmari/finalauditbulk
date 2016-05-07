@@ -111,7 +111,7 @@
                           </table>
                   </div>
               </div>
-             
+             @if(Auth::check() && Auth::user()->level() == 2)
               <div class="col-md-2">
                   <div class="panel panel-default">
                     <div class="panel-heading">Options</div>
@@ -147,6 +147,7 @@
                       <br>
                   </div>
               </div>
+             @endif
             </div>
 
         </div>
