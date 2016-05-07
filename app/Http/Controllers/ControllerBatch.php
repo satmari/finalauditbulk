@@ -82,17 +82,30 @@ class ControllerBatch extends Controller {
 			if ($user->is('operator')) { 
 			    
 			    //$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_user = '".$name_id."' AND deleted = 0 ORDER BY id asc"));
-
+				
 			    $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT 
 																*,
 																(SELECT COUNT(garment.batch_name) FROM garment WHERE garment.batch_name = batch.batch_name AND garment.garment_status = 'Rejected') as RejectedCount
 																FROM batch 
 																WHERE (batch.batch_user = '".$name_id."') AND 
 																(batch.deleted = 0) AND 
-																((CAST(batch.created_at AS DATE) = CAST(GETDATE() AS DATE)) OR ((batch.batch_status = 'Pending') OR (batch.batch_status = 'Suspend')))
+																((CAST(batch.created_at AS DATE) = CAST(GETDATE() AS DATE)) OR
+																((batch.batch_status = 'Pending') OR (batch.batch_status = 'Suspend')))
 																ORDER BY batch.id asc"));
+				
+				/* // with mandatory to check
+			    $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT 
+																*,
+																(SELECT COUNT(garment.batch_name) FROM garment WHERE garment.batch_name = batch.batch_name AND garment.garment_status = 'Rejected') as RejectedCount,
+																(SELECT mandatory_to_check FROM models WHERE models.model_name = batch.style) as to_check
+																FROM batch 
+																WHERE (batch.batch_user = '".$name_id."') AND 
+																(batch.deleted = 0) AND 
+																((CAST(batch.created_at AS DATE) = CAST(GETDATE() AS DATE)) OR ((batch.batch_status = 'Pending') OR (batch.batch_status = 'Suspend') /* OR (batch.batch_status = 'Not checked'))) 
+																ORDER BY batch.id asc"));
+				*/
 
-			    // dd($name_id);
+			    // dd($batch);
 				// $total_checked_garments =  DB::connection('sqlsrv')->select(DB::raw("SELECT (COUNT(*))
 				//  											    FROM garment
 				//  												JOIN batch ON batch.batch_name = garment.batch_name
@@ -554,14 +567,14 @@ class ControllerBatch extends Controller {
 			$batch->save();
 
 			// Add status to garments inside batch
-			/*
+			
 			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batch->batch_name."'"));
 			foreach ($garments as $garment) {
 				$gar = Garment::findOrFail($garment->id);
 				$gar->garment_status = "Not checked";
 				$gar->save();
 			}
-			*/
+			
 			return Redirect::to('/batch/');
 		}
 		catch (\Illuminate\Database\QueryException $e) {

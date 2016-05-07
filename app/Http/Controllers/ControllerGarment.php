@@ -36,7 +36,14 @@ class ControllerGarment extends Controller {
 	{
 		//
 		try {
-			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_name = '".$batch_name."'"));
+			//$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_name = '".$batch_name."'"));
+
+			// with mandatory to check
+			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT 
+																*,
+																(SELECT mandatory_to_check FROM models WHERE models.model_name = batch.style) as to_check
+																FROM batch 
+																WHERE batch_name = '".$batch_name."'"));
 			
 			//$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batch_name."' ORDER BY id asc"));
 
