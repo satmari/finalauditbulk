@@ -122,6 +122,7 @@ Route::get('/batch/accept/{id}', 'ControllerBatch@accept');
 Route::get('/batch/acceptwithreservetion/{id}', 'ControllerBatch@acceptwithreservetion');
 Route::get('/batch/reject/{id}', 'ControllerBatch@reject');
 Route::get('/batch/suspend/{id}', 'ControllerBatch@suspend');
+Route::get('/batch/not_checked/{id}', 'ControllerBatch@not_checked');
 
 Route::get('/garment', 'ControllerGarment@index');
 //Route::get('/garment_new', 'ControllerGarment@create');

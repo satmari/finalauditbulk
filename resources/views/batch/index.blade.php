@@ -64,6 +64,8 @@
                                           <td><span style="color:red;"><b>{{ $req->batch_status }}</b></span></td>
                                           @elseif ($req->batch_status == "Accept") 
                                           <td><span style="color:green;"><b>{{ $req->batch_status }}</b></span></td>
+                                          @elseif ($req->batch_status == "Not checked") 
+                                          <td><span style="color:blue;"><b>{{ $req->batch_status }}</b></span></td>
                                           @else 
                                            <td><span><b>{{ $req->batch_status }}</b></span></td>
                                           @endif 

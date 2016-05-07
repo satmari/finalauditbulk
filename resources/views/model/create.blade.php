@@ -29,6 +29,14 @@
 							{!! Form::select('category_id',  ['' => ''] + $categories, null,['class' => 'form-control']) !!}
 						</div>
 
+						<div class="panel-body">
+						<p>Mandatory to check: </p>
+							{{-- {!! Form::checkbox('mandatory_to_check', 1, false, ['id' => 'check', 'class' => 'form-control']); !!} --}}
+							{!! Form::select('mandatory_to_check', array('NO'=>'NO','YES'=>'YES'), null, array('class' => 'form-control')); !!} 
+							
+						</div>
+						<br>
+
 						{!! Form::submit('Add', ['class' => 'btn  btn-success center-block']) !!}
 
 						@include('errors.list')

@@ -546,6 +546,29 @@ class ControllerBatch extends Controller {
 		}
 	}
 
+	public function not_checked($id) {
+		try {
+			// Add status to batch
+			$batch = Batch::findOrFail($id);
+			$batch->batch_status = "Not checked";
+			$batch->save();
+
+			// Add status to garments inside batch
+			/*
+			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batch->batch_name."'"));
+			foreach ($garments as $garment) {
+				$gar = Garment::findOrFail($garment->id);
+				$gar->garment_status = "Not checked";
+				$gar->save();
+			}
+			*/
+			return Redirect::to('/batch/');
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return Redirect::to('/batch/not_checked/'.$id);
+		}
+	}
+
 	public function delete($id) {
 
 		try {

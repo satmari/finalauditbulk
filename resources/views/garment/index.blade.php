@@ -121,6 +121,10 @@
                         <div class="row">
                           <a href="{{url('/batch/suspend/'.$req->id)}}" class="btn btn-default side-button"><br>Suspend Batch <br><br></a>
                         </div>
+
+                        <div class="row">
+                          <a href="{{url('/batch/not_checked/'.$req->id)}}" class="btn btn-info side-button"><br>NOT checked<br><br></a>
+                        </div>
                         
                         <div class="row">
                           <a href="{{ url('/batch/confirm/'.$req->id) }}" class="btn btn-success side-button"><br>Close Batch <br><br></a>

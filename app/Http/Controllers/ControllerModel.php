@@ -37,6 +37,14 @@ class ControllerModel extends Controller {
 		$model_brand = $model_input['model_brand'];
 		$category_id = $model_input['category_id'];
 		
+		// if (isset($model_input['mandatory_to_check'])) {
+		if ($model_input['mandatory_to_check'] == "YES") {
+			$mandatory_to_check = 'YES';
+		} else {
+			$mandatory_to_check = 'NO';
+		}
+		// dd($mandatory_to_check);
+
 		$categories = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM categories WHERE category_id = '".$category_id."'"));
 		//dd($categories[0]->category_name);
 
@@ -59,6 +67,7 @@ class ControllerModel extends Controller {
 			$model->category_description = $category_description;
 			$model->category_description_1 = $category_description_1;
 			$model->category_description_2 = $category_description_2;
+			$model->mandatory_to_check = $mandatory_to_check;
 
 			$model->save();
 		}
@@ -80,8 +89,9 @@ class ControllerModel extends Controller {
 		// dd($defect_level_selected_id);
 
 		$category_selected_id = $model->category_id;
+		$mandatory_selected = 'YES';
 		
-		return view('model.edit', compact('model','categories','category_selected_id'));
+		return view('model.edit', compact('model','categories','category_selected_id', 'mandatory_selected'));
 	}
 
 	public function update($id, Request $request) {
@@ -97,7 +107,13 @@ class ControllerModel extends Controller {
 		$model_name = $input['model_name'];
 		$model_brand = $input['model_brand'];
 		$category_id = $input['category_id'];
-		
+
+		if ($input['mandatory_to_check'] == 'YES') {
+			$mandatory_to_check = 'YES';
+		} else {
+			$mandatory_to_check = 'NO';
+		}
+
 		$categories = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM categories WHERE category_id = '".$category_id."'"));
 		//dd($categories[0]->category_name);
 
@@ -119,6 +135,7 @@ class ControllerModel extends Controller {
 			$model->category_description = $category_description;
 			$model->category_description_1 = $category_description_1;
 			$model->category_description_2 = $category_description_2;
+			$model->mandatory_to_check = $mandatory_to_check;
 									
 			$model->save();
 		}
