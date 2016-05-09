@@ -121,7 +121,11 @@
                                     </tr>
                                     <tr>
                                         <td>Suspended</td>
-                                        <td> {{ $total_suspend_batch }}</td>
+                                        <td>{{ $total_suspend_batch }}</td>
+                                    </tr>
+                                     <tr>
+                                        <td>Not checked</td>
+                                        <td>{{ $total_not_checked_batch }}</td>
                                     </tr>
                                 </table>
                             </div>

@@ -71,13 +71,20 @@ class ControllerBatch extends Controller {
 			                    ->count();
 				// dd($total_suspend_batch);
 
+			    $total_not_checked_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('deleted', '=', 0)
+			                    ->where('batch_status', '=', 'Not checked')
+			                    ->count();
+				// dd($total_not_checked_batch);
+
 				$total_garments_today = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('deleted', '=', 0)
 			                    ->sum('batch_qty');
 				// dd($total_suspend_batch);			                    
 
-				return view('batch.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch','total_garments_today'));
+				return view('batch.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch', 'total_not_checked_batch', 'total_garments_today'));
 			}
 			if ($user->is('operator')) { 
 			    
@@ -145,6 +152,14 @@ class ControllerBatch extends Controller {
 			                    ->count();
 				// dd($total_suspend_batch);
 
+			    $total_not_checked_batch = DB::table('batch')
+			                    ->where('batch_date', '=', $batch_date)
+			                    ->where('batch_user', '=', $batch_user)
+			                    ->where('deleted', '=', 0)
+			                    ->where('batch_status', '=', 'Not checked')
+			                    ->count();
+				// dd($total_not_checked_batch);
+
 			    $total_garments_today = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('batch_user', '=', $batch_user)
@@ -152,7 +167,7 @@ class ControllerBatch extends Controller {
 			                    ->sum('batch_qty');
 				// dd($total_suspend_batch);
 
-				return view('batch.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch','total_garments_today'));
+				return view('batch.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch', 'total_not_checked_batch', 'total_garments_today'));
 			}
 			
 			
