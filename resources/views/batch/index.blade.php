@@ -139,6 +139,10 @@
                                         <td>Total checked <b>today</b></td>
                                         <td>{{ $total_garments_today }}</td>
                                    </tr>
+                                   <tr>
+                                        <td>Total Not checked <b>today</b></td>
+                                        <td>{{ $total_garments_not_today }}</td>
+                                   </tr>
                             </div>
                         </div>
 
