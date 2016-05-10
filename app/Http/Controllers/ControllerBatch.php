@@ -47,6 +47,7 @@ class ControllerBatch extends Controller {
 			    $total_checked_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('deleted', '=', 0)
+			                    ->where('batch_status', '!=', 'Not checked')
 			                    ->count();
 				// dd($total_checked_batch);
 
@@ -132,6 +133,7 @@ class ControllerBatch extends Controller {
 			    $total_checked_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('batch_user', '=', $batch_user)
+			                    ->where('batch_status', '!=', 'Not checked')
 			                    ->where('deleted', '=', 0)
 			                    ->count();
 				// dd($total_checked_batch);

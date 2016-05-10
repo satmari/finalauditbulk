@@ -72,19 +72,25 @@ class ControllerPosition extends Controller {
 			foreach ($categories as $category) {
 				//dd($category->category_name);
 
-				try {
-					$categoryposition = new CategoryPosition;
+				$exist = DB::table('defect_types')
+			                    ->where('category_id', '=', $category->category_id)
+			                    ->where('position_id', '=', $position_id)
+			                    ->count();
+				if ($exist == 0) {
+					try {
+						$categoryposition = new CategoryPosition;
 
-					$categoryposition->position_id = $position_id;
-					$categoryposition->position_name = $position_name;
-					$categoryposition->category_id = $category->category_id;
-					$categoryposition->category_name = $category->category_name;
-					$categoryposition->link_type = $link_type;
-					
-					$categoryposition->save();
-				}
-				catch (\Illuminate\Database\QueryException $e) {
-					return view('position.error');			
+						$categoryposition->position_id = $position_id;
+						$categoryposition->position_name = $position_name;
+						$categoryposition->category_id = $category->category_id;
+						$categoryposition->category_name = $category->category_name;
+						$categoryposition->link_type = $link_type;
+						
+						$categoryposition->save();
+					}
+					catch (\Illuminate\Database\QueryException $e) {
+						return view('position.error');			
+					}
 				}
 			}
 		}

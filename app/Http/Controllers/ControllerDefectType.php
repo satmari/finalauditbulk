@@ -172,19 +172,25 @@ class ControllerDefectType extends Controller {
 			foreach ($categories as $category) {
 				//dd($category->category_name);
 
-				try {
-					$categorydefecttype = new CategoryDefectType;
+				$exist = DB::table('defect_types')
+			                    ->where('category_id', '=', $category->category_id)
+			                    ->where('defect_type_id', '=', $defect_type_id)
+			                    ->count();
+				if ($exist == 0) {
+					try {
+						$categorydefecttype = new CategoryDefectType;
 
-					$categorydefecttype->defect_type_id = $defect_type_id;
-					$categorydefecttype->defect_type_name = $defect_type_name;
-					$categorydefecttype->category_id = $category->category_id;
-					$categorydefecttype->category_name = $category->category_name;
-					$categorydefecttype->link_type = $link_type;
-					
-					$categorydefecttype->save();
-				}
-				catch (\Illuminate\Database\QueryException $e) {
-					return view('defecttype.error');			
+						$categorydefecttype->defect_type_id = $defect_type_id;
+						$categorydefecttype->defect_type_name = $defect_type_name;
+						$categorydefecttype->category_id = $category->category_id;
+						$categorydefecttype->category_name = $category->category_name;
+						$categorydefecttype->link_type = $link_type;
+						
+						$categorydefecttype->save();
+					}
+					catch (\Illuminate\Database\QueryException $e) {
+						return view('defecttype.error');			
+					}
 				}
 			}
 		} elseif ($defect_applay_to_all == "NO") {
