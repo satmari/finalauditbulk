@@ -104,11 +104,13 @@
                                 <a href="{{url('/batch/suspend/'.$batchid->id)}}" class="btn btn-default side-button"><br>Suspend</a>
 
                             </div>
+                            {{--
                             <div class="row">
                               <!-- <div class="col-md-6"> -->
                                 <a href="{{ url('/batch/delete/'.$batchid->id) }}" class="btn btn-danger side-button"><br>Delete</a>
                               <!-- </div> -->
                             </div>
+                            --}}
                          <br>
                     </div>
                 </div>

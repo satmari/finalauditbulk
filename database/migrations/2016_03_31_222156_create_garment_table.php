@@ -31,6 +31,8 @@ class CreateGarmentTable extends Migration {
 			$table->string('category_name');
 
 			$table->string('garment_status');
+			$table->string('garment_barcode_match')->nullable();
+			$table->string('garment_barcode')->nullable();
 
 			$table->boolean('deleted')->nullable();
 

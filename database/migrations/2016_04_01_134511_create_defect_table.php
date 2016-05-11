@@ -34,6 +34,7 @@ class CreateDefectTable extends Migration {
 			$table->string('machine_id');
 			$table->string('machine_type');
 
+			$table->string('defect_status')->nullable();
 			$table->boolean('deleted')->nullable();
 
 			$table->timestamps();

@@ -17,7 +17,8 @@
                             <td>Module</td>
                             <td>CB Qty</td>
                             <td>CB Code</td>
-                            <td>CB finished</td>
+                            {{--<td>CB finished</td>--}}
+                            <td>CB Barcode Match</td>
                             <td>Batch Qty</td>
                             <td>MAX Rejected</td>
                             <td>Category</td>
@@ -30,7 +31,12 @@
                             <td>{{ $req->module_name }}</td>
                             <td>{{ $req->cartonbox_produced }}</td>
                             <td>{{ $req->cartonbox }}</td>
-                            <td>{{ $req->cartonbox_finish_date }}</td>
+                            {{--<td>{{ $req->cartonbox_finish_date }}</td>--}}
+                            @if ($req->batch_barcode_match == "NO")
+                              <td><span style="color:red;font-weight:bold;font-size:18px;">{{ $req->batch_barcode_match }}</span></td>
+                            @else 
+                              <td><span style="color:green;font-weight:bold;">{{ $req->batch_barcode_match }}</span></td>
+                            @endif
                             <td>{{ $req->batch_qty }}</td>
                             <td>{{ $req->batch_brand_max_reject }}</td>
                             <td>{{ $req->category_name }}</td>
@@ -80,6 +86,7 @@
                                   <!-- <td>SKU</td> -->
                                   <!-- <td>Prod Order</td> -->
                                   <!-- <td>Brand</td> -->
+                                  <td>Garment Barcode match</td>
                                   <td>Total Defects</td>
                                   <td>Total Critical Defects</td>
                                   <td><b>Final Status</b></td>
@@ -95,6 +102,7 @@
                                   {{-- <td>{{ $req->sku }}</td> --}}
                                   {{-- <td>{{ $req->po }}</td> --}}
                                   {{-- <td>{{ $req->brand }}</td> --}}
+                                  <td>{{ $req->garment_barcode_match }}</td>
                                   <td>{{ $req->CountDefects }}</td> 
                                   <td>{{ $req->CountCriticalDefects }}</td>
                                   @if ($req->garment_status == "Rejected")
@@ -102,8 +110,9 @@
                                   @else 
                                   <td><span style="color:green;">{{ $req->garment_status }}</span></td>
                                   @endif
-                                  <td><a href="{{ url('/defect/by_garment/'.$req->garment_name) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
-                                  {{-- <td><a href="{{ url('/garment/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td> --}}
+                                  {{-- <td><a href="{{ url('/defect/by_garment/'.$req->garment_name) }}" class="btn btn-info btn-xs center-block">Edit</a></td> --}}
+                                  <td><a href="{{ url('/garment/checkbarcode/'.$req->garment_name) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                                  
                               </tr>
                           @endforeach
                           
@@ -132,10 +141,11 @@
                         <div class="row">
                           <a href="{{ url('/batch/confirm/'.$req->id) }}" class="btn btn-success side-button"><br>Close Batch <br><br></a>
                         </div>
-
+                        {{-- 
                         <div class="row">
                           <a href="{{ url('/batch/delete/'.$req->id) }}" class="btn btn-danger side-button"><br>Delete Batch <br><br></a>
                         </div>
+                        --}}
 
                        <!--  <div class="row">
                           <a href="{{ url('/batch') }}" class="btn btn-warning side-button"><br>Back<br><br></a>

@@ -53,6 +53,8 @@ class CreateBatchTable extends Migration {
 						
 			$table->integer('rejected'); //exist but ?
 			$table->string('batch_status');
+			$table->string('batch_barcode_match')->nullable();
+			$table->string('batch_barcode')->nullable();
 
 			$table->boolean('deleted')->nullable();
 			

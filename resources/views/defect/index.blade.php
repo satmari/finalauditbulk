@@ -17,7 +17,8 @@
                             <td>Module</td>
                             <td>CB Qty</td>
                             <td>CB Code</td>
-                            <td>CB finished</td>
+                            {{--<td>CB finished</td>--}}
+                            <td>CB Barcode Match</td>
                             <td>Batch Qty</td>
                             <td>MAX Rejected</td>
                             <td>Category</td>
@@ -30,7 +31,12 @@
                             <td>{{ $req->module_name }}</td>
                             <td>{{ $req->cartonbox_produced }}</td>
                             <td>{{ $req->cartonbox }}</td>
-                            <td>{{ $req->cartonbox_finish_date }}</td>
+                            {{--<td>{{ $req->cartonbox_finish_date }}</td>--}}
+                            @if ($req->batch_barcode_match == "NO")
+                              <td><span style="color:red;font-weight:bold;font-size:18px;">{{ $req->batch_barcode_match }}</span></td>
+                            @else 
+                              <td><span style="color:green;font-weight:bold;">{{ $req->batch_barcode_match }}</span></td>
+                            @endif
                             <td>{{ $req->batch_qty }}</td>
                             <td>{{ $req->batch_brand_max_reject }}</td>
                             <td>{{ $req->category_name }}</td>

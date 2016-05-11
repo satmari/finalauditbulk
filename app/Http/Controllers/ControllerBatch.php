@@ -483,13 +483,72 @@ class ControllerBatch extends Controller {
 				}
 			}
 			// return Redirect::to('/batch');
-			return Redirect::to('/garment/by_batch/'.$batch_name);
+			//return Redirect::to('/garment/by_batch/'.$batch_name);
+
+			return Redirect::to('/batch/checkbarcode/'.$batch_name);
 		}
 		catch (\Illuminate\Database\QueryException $e) {
 			//return Redirect::to('/searchinteos');
 			$msg = "Problem to save batch in table. try agan.";
 			return view('batch.error',compact('msg'));
 		}	
+	}
+
+	public function batch_checkbarcode ($name)
+	{
+		try {
+			return view('batch.checkbarcode',compact('name'));
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return view('batch.checkbarcode',compact('name'));
+		}
+	}
+
+	public function batch_checkbarcode_store (Request $request)
+	{
+		//
+		$this->validate($request, ['batch_name' => 'required', 'barcode' => 'required']);
+
+		$input = $request->all(); 
+
+		$batch_name = $input['batch_name'];
+		$barcode_insert = $input['barcode'];
+
+		try {
+
+			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT id,style,color,size FROM batch WHERE batch_name = '".$batch_name."'"));
+			$style = $batch[0]->style;
+			$color = $batch[0]->color;
+			$size = $batch[0]->size;
+					
+			//$barcode = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM cartiglio WHERE Cod_Bar = '".$barcode."'"));
+			$barcode = DB::connection('sqlsrv')->select(DB::raw("SELECT Cod_Bar FROM cartiglio WHERE Cod_Art_CZ = '".$style."' AND Cod_Col_CZ = '".$color."' AND Tgl_ENG = '".$size."'"));
+			$barcode_indb = $barcode[0]->Cod_Bar;
+			
+			if ($barcode_insert == $barcode_indb) {
+				// dd("Barcode is Ok");
+				$barcode_match = "YES";
+			} else {
+				// dd("Barcode is NOT Ok");
+				$barcode_match = "NO";
+			}
+
+			$b = Batch::findOrFail($batch[0]->id);
+			$b->batch_barcode_match = $barcode_match;
+			$b->batch_barcode = $barcode_indb;
+			$b->save();
+
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			$msg = "Barcode not found in cartiglio database";
+			return view('batch.error',compact('msg'));
+		}
+
+		if ($barcode_insert != $barcode_indb) {
+			$msg = "Barcode not match with barcode from cartiglio database";
+			return view('batch.error_continue',compact('msg','batch_name'));
+		}
+		return Redirect::to('/garment/by_batch/'.$batch_name);
 	}
 
 	public function inside()
@@ -503,11 +562,13 @@ class ControllerBatch extends Controller {
 		}
 	}
 
-	public function confirm($id) {
-
+	public function confirm($id) 
+	{
 		// 
+		// dd($batchid->id);
 		try {
 			$batchid = Batch::findOrFail($id);
+			// dd($batchid->id);
 			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_name = '".$batchid->batch_name."'"));
 			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batchid->batch_name."'"));
 			$defects = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM defect WHERE batch_name = '".$batchid->batch_name."'"));
@@ -535,17 +596,19 @@ class ControllerBatch extends Controller {
 
 			if ($batch_brand_max_reject < $total_rejected_garments) {
 				$suggestion = "Reject";
+				return view('batch.confirm',compact('batch','batchid','garments','defects','total_defects','total_rejected_defects','total_rejected_garments','suggestion'));
 			} else {
 				$suggestion = "Accept";
+				return Redirect::to('/batch/accept/'.$batchid->id);
 			}
-
-			return view('batch.confirm',compact('batch','batchid','garments','defects','total_defects','total_rejected_defects','total_rejected_garments','suggestion'));		}
+		}
 		catch (\Illuminate\Database\QueryException $e) {
-			return Redirect::to('/batch/confirm/'.$id);
+			return Redirect::to('/batch/');
 		}
 	}
 
-	public function accept($id) {
+	public function accept($id) 
+	{
 		try {
 			$batch = Batch::findOrFail($id);
 			$batch->batch_status = "Accept";
@@ -557,7 +620,8 @@ class ControllerBatch extends Controller {
 		}
 	}
 
-	public function acceptwithreservetion($id) {
+	public function acceptwithreservetion($id) 
+	{
 		try {
 			$batch = Batch::findOrFail($id);
 			$batch->batch_status = "Accept with reservation";
@@ -569,7 +633,8 @@ class ControllerBatch extends Controller {
 		}
 	}
 
-	public function reject($id) {
+	public function reject($id) 
+	{
 		try {
 			$batch = Batch::findOrFail($id);
 			$batch->batch_status = "Reject";
@@ -581,7 +646,8 @@ class ControllerBatch extends Controller {
 		}
 	}
 
-	public function suspend($id) {
+	public function suspend($id) 
+	{
 		try {
 			$batch = Batch::findOrFail($id);
 			$batch->batch_status = "Suspend";
@@ -593,7 +659,8 @@ class ControllerBatch extends Controller {
 		}
 	}
 
-	public function not_checked($id) {
+	public function not_checked($id) 
+	{
 		try {
 			// Add status to batch
 			$batch = Batch::findOrFail($id);
@@ -608,6 +675,13 @@ class ControllerBatch extends Controller {
 				$gar->garment_status = "Not checked";
 				$gar->save();
 			}
+
+			$defects = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM defect WHERE batch_name = '".$batch->batch_name."'"));
+			foreach ($defects as $defect) {
+				$def = Defect::findOrFail($defect->id);
+				$def->deleted = TRUE;
+				$def->save();
+			}
 			
 			return Redirect::to('/batch/');
 		}
@@ -616,8 +690,9 @@ class ControllerBatch extends Controller {
 		}
 	}
 
-	public function delete($id) {
-
+	public function delete($id) 
+	{
+		/*
 		try {
 			$batch = Batch::findOrFail($id);
 			$batch->deleted = TRUE;
@@ -643,5 +718,6 @@ class ControllerBatch extends Controller {
 		catch (\Illuminate\Database\QueryException $e) {
 			return Redirect::to('/batch/delete/'.$id);
 		}
+		*/
 	}
 }

@@ -5,17 +5,19 @@
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4">
             <div class="panel panel-default">
-                <div class="panel-heading"><b>1.</b> Find CB in Inteos database</div>
+                <div class="panel-heading">Check BARCODE on garment</div>
                 
-                {!! Form::open(['url' => 'searchinteos_store']) !!}
+                {!! Form::open(['url' => '/garment/checkbarcode_store']) !!}
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
+                {!! Form::hidden('garment_name', $name, ['class' => 'form-control']) !!}
+
                 <div class="panel-body">
-                    {!! Form::input('number', 'cb_code', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
+                    {!! Form::input('barcode', 'barcode', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
                 </div>
 
                 <div class="panel-body">
-                    {!! Form::submit('Find CB', ['class' => 'btn btn-success btn-lg center-block']) !!}
+                    {!! Form::submit('Check', ['class' => 'btn btn-success btn-lg center-block']) !!}
                 </div>
 
                 @include('errors.list')

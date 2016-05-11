@@ -61,4 +61,74 @@ class ControllerGarment extends Controller {
 		}
 	}
 
+	public function garment_checkbarcode ($name) 
+	{
+		$garment = DB::connection('sqlsrv')->select(DB::raw("SELECT garment_barcode_match FROM garment WHERE garment_name = '".$name."'"));
+
+		if ($garment[0]->garment_barcode_match == NULL ) {
+			return view('garment.checkbarcode',compact('name'));
+		} else {
+			return Redirect::to('/defect/by_garment/'.$name);
+		}
+	}
+
+	public function garment_checkbarcode_store (Request $request) 
+	{
+		$this->validate($request, ['garment_name' => 'required', 'barcode' => 'required']);
+		$input = $request->all(); 
+
+		$garment_name = $input['garment_name'];
+		$barcode_insert = $input['barcode'];
+
+		try {
+
+			// if you check barcode form batch barcode
+			/*
+			$garment = DB::connection('sqlsrv')->select(DB::raw("SELECT batch_name FROM garment WHERE garment_name = '".$garment_name."'"));		
+			$batch_name = $garment[0]->batch_name;
+			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT batch_barcode FROM batch WHERE batch_name = '".$batch_name."'"));
+			$barcode = $batch[0]->batch_barcode;
+			*/
+
+			//if you check barcode from cartiglio database
+			$garment = DB::connection('sqlsrv')->select(DB::raw("SELECT id,sku FROM garment WHERE garment_name = '".$garment_name."'"));		
+			$sku = $garment[0]->sku; //1MC875 019-M
+
+			$a = explode(' ', $sku);
+			$style = $a[0];
+			$b = explode('-', $a[1]);
+			$color = $b[0];
+			$size = $b[1];
+
+			$barcode = DB::connection('sqlsrv')->select(DB::raw("SELECT Cod_Bar FROM cartiglio WHERE Cod_Art_CZ = '".$style."' AND Cod_Col_CZ = '".$color."' AND Tgl_ENG = '".$size."'"));
+			$barcode_indb = $barcode[0]->Cod_Bar;
+			
+			if ($barcode_insert == $barcode_indb) {
+				// dd("Barcode is Ok");
+				$barcode_match = "YES";
+			} else {
+				// dd("Barcode is NOT Ok");
+				$barcode_match = "NO";
+			}
+
+			$b = Garment::findOrFail($garment[0]->id);
+			$b->garment_barcode_match = $barcode_match;
+			$b->garment_barcode = $barcode_indb;
+			$b->save();
+
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			$msg = "Barcode not found in cartiglio database";
+			return view('garment.error',compact('msg'));
+		}		
+
+		if ($barcode_insert != $barcode_indb) {
+			$msg = "Barcode not match with barcode from cartiglio database";
+			return view('garment.error_continue',compact('msg','garment_name'));
+		}
+		return Redirect::to('/defect/by_garment/'.$garment_name);
+		
+		
+	}
+
 }
