@@ -520,10 +520,26 @@ class ControllerBatch extends Controller {
 			$style = $batch[0]->style;
 			$color = $batch[0]->color;
 			$size = $batch[0]->size;
+
+			$size_to_search = str_replace("/","-",$size);
 					
 			//$barcode = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM cartiglio WHERE Cod_Bar = '".$barcode."'"));
-			$barcode = DB::connection('sqlsrv')->select(DB::raw("SELECT Cod_Bar FROM cartiglio WHERE Cod_Art_CZ = '".$style."' AND Cod_Col_CZ = '".$color."' AND Tgl_ENG = '".$size."'"));
-			$barcode_indb = $barcode[0]->Cod_Bar;
+			$barcode = DB::connection('sqlsrv')->select(DB::raw("SELECT Cod_Bar FROM cartiglio WHERE Cod_Art_CZ = '".$style."' AND Cod_Col_CZ = '".$color."' AND Tgl_ENG = '".$size_to_search."'"));
+			
+			try {
+			   if ($barcode[0]->Cod_Bar) {
+				$barcode_indb = $barcode[0]->Cod_Bar;
+				} else {
+					$msg = "Item is not in Cartiglio table";
+					return view('batch.error',compact('msg'));
+				}
+			} catch (Exception $e) {
+			    $msg = "Item is not in Cartiglio table";
+				return view('batch.error',compact('msg'));
+			}
+
+			
+			
 			
 			if ($barcode_insert == $barcode_indb) {
 				// dd("Barcode is Ok");
