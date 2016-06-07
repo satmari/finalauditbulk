@@ -63,6 +63,11 @@ class HomeController extends Controller {
 		    $msg = "Hi statistica operator";
 		    return redirect('/batch');
 		}
+		if ($user->is('notcheck')) { 
+		    // if user has at least one role
+		    $msg = "Hi Not check operator";
+		    return redirect('/notcheck');
+		}
 		if ($user->is('guest')) { 
 		    // if user has at least one role
 		    $msg = "Hi Guest";

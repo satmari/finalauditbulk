@@ -274,7 +274,7 @@ class ControllerBatch extends Controller {
 			if ($inteos) {
 				//continue
 			} else {
-	        	$msg = 'Cannot find CB in Inteos';
+	        	$msg = 'Cannot find CB in Inteos, NE POSTOJI KARTONSKA KUTIJA U INTEOSU ! ';
 	        	return view('batch.error', compact('msg'));
 	    	}
 
@@ -305,6 +305,7 @@ class ControllerBatch extends Controller {
 
 	    	$checked_by_name = $username;
 	    	$checked_by_id = $name_id;
+	    	//dd($name_id);
 	    	$batch_date = date("Ymd");
 	    	$batch_user = $name_id;
 
@@ -327,14 +328,21 @@ class ControllerBatch extends Controller {
 
 	  		//$brand = substr($po, 2, 1); // T;I;C
 			
-			$models = DB::connection('sqlsrv')->select(DB::raw("SELECT category_name,category_id,model_brand FROM models WHERE model_name = '".$style."'"));
+			$models = DB::connection('sqlsrv')->select(DB::raw("SELECT category_name,category_id,model_brand,mandatory_to_check FROM models WHERE model_name = '".$style."'"));
 			
 	    	if ($models) {
 	    		$brand = $models[0]->model_brand;
 				$category_name = $models[0]->category_name;
 				$category_id = $models[0]->category_id;
+				$mandatory_to_check = $models[0]->mandatory_to_check;
 			} else {
-	        	$msg = 'Cannot find Style  '.$style.'  in Model table';
+	        	$msg = 'Cannot find Style '.$style.' in Model table, NE POSTOJI MODEL '.$style.' U TABELI!!!';
+	        	return view('batch.error', compact('msg'));
+	    	}
+
+	    	/* User NotCheck */
+	    	if ($mandatory_to_check == "YES" AND $name_id == '10') {
+	    		$msg = 'This Style '.$style.' is MANDATORY to check, OVAJ MODEL SE MORA PREGLEDATI!!! ';
 	        	return view('batch.error', compact('msg'));
 	    	}
 
@@ -346,7 +354,7 @@ class ControllerBatch extends Controller {
 	    	if ($cartonbox_produced > 0) {
 				//continue
 			} else {
-				$msg = 'Carton box have 0 quantity inside';
+				$msg = 'Carton box have 0 quantity inside, KUTIJA IMA 0 KOMADA! ';
 	        	return view('batch.error', compact('msg'));
 			}
 
@@ -354,7 +362,7 @@ class ControllerBatch extends Controller {
 	    	if ($cartonbox_status == "Completed") {
 				//continue
 			} else {
-				$msg = 'Carton box is NOT completed in Inteos (on Module)';
+				$msg = 'Carton box is NOT completed in Inteos (on Module), KUTIJA NIJE ZAVRSENA U MODULU! ';
 	        	return view('batch.error', compact('msg'));
 			}
 
@@ -385,7 +393,7 @@ class ControllerBatch extends Controller {
 		  		$batch_brand_max = $batch_brand_table[0]->batch_max;
 		  		$batch_brand_max_reject = $batch_brand_table[0]->batch_reject;
 			} else {
-		      	$msg = 'Cannot find proper line in Batch table for this Brand';
+		      	$msg = 'Cannot find proper line in Batch table for this Brand, OVA KOLICINA NIJE DEFINISANA U TABELI ZA OVAJ BREND!!!';
 		      	return view('batch.error', compact('msg'));
 		  	}
 
@@ -516,10 +524,11 @@ class ControllerBatch extends Controller {
 
 		try {
 
-			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT id,style,color,size FROM batch WHERE batch_name = '".$batch_name."'"));
+			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT id,style,color,size,batch_user FROM batch WHERE batch_name = '".$batch_name."'"));
 			$style = $batch[0]->style;
 			$color = $batch[0]->color;
 			$size = $batch[0]->size;
+			$batch_user = $batch[0]->batch_user;
 
 			$size_to_search = str_replace("/","-",$size);
 					
@@ -527,20 +536,17 @@ class ControllerBatch extends Controller {
 			$barcode = DB::connection('sqlsrv')->select(DB::raw("SELECT Cod_Bar FROM cartiglio WHERE Cod_Art_CZ = '".$style."' AND Cod_Col_CZ = '".$color."' AND Tgl_ENG = '".$size_to_search."'"));
 			
 			try {
-			   if ($barcode[0]->Cod_Bar) {
-				$barcode_indb = $barcode[0]->Cod_Bar;
+			   	if ($barcode[0]->Cod_Bar) {
+					$barcode_indb = $barcode[0]->Cod_Bar;
 				} else {
-					$msg = "Item is not in Cartiglio table";
+					$msg = "Item is not in Cartiglio table, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
 					return view('batch.error',compact('msg'));
 				}
 			} catch (Exception $e) {
-			    $msg = "Item is not in Cartiglio table";
+			    $msg = "Item is not in Cartiglio table, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
 				return view('batch.error',compact('msg'));
 			}
 
-			
-			
-			
 			if ($barcode_insert == $barcode_indb) {
 				// dd("Barcode is Ok");
 				$barcode_match = "YES";
@@ -556,15 +562,22 @@ class ControllerBatch extends Controller {
 
 		}
 		catch (\Illuminate\Database\QueryException $e) {
-			$msg = "Barcode not found in cartiglio database";
+			$msg = "Barcode not found in cartiglio database, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
 			return view('batch.error',compact('msg'));
 		}
 
 		if ($barcode_insert != $barcode_indb) {
-			$msg = "Barcode not match with barcode from cartiglio database";
+			$msg = "Barcode not match with barcode from cartiglio database, BARKODOVI SE NE SLAZU! ";
 			return view('batch.error_continue',compact('msg','batch_name'));
 		}
-		return Redirect::to('/garment/by_batch/'.$batch_name);
+
+		// user NotCheck
+		if ($batch_user == '10') {
+			return Redirect::to('/notcheck/'.$batch_name);
+		} else {
+			return Redirect::to('/garment/by_batch/'.$batch_name);	
+		}
+		
 	}
 
 	public function inside()
@@ -699,7 +712,14 @@ class ControllerBatch extends Controller {
 				$def->save();
 			}
 			
-			return Redirect::to('/batch/');
+			// user NotCheck
+			$name_id = Auth::user()->name_id;
+			
+			if ($name_id == '10') {
+				return Redirect::to('/');
+			} else {
+				return Redirect::to('/batch/');
+			}
 		}
 		catch (\Illuminate\Database\QueryException $e) {
 			return Redirect::to('/batch/not_checked/'.$id);

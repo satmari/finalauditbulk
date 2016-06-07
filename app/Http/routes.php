@@ -148,6 +148,10 @@ Route::post('/import2', 'ControllerImport@postImportUser');
 Route::post('/import3', 'ControllerImport@postImportRoll');
 Route::post('/import4', 'ControllerImport@postImportUserRole');
 
+//NotCheck
+Route::get('/notcheck', 'ControllerNotCheck@index');
+Route::get('/notcheck/{batch_name}', 'ControllerNotCheck@main');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
