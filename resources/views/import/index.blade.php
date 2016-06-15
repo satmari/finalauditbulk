@@ -51,7 +51,36 @@
 					@include('errors.list')
 				{!! Form::close() !!}
 
-				
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Import E-commerce Excel file</div>
+
+				{!! Form::open(['files'=>True, 'method'=>'POST', 'action'=>['ControllerImport@postImportEcommerce']]) !!}
+					<div class="panel-body">
+						{!! Form::file('file5', ['class' => 'center-block']) !!}
+					</div>
+					<div class="panel-body">
+						{!! Form::submit('Import E-commerce', ['class' => 'btn btn-warning center-block']) !!}
+					</div>
+					@include('errors.list')
+				{!! Form::close() !!}
+
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Import Size-set Excel file</div>
+
+				{!! Form::open(['files'=>True, 'method'=>'POST', 'action'=>['ControllerImport@postImportSizeset']]) !!}
+					<div class="panel-body">
+						{!! Form::file('file5', ['class' => 'center-block']) !!}
+					</div>
+					<div class="panel-body">
+						{!! Form::submit('Import Size-set', ['class' => 'btn btn-warning center-block']) !!}
+					</div>
+					@include('errors.list')
+				{!! Form::close() !!}
+
 			</div>
 			
 

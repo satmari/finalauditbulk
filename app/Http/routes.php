@@ -147,10 +147,20 @@ Route::get('/import', 'ControllerImport@index');
 Route::post('/import2', 'ControllerImport@postImportUser');
 Route::post('/import3', 'ControllerImport@postImportRoll');
 Route::post('/import4', 'ControllerImport@postImportUserRole');
+Route::post('/import5', 'ControllerImport@postImportEcommerce');
+Route::post('/import6', 'ControllerImport@postImportSizeset');
 
 //NotCheck
 Route::get('/notcheck', 'ControllerNotCheck@index');
 Route::get('/notcheck/{batch_name}', 'ControllerNotCheck@main');
+
+//Samples
+Route::get('/ecommerce', 'ControllerEcommerce@index');
+Route::get('/ecommerce/edit/{id}', 'ControllerEcommerce@edit');
+Route::post('/ecommerce/{id}', 'ControllerEcommerce@update');
+Route::post('/ecommerce/scanned/{id}', 'ControllerEcommerce@scanned');
+Route::post('/ecommerce/collected/{id}', 'ControllerEcommerce@collected');
+Route::post('/ecommerce/shipped/{id}', 'ControllerEcommerce@shipped');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
