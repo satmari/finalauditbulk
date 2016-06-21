@@ -6,7 +6,8 @@
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4">
 
-					
+			@if(Auth::check() && ((Auth::user()->level() == 1)))
+
 			<div class="panel panel-default">
 				<div class="panel-heading">Import users form Excel file</div>
 
@@ -53,8 +54,12 @@
 
 			</div>
 
+			@endif
+
+			@if(Auth::check() && ((Auth::user()->level() == 5) OR (Auth::user()->level() == 1)))
+
 			<div class="panel panel-default">
-				<div class="panel-heading">Import E-commerce Excel file</div>
+				<div class="panel-heading">Import <b>E-commerce</b> Excel file</div>
 
 				{!! Form::open(['files'=>True, 'method'=>'POST', 'action'=>['ControllerImport@postImportEcommerce']]) !!}
 					<div class="panel-body">
@@ -69,11 +74,11 @@
 			</div>
 
 			<div class="panel panel-default">
-				<div class="panel-heading">Import Size-set Excel file</div>
+				<div class="panel-heading">Import <b>Size-set</b> Excel file</div>
 
 				{!! Form::open(['files'=>True, 'method'=>'POST', 'action'=>['ControllerImport@postImportSizeset']]) !!}
 					<div class="panel-body">
-						{!! Form::file('file5', ['class' => 'center-block']) !!}
+						{!! Form::file('file6', ['class' => 'center-block']) !!}
 					</div>
 					<div class="panel-body">
 						{!! Form::submit('Import Size-set', ['class' => 'btn btn-warning center-block']) !!}
@@ -82,6 +87,8 @@
 				{!! Form::close() !!}
 
 			</div>
+
+			@endif
 			
 
 			

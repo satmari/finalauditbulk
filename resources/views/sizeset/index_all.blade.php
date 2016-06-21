@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">E-commerce table</div>
+                            <div class="panel-heading">Size-set table</div>
                             <div class="input-group"> <span class="input-group-addon">Filter</span>
                                 <input id="filter" type="text" class="form-control" placeholder="Type here...">
                             </div>
@@ -44,47 +44,47 @@
                                         <td>Style</td>
                                         <td>Color</td>
                                         <td>Size</td>
-                                        <td>Color Desc</td>
+                                        <!-- <td>Color Desc</td> -->
 
                                         <td style="background-color: aliceblue;">Scanned</td>
-                                        <!-- <td style="background-color: aliceblue;">Date</td> -->
-                                        <!-- <td style="background-color: aliceblue;">User</td> -->
+                                        <td style="background-color: aliceblue;">Date</td>
+                                        <td style="background-color: aliceblue;">User</td>
 
                                         <td style="background-color: antiquewhite;">Collected</td>
-                                        <!-- <td style="background-color: antiquewhite;">Date</td> -->
-                                        <!-- <td style="background-color: antiquewhite;">User</td> -->
+                                        <td style="background-color: antiquewhite;">Date</td>
+                                        <td style="background-color: antiquewhite;">User</td>
 
                                         <td style="background-color: floralwhite;">Shipped</td>
                                         <td style="background-color: floralwhite;">Date</td>
-                                        <!-- <td style="background-color: floralwhite;">User</td> -->
+                                        <td style="background-color: floralwhite;">User</td>
 
-                                        <td></td>
+                                        <!-- <td></td> -->
                                         <!-- <td></td> -->
                                     </tr>
                                 </thead>
                                 <tbody class="searchable">
-                                @foreach ($ecommerce as $req)
+                                @foreach ($sizeset as $req)
                                     <tr>
                                         {{-- <td>{{ $req->id }}</td> --}}
                                         <td>{{ $req->sku }}</td>
                                         <td>{{ $req->style }}</td>
                                         <td>{{ $req->color }}</td>
                                         <td>{{ $req->size }}</td>
-                                        <td>{{ $req->color_desc }}</td>
+                                        <!-- <td>{{-- {{ $req->color_desc }} --}}</td> -->
 
                                         <td style="background-color: aliceblue;">{{ $req->scanned }}</td>
-                                        <!-- <td style="background-color: aliceblue;">{{-- {{ $req->scanned_date }} --}}</td> -->
-                                        <!-- <td style="background-color: aliceblue;">{{-- {{ $req->scanned_user }} --}}</td> -->
+                                        <td style="background-color: aliceblue;">{{ $req->scanned_date }}</td>
+                                        <td style="background-color: aliceblue;">{{ $req->scanned_user }}</td>
 
                                         <td style="background-color: antiquewhite;">{{ $req->collected }}</td>
-                                        <!-- <td style="background-color: antiquewhite;">{{-- {{ $req->collected_date }} --}}</td> -->
-                                        <!-- <td style="background-color: antiquewhite;">{{-- {{ $req->collected_user }} --}}</td> -->
+                                        <td style="background-color: antiquewhite;">{{ $req->collected_date }}</td>
+                                        <td style="background-color: antiquewhite;">{{ $req->collected_user }}</td>
 
                                         <td style="background-color: floralwhite;">{{ $req->shipped }}</td>
                                         <td style="background-color: floralwhite;">{{ $req->shipped_date }}</td>
-                                        <!-- <td style="background-color: floralwhite;">{{-- {{ $req->shipped_user }} --}}</td> -->
+                                        <td style="background-color: floralwhite;">{{ $req->shipped_user }}</td>
 
-                                        <td><a href="{{ url('/ecommerce/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                                        {{-- <td><a href="{{ url('/sizeset/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td> --}}
 
                                     </tr>
                                 @endforeach

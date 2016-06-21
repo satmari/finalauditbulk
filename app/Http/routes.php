@@ -156,11 +156,20 @@ Route::get('/notcheck/{batch_name}', 'ControllerNotCheck@main');
 
 //Samples
 Route::get('/ecommerce', 'ControllerEcommerce@index');
+Route::get('/ecommerce_all', 'ControllerEcommerce@ecommerce_all');
 Route::get('/ecommerce/edit/{id}', 'ControllerEcommerce@edit');
 Route::post('/ecommerce/{id}', 'ControllerEcommerce@update');
 Route::post('/ecommerce/scanned/{id}', 'ControllerEcommerce@scanned');
 Route::post('/ecommerce/collected/{id}', 'ControllerEcommerce@collected');
 Route::post('/ecommerce/shipped/{id}', 'ControllerEcommerce@shipped');
+
+Route::get('/sizeset', 'ControllerSizeset@index');
+Route::get('/sizeset_all', 'ControllerSizeset@sizeset_all');
+Route::get('/sizeset/edit/{id}', 'ControllerSizeset@edit');
+Route::post('/sizeset/{id}', 'ControllerSizeset@update');
+Route::post('/sizeset/scanned/{id}', 'ControllerSizeset@scanned');
+Route::post('/sizeset/collected/{id}', 'ControllerSizeset@collected');
+Route::post('/sizeset/shipped/{id}', 'ControllerSizeset@shipped');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

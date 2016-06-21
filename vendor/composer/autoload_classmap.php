@@ -28,6 +28,7 @@ return array(
     'CreatePositionsTable' => $baseDir . '/database/migrations/2016_03_19_103351_create_positions_table.php',
     'CreateRoleUserTable' => $baseDir . '/database/migrations/2015_01_15_114412_create_role_user_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2015_01_15_105324_create_roles_table.php',
+    'CreateSizesetsTable' => $baseDir . '/database/migrations/2016_06_17_082905_create_sizesets_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',

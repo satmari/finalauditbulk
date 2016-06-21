@@ -45,20 +45,6 @@
 					@if(Auth::check() && Auth::user()->level() == 1)
 						<li><a href="{{ url('/') }}">Home</a></li>
 					@endif
-
-					<!-- <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-			          <ul class="dropdown-menu">
-			            <li><a href="#">Action</a></li>
-			            <li><a href="#">Another action</a></li>
-			            <li><a href="#">Something else here</a></li>
-			            <li role="separator" class="divider"></li>
-			            <li><a href="#">Separated link</a></li>
-			            <li role="separator" class="divider"></li>
-			            <li><a href="#">One more separated link</a></li>
-			          </ul>
-			        </li> -->
-
 				</ul>
 				<ul class="nav navbar-nav">
 					<li>
@@ -96,9 +82,38 @@
 					</li>
 				</ul>
 
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/batch') }}">Batch Table</a></li>
-				</ul>
+				@if(Auth::check() && ((Auth::user()->level() != 5)))
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
+					</ul>
+				@endif
+
+				@if(Auth::check() && ((Auth::user()->level() == 5) OR (Auth::user()->level() == 3)))
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/ecommerce') }}">E-commerce</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/ecommerce_all') }}">E-commerce (All)</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/sizeset') }}">Size set</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/import') }}">Import files</a></li>
+					</ul>
+				@endif
+
+				@if(Auth::check() && Auth::user()->level() == 1)
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/ecommerce_all') }}">E-commerce (All)</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
+					</ul>
+				@endif
 
 				<!-- <ul class="nav navbar-nav">
 					<li><a href="{{ url('/category') }}">Categories</a></li>
@@ -131,7 +146,7 @@
 						<!-- <li><a href="{{ url('/auth/register') }}">Register</a></li> -->
 					@else
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
 							</ul>
@@ -189,6 +204,11 @@ $(function() {
 	});
 	$('#myTabs a:first').tab('show') // Select first tab
 
+	$(function() {
+    	$( "#datepicker" ).datepicker();
+  	});
+
+  	
 	// $('#sort').bootstrapTable({
     
 	// });

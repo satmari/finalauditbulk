@@ -340,7 +340,7 @@ class ControllerBatch extends Controller {
 	        	return view('batch.error', compact('msg'));
 	    	}
 
-	    	/* User NotCheck */
+	    	/* If User NotCheck */
 	    	if ($mandatory_to_check == "YES" AND $name_id == '10') {
 	    		$msg = 'This Style '.$style.' is MANDATORY to check, OVAJ MODEL SE MORA PREGLEDATI!!! ';
 	        	return view('batch.error', compact('msg'));
@@ -400,6 +400,65 @@ class ControllerBatch extends Controller {
 			$rejected = 0; // exist but ?
 			//$batch_status = "Pending"; // new batch
 			$batch_status = "Suspend"; // new batch
+
+			
+			// Samples Ecommerce
+			/*
+			$ecommerce_sample = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM ecommerce WHERE style = '".$style."' AND size = '".$size."' AND color '".$color."' "));
+			
+			if ($ecommerce_sample) {
+				$scanned = $ecommerce_sample[0]->scanned;
+
+				if ($scanned == 'NO') {
+					try {
+						$ecommerce = Ecommerce::findOrFail($ecommerce_sample[0]->id);
+						$ecommerce->scanned = 'YES';
+						$ecommerce->scanned_date = date("Y-m-d H:i:s");
+						$ecommerce->scanned_user = Auth::user()->username;
+						$ecommerce->save();
+						//return Redirect::to('/');
+					}
+					catch (\Illuminate\Database\QueryException $e) {
+						//return Redirect::to('/batch/reject/'.$id);
+					}
+				}
+				
+			} else {
+				$msg = 'This SKU not exist in Ecommerce table, OVAJ SKU NE POSTOJI U Ecommerce TABELI !!!';
+		      	return view('batch.error', compact('msg'));
+			}
+			*/
+
+			// Samples Setsize
+			/*
+			$sizeset_sample = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM sizeset WHERE style = '".$style."' AND size = '".$size."' "));
+			
+			if ($sizeset_sample) {
+				$scanned = $sizeset_sample[0]->scanned;
+
+				if ($scanned == 'NO') {
+
+					// foreach size
+						
+					try {
+						$sizeset = sizeset::findOrFail($sizeset_sample[0]->id);
+						$sizeset->scanned = 'YES';
+						//$sizeset->color = $color;
+						$sizeset->scanned_date = date("Y-m-d H:i:s");
+						$sizeset->scanned_user = Auth::user()->username;
+						$sizeset->save();
+						//return Redirect::to('/');
+					}
+					catch (\Illuminate\Database\QueryException $e) {
+						//return Redirect::to('/batch/reject/'.$id);
+					}
+				}
+				
+			} else {
+				$msg = 'This SKU not exist in sizeset table, OVAJ SKU NE POSTOJI U sizeset TABELI !!!';
+		      	return view('batch.error', compact('msg'));
+			}
+			*/
 			
 			try {
 				$table = new Batch;
@@ -536,12 +595,19 @@ class ControllerBatch extends Controller {
 			$barcode = DB::connection('sqlsrv')->select(DB::raw("SELECT Cod_Bar FROM cartiglio WHERE Cod_Art_CZ = '".$style."' AND Cod_Col_CZ = '".$color."' AND Tgl_ENG = '".$size_to_search."'"));
 			
 			try {
-			   	if ($barcode[0]->Cod_Bar) {
+				if(isset($barcode[0])) {
+					if ($barcode[0]->Cod_Bar) {
 					$barcode_indb = $barcode[0]->Cod_Bar;
-				} else {
+					} else {
+						$msg = "Item is not in Cartiglio table, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
+						return view('batch.error',compact('msg'));
+					}
+				}
+				else {
 					$msg = "Item is not in Cartiglio table, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
 					return view('batch.error',compact('msg'));
 				}
+			   	
 			} catch (Exception $e) {
 			    $msg = "Item is not in Cartiglio table, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
 				return view('batch.error',compact('msg'));

@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use Request;
 use App\Ecommerce;
-
+use App\Sizeset;
 use App\User;
 use DB;
 
@@ -141,7 +141,7 @@ class ControllerImport extends Controller {
 	        //if ($sheetName === 'Product-General-Table')  {
 	    	//selectSheetsByIndex(0)
 	           	//DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-	            DB::table('ecommerce')->truncate();
+	            //DB::table('ecommerce')->truncate();
 	
 	            //Excel::selectSheets($sheetName)->load($request->file('file'), function ($reader)
 	            //Excel::selectSheets($sheetName)->load(Input::file('file'), function ($reader)
@@ -154,22 +154,28 @@ class ControllerImport extends Controller {
 
 	                foreach($readerarray as $row)
 	                {
+	                	// try {
 	                	
-						$bulk = new Ecommerce;
+							$bulk = new Ecommerce;
 
-	                	$sku = $row['style'].' '.$row['color'].'-'.$row['size'];
-						$bulk->sku = $sku;
+		                	$sku = $row['style'].' '.$row['color'].'-'.$row['size'];
+							$bulk->sku = $sku;
 
-						$bulk->style = $row['style'];
-						$bulk->color = $row['color'];
-						$bulk->size = $row['size'];
-						$bulk->color_desc = $row['color_description'];
+							$bulk->style = $row['style'];
+							$bulk->color = $row['color'];
+							$bulk->size = $row['size'];
+							$bulk->color_desc = $row['color_description'];
 
-						$bulk->scanned = 'NO';
-						$bulk->collected = 'NO';
-						$bulk->shipped = 'NO';
+							$bulk->scanned = 'NO';
+							$bulk->collected = 'NO';
+							$bulk->shipped = 'NO';
 
-						$bulk->save();
+							$bulk->save();
+						
+						// } catch (\Illuminate\Database\QueryException $e) {
+	                			
+	     //            	}
+
 	                }
 	            });
 	    }
@@ -184,7 +190,7 @@ class ControllerImport extends Controller {
 	        //if ($sheetName === 'Product-General-Table')  {
 	    	//selectSheetsByIndex(0)
 	           	//DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-	            //DB::table('sizeset')->truncate();
+	            // DB::table('sizeset')->truncate();
 	
 	            //Excel::selectSheets($sheetName)->load($request->file('file'), function ($reader)
 	            //Excel::selectSheets($sheetName)->load(Input::file('file'), function ($reader)
@@ -197,20 +203,32 @@ class ControllerImport extends Controller {
 
 	                foreach($readerarray as $row)
 	                {
-	                	/*
-						$userbulk = new User;
-						$userbulk->name = $row['user'];;
-						$userbulk->email = $row['email'];
-						$userbulk->password = bcrypt($row['pass']);
-						//$userbulk->created_at = date(2015-12-22);
-						//$userbulk->updated_at = date(2015-12-22);
-												
-						$userbulk->save();
-						*/
+
+	                	try {
+
+	                	$bulk = new Sizeset;
+
+	                	$sku = $row['style'].'-'.$row['size'];
+						$bulk->sku = $sku;
+
+						$bulk->style = $row['style'];
+						//$bulk->color = ''; // not exist in imput file
+						$bulk->size = $row['size'];
+						//$bulk->color_desc = $row['color_description'];
+
+						$bulk->scanned = 'NO';
+						$bulk->collected = 'NO';
+						$bulk->shipped = 'NO';
+
+						$bulk->save();
+
+						} catch (\Illuminate\Database\QueryException $e) {
+	                			
+	                	}
 	                }
 	            });
 	    }
-		return redirect('/');
+		return redirect('/sizeset');
 	}
 	
 }

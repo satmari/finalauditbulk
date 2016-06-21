@@ -10,7 +10,7 @@
 					
 				@if(Auth::check() && Auth::user()->level() == 100)
 
-					{!! Form::model($ecommerce , ['method' => 'POST', 'url' => '/ecommerce/'.$ecommerce->id /*, 'class' => 'form-inline'*/]) !!}
+					{!! Form::model($sizeset , ['method' => 'POST', 'url' => '/sizeset/'.$sizeset->id /*, 'class' => 'form-inline'*/]) !!}
 
 					<div class="panel-body">
 						<span>Id:</span>
@@ -58,10 +58,10 @@
 				@endif
 
 				@if(Auth::check() && Auth::user()->level() == 100)
-					@if ($ecommerce->scanned != 'YES') 
+					@if ($sizeset->scanned != 'YES') 
 					<br>
-					{!! Form::open(['method'=>'POST', 'url'=>'/ecommerce/scanned/'.$ecommerce->id]) !!}
-					{!! Form::hidden('id', $ecommerce->id, ['class' => 'form-control']) !!}
+					{!! Form::open(['method'=>'POST', 'url'=>'/sizeset/scanned/'.$sizeset->id]) !!}
+					{!! Form::hidden('id', $sizeset->id, ['class' => 'form-control']) !!}
 					{!! Form::submit('Scan', ['class' => 'btn  btn-danger /*btn-xs*/ center-block']) !!}
 					{!! Form::close() !!}
 					@else 
@@ -70,10 +70,10 @@
 				@endif
 
 				@if(Auth::check() && Auth::user()->level() == 2)
-					@if ($ecommerce->collected != 'YES') 
+					@if ($sizeset->collected != 'YES') 
 					<br>
-					{!! Form::open(['method'=>'POST', 'url'=>'/ecommerce/collected/'.$ecommerce->id]) !!}
-					{!! Form::hidden('id', $ecommerce->id, ['class' => 'form-control']) !!}
+					{!! Form::open(['method'=>'POST', 'url'=>'/sizeset/collected/'.$sizeset->id]) !!}
+					{!! Form::hidden('id', $sizeset->id, ['class' => 'form-control']) !!}
 					{!! Form::submit('Collect', ['class' => 'btn  btn-danger /*btn-xs*/ center-block']) !!}
 					{!! Form::close() !!}
 					@else 
@@ -82,10 +82,10 @@
 				@endif
 
 				@if(Auth::check() && Auth::user()->level() == 5)
-					@if ($ecommerce->shipped != 'YES') 
+					@if ($sizeset->shipped != 'YES') 
 					<br>
-					{!! Form::open(['method'=>'POST', 'url'=>'/ecommerce/shipped/'.$ecommerce->id]) !!}
-					{!! Form::hidden('id', $ecommerce->id, ['class' => 'form-control']) !!}
+					{!! Form::open(['method'=>'POST', 'url'=>'/sizeset/shipped/'.$sizeset->id]) !!}
+					{!! Form::hidden('id', $sizeset->id, ['class' => 'form-control']) !!}
 					<div class="panel-body">
 						<span>Shipment date: <span style="color:red;">*</span></span><br>
 						{!! Form::text('date', '', array('id' => 'datepicker')) !!}
@@ -101,9 +101,10 @@
 				<hr>
 				<div class="panel-body">
 					<div class="">
-						<a href="{{url('/ecommerce')}}" class="btn btn-default">Back</a>
+						<a href="{{url('/sizeset')}}" class="btn btn-default">Back</a>
 					</div>
 				</div>
+					
 			</div>
 		</div>
 	</div>
