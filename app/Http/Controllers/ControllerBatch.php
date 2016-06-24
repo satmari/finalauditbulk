@@ -11,6 +11,8 @@ use App\Batch;
 use App\Garment;
 use App\Defect;
 use App\Category;
+use App\Ecommerce;
+use App\Sizeset;
 use DB;
 use Auth;
 use App\User;
@@ -218,7 +220,9 @@ class ControllerBatch extends Controller {
 		$cbcode = $input['cb_code'];
 		// dd($cbcode);
 		
-		$msg ='';
+		$msg = '';
+		$msg1 = '';
+		$msg2 = '';
 
 		// Test database
 		// $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant, [CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZGtest].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZGtest].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZGtest].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZGtest].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
@@ -226,7 +230,7 @@ class ControllerBatch extends Controller {
 		// ));
 
 		// Live database
-		try {
+		// try {
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 	
 			/*[CNF_CartonBox].IntKeyPO, */
 			[CNF_CartonBox].BoxNum,
@@ -401,14 +405,13 @@ class ControllerBatch extends Controller {
 			//$batch_status = "Pending"; // new batch
 			$batch_status = "Suspend"; // new batch
 
-			
 			// Samples Ecommerce
-			/*
-			$ecommerce_sample = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM ecommerce WHERE style = '".$style."' AND size = '".$size."' AND color '".$color."' "));
+			
+			$ecommerce_sample = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM ecommerce WHERE style = '".$style."' AND size = '".$size."' AND color = '".$color."' "));
 			
 			if ($ecommerce_sample) {
 				$scanned = $ecommerce_sample[0]->scanned;
-
+				
 				if ($scanned == 'NO') {
 					try {
 						$ecommerce = Ecommerce::findOrFail($ecommerce_sample[0]->id);
@@ -416,49 +419,76 @@ class ControllerBatch extends Controller {
 						$ecommerce->scanned_date = date("Y-m-d H:i:s");
 						$ecommerce->scanned_user = Auth::user()->username;
 						$ecommerce->save();
+						
 						//return Redirect::to('/');
+						$msg1 = 'This Item scanned first time for ecommerce! PROIZVOD PRVI PUT SKENIRAN I ODABRAN ZA UZORAK ECOMMERCE!';
+		      			//return view('batch.sample', compact('msg','batch_name'));
 					}
 					catch (\Illuminate\Database\QueryException $e) {
-						//return Redirect::to('/batch/reject/'.$id);
+						$msg = "Problem to save in ecommerce table";
+						return view('batch.error',compact('msg'));
 					}
 				}
 				
 			} else {
 				$msg = 'This SKU not exist in Ecommerce table, OVAJ SKU NE POSTOJI U Ecommerce TABELI !!!';
-		      	return view('batch.error', compact('msg'));
+		      	//return view('batch.error', compact('msg'));
 			}
-			*/
+			
 
 			// Samples Setsize
-			/*
+			
 			$sizeset_sample = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM sizeset WHERE style = '".$style."' AND size = '".$size."' "));
 			
 			if ($sizeset_sample) {
+
+				$scanned_color = $sizeset_sample[0]->color;
 				$scanned = $sizeset_sample[0]->scanned;
 
+				//if color is not set
+				if ($scanned_color == '' OR $scanned_color == NULL) {
+					$sizeset_sample_style = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM sizeset WHERE style = '".$style."' "));	
+
+					//set color for each style
+					foreach ($sizeset_sample_style as $size_line) {
+						try {
+							$sizeset = Sizeset::findOrFail($size_line->id);
+							$sizeset->color = $color;
+							$sizeset->save();
+						}
+						catch (\Illuminate\Database\QueryException $e) {
+							// $msg = "Problem to save in sizeset table";
+							// return view('batch.error',compact('msg'));
+						}
+					}
+				}
+
+				//if sytle + size scanned
 				if ($scanned == 'NO') {
 
-					// foreach size
-						
 					try {
-						$sizeset = sizeset::findOrFail($sizeset_sample[0]->id);
+						$sizeset = Sizeset::findOrFail($sizeset_sample[0]->id);
 						$sizeset->scanned = 'YES';
-						//$sizeset->color = $color;
 						$sizeset->scanned_date = date("Y-m-d H:i:s");
 						$sizeset->scanned_user = Auth::user()->username;
 						$sizeset->save();
-						//return Redirect::to('/');
+						
+						$msg2 = 'This Item scanned first time for sizeset! PROIZVOD PRVI PUT SKENIRAN I ODABRAN ZA UZORAK ZA SIZESET!';
 					}
 					catch (\Illuminate\Database\QueryException $e) {
-						//return Redirect::to('/batch/reject/'.$id);
+						// $msg = "Problem to save in sizeset table";
+						// return view('batch.error',compact('msg'));
+					}
+
 					}
 				}
 				
-			} else {
-				$msg = 'This SKU not exist in sizeset table, OVAJ SKU NE POSTOJI U sizeset TABELI !!!';
-		      	return view('batch.error', compact('msg'));
-			}
-			*/
+			// } else {
+			// 	// $msg = 'This SKU not exist in sizeset table, OVAJ SKU NE POSTOJI U sizeset TABELI !!!';
+		 	//  // return view('batch.error', compact('msg'));
+			// }
+			
+			
 			
 			try {
 				$table = new Batch;
@@ -526,20 +556,14 @@ class ControllerBatch extends Controller {
 
 					$table->garment_name = $garment_name;
 					$table->garment_order = $garment_order;
-
 					$table->batch_name = $batch_name;
-
 					$table->cartonbox = $cartonbox;
-
 					$table->sku = $sku;
-
 					$table->po = $po;
 					$table->brand = $brand;
 					$table->category_id = $category_id;
 					$table->category_name = $category_name;
-					
 					$table->garment_status = $garment_status;
-
 					$table->deleted = FALSE;
 							
 					$table->save();
@@ -552,13 +576,20 @@ class ControllerBatch extends Controller {
 			// return Redirect::to('/batch');
 			//return Redirect::to('/garment/by_batch/'.$batch_name);
 
+			if ($msg1 != ''){
+				return view('batch.sample', compact('msg1','batch_name'));
+			}
+			if ($msg2 != ''){
+				return view('batch.sample', compact('msg2','batch_name'));
+			}
 			return Redirect::to('/batch/checkbarcode/'.$batch_name);
-		}
-		catch (\Illuminate\Database\QueryException $e) {
-			//return Redirect::to('/searchinteos');
-			$msg = "Problem to save batch in table. try agan.";
-			return view('batch.error',compact('msg'));
-		}	
+
+		// }
+		// catch (\Illuminate\Database\QueryException $e) {
+		// 	//return Redirect::to('/searchinteos');
+		// 	$msg = "Problem to save batch in table. try agan.";
+		// 	return view('batch.error',compact('msg'));
+		// }	
 	}
 
 	public function batch_checkbarcode ($name)
@@ -577,6 +608,7 @@ class ControllerBatch extends Controller {
 		$this->validate($request, ['batch_name' => 'required', 'barcode' => 'required']);
 
 		$input = $request->all(); 
+		// dd($input);
 
 		$batch_name = $input['batch_name'];
 		$barcode_insert = $input['barcode'];

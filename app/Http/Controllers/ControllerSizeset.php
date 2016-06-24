@@ -137,6 +137,10 @@ class ControllerSizeset extends Controller {
 
 		try {
 			$sizeset = Sizeset::findOrFail($id);
+
+			if (isset($input['color'])) {
+				$sizeset->color = $input['color'];
+			}
 			$sizeset->collected = 'YES';
 			$sizeset->scanned = 'YES';
 			$sizeset->shipped = 'YES';

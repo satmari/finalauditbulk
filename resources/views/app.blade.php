@@ -86,6 +86,13 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
 					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/ecommerce') }}">E-commerce</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/sizeset') }}">Size set</a></li>
+					</ul>
+					
 				@endif
 
 				@if(Auth::check() && ((Auth::user()->level() == 5) OR (Auth::user()->level() == 3)))

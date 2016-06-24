@@ -88,7 +88,7 @@
 					{!! Form::hidden('id', $ecommerce->id, ['class' => 'form-control']) !!}
 					<div class="panel-body">
 						<span>Shipment date: <span style="color:red;">*</span></span><br>
-						{!! Form::text('date', '', array('id' => 'datepicker')) !!}
+						{!! Form::text('date', '', array('id' => 'datepicker', 'class' => 'form-control')) !!}
 					</div>
 					{!! Form::submit('Ship', ['class' => 'btn  btn-danger /*btn-xs*/ center-block']) !!}
 					@include('errors.list')

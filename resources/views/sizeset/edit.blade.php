@@ -58,7 +58,7 @@
 				@endif
 
 				@if(Auth::check() && Auth::user()->level() == 100)
-					@if ($sizeset->scanned != 'YES') 
+					@if ($sizeset->scanned != 'YES')
 					<br>
 					{!! Form::open(['method'=>'POST', 'url'=>'/sizeset/scanned/'.$sizeset->id]) !!}
 					{!! Form::hidden('id', $sizeset->id, ['class' => 'form-control']) !!}
@@ -86,9 +86,17 @@
 					<br>
 					{!! Form::open(['method'=>'POST', 'url'=>'/sizeset/shipped/'.$sizeset->id]) !!}
 					{!! Form::hidden('id', $sizeset->id, ['class' => 'form-control']) !!}
+
+					@if ($sizeset->color == '' OR $sizeset->color == NULL )
+					<div class="panel-body">
+						<span>Color: <span style="color:red;">*</span></span>
+						{!! Form::input('string', 'color', null, ['class' => 'form-control']) !!}
+					</div>
+					@endif
+
 					<div class="panel-body">
 						<span>Shipment date: <span style="color:red;">*</span></span><br>
-						{!! Form::text('date', '', array('id' => 'datepicker')) !!}
+						{!! Form::text('date', '', array('id' => 'datepicker', 'class' => 'form-control')) !!}
 					</div>
 					{!! Form::submit('Ship', ['class' => 'btn  btn-danger /*btn-xs*/ center-block']) !!}
 					@include('errors.list')
