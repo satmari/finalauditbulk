@@ -7,12 +7,9 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Info</div>
 				<h3 style="color:blue;">Info !</h3>
-				@if ($msg1)
+				
 				<p style="color:blue;"> {{ $msg1 }}</p>
-				@endif
-				@if ($msg2)
-				<p style="color:blue;"> {{ $msg2 }}</p>
-				@endif
+				
 				
 				<div class="panel-body">
 					<div class="">

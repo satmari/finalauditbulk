@@ -87,23 +87,23 @@
 						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
+						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge">{{-- $ecommerce --}}</span></a></li>
 					</ul>
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/sizeset') }}">Size set <span class="badge"></span></a></li>
+						<li><a href="{{ url('/sizeset') }}">Size set <span class="badge">{{-- $sizeset --}}</span></a></li>
 					</ul>
 					
 				@endif
 
 				@if(Auth::check() && ((Auth::user()->level() == 5) OR (Auth::user()->level() == 3)))
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
+						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge">{{-- $ecommerce --}}</span></a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/ecommerce_all') }}">E-commerce (All)</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/sizeset') }}">Size set <span class="badge"></span></a></li>
+						<li><a href="{{ url('/sizeset') }}">Size set <span class="badge">{{-- $sizeset --}}</span></a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>

@@ -222,7 +222,7 @@ class ControllerBatch extends Controller {
 		
 		$msg = '';
 		$msg1 = '';
-		$msg2 = '';
+		//$msg2 = '';
 
 		// Test database
 		// $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant, [CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZGtest].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZGtest].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZGtest].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZGtest].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
@@ -230,7 +230,7 @@ class ControllerBatch extends Controller {
 		// ));
 
 		// Live database
-		// try {
+		try {
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 	
 			/*[CNF_CartonBox].IntKeyPO, */
 			[CNF_CartonBox].BoxNum,
@@ -421,7 +421,7 @@ class ControllerBatch extends Controller {
 						$ecommerce->save();
 						
 						//return Redirect::to('/');
-						$msg1 = 'This Item scanned first time for ecommerce! PROIZVOD PRVI PUT SKENIRAN I ODABRAN ZA UZORAK ECOMMERCE!';
+						$msg1 = 'This Item scanned first time for e-commerce! PROIZVOD PRVI PUT SKENIRAN I ODABRAN ZA UZORAK E-COMMERCE!';
 		      			//return view('batch.sample', compact('msg','batch_name'));
 					}
 					catch (\Illuminate\Database\QueryException $e) {
@@ -473,7 +473,8 @@ class ControllerBatch extends Controller {
 						$sizeset->scanned_user = Auth::user()->username;
 						$sizeset->save();
 						
-						$msg2 = 'This Item scanned first time for sizeset! PROIZVOD PRVI PUT SKENIRAN I ODABRAN ZA UZORAK ZA SIZESET!';
+						$msg1 = $msg1.' This Item scanned first time for sizeset! PROIZVOD PRVI PUT SKENIRAN I ODABRAN ZA UZORAK ZA SIZESET!';
+						//$msg2 = '';
 					}
 					catch (\Illuminate\Database\QueryException $e) {
 						// $msg = "Problem to save in sizeset table";
@@ -579,17 +580,17 @@ class ControllerBatch extends Controller {
 			if ($msg1 != ''){
 				return view('batch.sample', compact('msg1','batch_name'));
 			}
-			if ($msg2 != ''){
-				return view('batch.sample', compact('msg2','batch_name'));
-			}
+			// if ($msg2 != ''){
+			// 	return view('batch.sample', compact('msg2','batch_name'));
+			// }
 			return Redirect::to('/batch/checkbarcode/'.$batch_name);
 
-		// }
-		// catch (\Illuminate\Database\QueryException $e) {
-		// 	//return Redirect::to('/searchinteos');
-		// 	$msg = "Problem to save batch in table. try agan.";
-		// 	return view('batch.error',compact('msg'));
-		// }	
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			//return Redirect::to('/searchinteos');
+			$msg = "Problem to save batch in table. try agan.";
+			return view('batch.error',compact('msg'));
+		}	
 	}
 
 	public function batch_checkbarcode ($name)

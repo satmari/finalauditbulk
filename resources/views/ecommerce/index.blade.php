@@ -40,7 +40,7 @@
                                 <thead>
                                     <tr>
                                         <!-- <td>Id</td> -->
-                                        <td>SKU</td>
+                                        <!-- <td>SKU</td> -->
                                         <td>Style</td>
                                         <td>Color</td>
                                         <td>Size</td>
@@ -66,7 +66,7 @@
                                 @foreach ($ecommerce as $req)
                                     <tr>
                                         {{-- <td>{{ $req->id }}</td> --}}
-                                        <td>{{ $req->sku }}</td>
+                                        {{-- <td>{{ $req->sku }}</td> --}}
                                         <td>{{ $req->style }}</td>
                                         <td>{{ $req->color }}</td>
                                         <td>{{ $req->size }}</td>

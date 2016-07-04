@@ -40,7 +40,7 @@
                                 <thead>
                                     <tr>
                                         <!-- <td>Id</td> -->
-                                        <td>SKU</td>
+                                        <!-- <td>SKU</td> -->
                                         <td>Style</td>
                                         <td>Color</td>
                                         <td>Size</td>
@@ -66,7 +66,7 @@
                                 @foreach ($ecommerce as $req)
                                     <tr>
                                         {{-- <td>{{ $req->id }}</td> --}}
-                                        <td>{{ $req->sku }}</td>
+                                        {{-- <td> $req->sku </td> --}}
                                         <td>{{ $req->style }}</td>
                                         <td>{{ $req->color }}</td>
                                         <td>{{ $req->size }}</td>
@@ -84,7 +84,12 @@
                                         <td style="background-color: floralwhite;">{{ $req->shipped_date }}</td>
                                         <td style="background-color: floralwhite;">{{ $req->shipped_user }}</td>
 
-                                        <td><a href="{{ url('/ecommerce/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                                        
+                                        @if(Auth::check() && Auth::user()->level() == 5)
+                                            @if($req->shipped == 'NO')
+                                            <td><a href="{{ url('/ecommerce/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                                            @endif
+                                        @endif
 
                                     </tr>
                                 @endforeach
