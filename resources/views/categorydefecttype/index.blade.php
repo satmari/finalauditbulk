@@ -7,11 +7,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Category-DefectType Links</div>
                 
+                @if (Auth::check() && Auth::user()->level() != 3)
                 <div class="panel-body">
                     <div class="">
                         <a href="{{url('/categorydefecttype_new')}}" class="btn btn-default btn-info">Create new Category-DefectType link</a>
                     </div>
                 </div>
+                @endif
 
                 <div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">
@@ -61,7 +63,9 @@
                             <td>{{ $req->category_id }}</td>
                             <td>{{ $req->category_name }}</td>
                             <td>{{ $req->link_type }}</td>
-                            <td><a href="{{ url('/categorydefecttype/delete/'.$req->id) }}" class="btn btn-danger btn-xs center-block">Delete</a></td>
+                            @if (Auth::check() && Auth::user()->level() != 3)
+                                <td><a href="{{ url('/categorydefecttype/delete/'.$req->id) }}" class="btn btn-danger btn-xs center-block">Delete</a></td>
+                            @endif
                         </tr>
                     @endforeach
                     

@@ -41,7 +41,7 @@ class ControllerBatch extends Controller {
 																*,
 																(SELECT COUNT(garment.batch_name) FROM garment WHERE garment.batch_name = batch.batch_name AND garment.garment_status = 'Rejected') as RejectedCount
 																FROM batch 
-																WHERE (batch.deleted = 0)
+																WHERE (batch.deleted = 0) AND created_at >= DATEADD(day,-30,GETDATE())
 																ORDER BY batch.id desc"));
 
 			    $batch_date = date("Ymd");
@@ -676,7 +676,6 @@ class ControllerBatch extends Controller {
 		} else {
 			return Redirect::to('/garment/by_batch/'.$batch_name);	
 		}
-		
 	}
 
 	public function inside()
@@ -761,11 +760,37 @@ class ControllerBatch extends Controller {
 		}
 	}
 
+	public function edit_status ($id)
+	{
+		$batch = Batch::findOrFail($id);
+		return view('batch.edit_status', compact('batch'));
+	}
+
+	public function edit_status_update ($id, Request $request)
+	{
+		$this->validate($request, ['batch_status' => 'required']);
+		$input = $request->all(); 
+
+		$batch_status = $input['batch_status'];
+
+		try {
+			$batch = Batch::findOrFail($id);
+			$batch->batch_status = $batch_status;
+
+			$batch->save();
+			return Redirect::to('/batch');
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return Redirect::to('/batch');
+		}
+	}
+
 	public function reject($id) 
 	{
 		try {
 			$batch = Batch::findOrFail($id);
 			$batch->batch_status = "Reject";
+			$batch->repaired = "NO";
 			$batch->save();
 			return Redirect::to('/batch/');
 		}
@@ -854,5 +879,47 @@ class ControllerBatch extends Controller {
 			return Redirect::to('/batch/delete/'.$id);
 		}
 		*/
+	}
+
+	public function cb_to_repair()
+	{
+		$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT [id]
+															      ,[batch_name]
+															      ,[sku]
+															      ,[po]
+															      ,[module_name]
+															      ,[cartonbox]
+															      ,[batch_status]
+															      ,[repaired]
+															      ,[repaired_by_name]
+															  FROM [finalaudit].[dbo].[batch]
+															  WHERE batch_status = 'Reject' AND [repaired] = 'NO'
+															  ORDER BY [created_at] asc
+															  "));
+
+		return view('batch.cb_to_repair', compact('batch'));
+	}
+
+	public function cb_to_repair_edit($id)
+	{
+		$batch = Batch::findOrFail($id);
+		return view('batch.cb_to_repair_update', compact('batch'));
+	}
+
+	public function cb_to_repair_repair($id)
+	{
+		try {
+			$batch = Batch::findOrFail($id);
+			$batch->repaired = "YES";
+			$batch->repaired_by_name = Auth::user()->username;
+			$batch->repaired_by_id = Auth::user()->name_id;
+			$batch->repaired_date = date("Y-m-d H:i:s");
+
+			$batch->save();
+			return Redirect::to('/cb_to_repair');
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return Redirect::to('/cb_to_repair');
+		}
 	}
 }

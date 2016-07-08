@@ -6,12 +6,14 @@
         <div class="text-center">
             <div class="panel panel-default">
                 <div class="panel-heading">Category Table</div>
-                
+
+                @if (Auth::check() && Auth::user()->level() != 3)
                 <div class="panel-body">
                     <div class="">
                         <a href="{{url('/category_new')}}" class="btn btn-default btn-info">Add new Category</a>
                     </div>
                 </div>
+                @endif
 
                 <div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">
@@ -65,7 +67,9 @@
                             <td>{{ $req->category_description }}</td>
                             <td>{{ $req->category_description_1 }}</td>
                             <td>{{ $req->category_description_2 }}</td>
-                            <td><a href="{{ url('/category/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                            @if (Auth::check() && Auth::user()->level() != 3)
+                                <td><a href="{{ url('/category/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                            @endif
                         </tr>
                     @endforeach
                     

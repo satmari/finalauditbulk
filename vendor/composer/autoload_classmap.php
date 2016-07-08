@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddRepaired' => $baseDir . '/database/migrations/2016_07_07_160739_add_repaired.php',
+    'AddRepairedDate' => $baseDir . '/database/migrations/2016_07_08_123145_add_repaired_date.php',
     'CreateBatchCsTable' => $baseDir . '/database/migrations/2016_03_20_114137_create_batch_cs_table.php',
     'CreateBatchIsTable' => $baseDir . '/database/migrations/2016_03_20_114130_create_batch_is_table.php',
     'CreateBatchTable' => $baseDir . '/database/migrations/2016_03_29_122622_create_batch_table.php',

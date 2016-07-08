@@ -82,7 +82,7 @@
 					</li>
 				</ul>
 
-				@if(Auth::check() && ((Auth::user()->level() != 5)))
+				@if(Auth::check() && ((Auth::user()->level() == 2)))
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
 					</ul>
@@ -92,10 +92,9 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset') }}">Size set <span class="badge"></span></a></li>
 					</ul>
-					
 				@endif
 
-				@if(Auth::check() && ((Auth::user()->level() == 5) OR (Auth::user()->level() == 3)))
+				@if(Auth::check() && (Auth::user()->level() == 5))
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
 					</ul>
@@ -113,33 +112,27 @@
 					</ul>
 				@endif
 
-				@if(Auth::check() && Auth::user()->level() == 1)
+				@if(Auth::check() && ((Auth::user()->level() == 3)  OR (Auth::user()->level() == 1)))
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
+					</ul>
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/ecommerce_all') }}">E-commerce (All)</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/sizeset') }}">Size set <span class="badge"></span></a></li>
+					</ul>
+					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
 					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/import') }}">Import files</a></li>
+					</ul>
 				@endif
-
-				<!-- <ul class="nav navbar-nav">
-					<li><a href="{{ url('/category') }}">Categories</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/defecttype') }}">Defect Types</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/categorydefecttype') }}">Category-DefectType Link</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/position') }}">Positions</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/categoryposition') }}">Category-Position Link</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/machine') }}">Machines</a></li>
-				</ul> -->
+				
 				@if (Auth::guest())
 				@else
 				<ul class="nav navbar-nav navoperator">

@@ -57,7 +57,7 @@ class HomeController extends Controller {
 		// }
 
 		// return redirect('/batch');
-		/*
+		
 		if ($user->is('operator')) { 
 
 			$ecommerce = DB::table('ecommerce')
@@ -88,7 +88,7 @@ class HomeController extends Controller {
 			$ecommerce = NULL;
 
 		}
-		*/
+		
 
 		// dd($sizeset);
 		

@@ -84,7 +84,9 @@
                                         <td style="background-color: floralwhite;">{{ $req->shipped_date }}</td>
                                         <!-- <td style="background-color: floralwhite;">{{-- {{ $req->shipped_user }} --}}</td> -->
 
-                                        <td><a href="{{ url('/ecommerce/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                                        @if(Auth::check() && Auth::user()->level() != 3)
+                                            <td><a href="{{ url('/ecommerce/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                                        @endif
 
                                     </tr>
                                 @endforeach

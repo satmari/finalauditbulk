@@ -8,7 +8,12 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="panel panel-default">
-                            <div class="panel-heading">Batch Table</div>
+                            <div class="panel-heading">Batch Table 
+                            @if (Auth::check() && (Auth::user()->level() == 3 OR Auth::user()->level() == 1))
+                            (Last 30 days)
+                            @endif
+
+                            </div>
                             <div class="input-group"> <span class="input-group-addon">Filter</span>
                                 <input id="filter" type="text" class="form-control" placeholder="Type here...">
                             </div>
@@ -70,11 +75,20 @@
                                            <td><span><b>{{ $req->batch_status }}</b></span></td>
                                           @endif 
                                         <td>
-                                        @if( $req->batch_status == "Pending" || $req->batch_status == "Suspend")
-                                            <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block">Edit</a>
+
+                                        @if(Auth::check() && Auth::user()->level() == 2)
+                                            @if( $req->batch_status == "Pending" || $req->batch_status == "Suspend")
+                                                <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block">Edit</a>
+                                            @endif
                                         @endif
+
+                                        @if(Auth::check() && Auth::user()->level() == 1)
+                                            <a href="{{ url('/batch/edit_status/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit Status</a>
+                                        @endif
+
                                         </td>
-                                        {{-- <td><a href="{{ url('/batch/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td> --}}
+
+                                        
                                     </tr>
                                 @endforeach
                                 

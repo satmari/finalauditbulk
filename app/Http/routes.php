@@ -112,6 +112,8 @@ Route::get('/batch', 'ControllerBatch@index');
 //Route::get('/batch_new', 'ControllerBatch@create');
 //Route::post('/batch_insert', 'ControllerBatch@insert');
 Route::get('/batch/edit/{id}', 'ControllerBatch@edit');
+Route::get('/batch/edit_status/{id}', 'ControllerBatch@edit_status');
+Route::post('/batch/edit_status_update/{id}', 'ControllerBatch@edit_status_update');
 // Route::post('/batch/{id}', 'ControllerBatch@update');
 Route::get('/batch/delete/{id}', 'ControllerBatch@delete');
 Route::post('/batch/delete/{id}', 'ControllerBatch@delete');
@@ -125,6 +127,10 @@ Route::get('/batch/acceptwithreservetion/{id}', 'ControllerBatch@acceptwithreser
 Route::get('/batch/reject/{id}', 'ControllerBatch@reject');
 Route::get('/batch/suspend/{id}', 'ControllerBatch@suspend');
 Route::get('/batch/not_checked/{id}', 'ControllerBatch@not_checked');
+// CB to repair
+Route::get('/cb_to_repair', 'ControllerBatch@cb_to_repair');
+Route::get('/cb_to_repair/edit/{id}', 'ControllerBatch@cb_to_repair_edit');
+Route::post('/cb_to_repair/reparied/{id}', 'ControllerBatch@cb_to_repair_repair');
 
 Route::get('/garment', 'ControllerGarment@index');
 //Route::get('/garment_new', 'ControllerGarment@create');
@@ -175,4 +181,5 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
 

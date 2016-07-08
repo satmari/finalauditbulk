@@ -7,11 +7,13 @@
             <div class="panel panel-default">
 				<div class="panel-heading">Defect Level Table</div>
 				
+                @if (Auth::check() && Auth::user()->level() != 3)
 				<div class="panel-body">
 					<div class="">
 						<a href="{{url('/defectlevel_new')}}" class="btn btn-default btn-info">Add new Defect Level</a>
 					</div>
 				</div>
+                @endif
 
 				<div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">
@@ -59,7 +61,9 @@
                             <td>{{ $req->defect_level_name }}</td>
                             <td>{{ $req->defect_level_rejected }}</td>
                             <!-- <td>{{-- $req->pcs_rejected --}}</td> -->
-                            <td><a href="{{ url('/defectlevel/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                            @if (Auth::check() && Auth::user()->level() != 3)
+                                <td><a href="{{ url('/defectlevel/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                            @endif
                         </tr>
                     @endforeach
                     
