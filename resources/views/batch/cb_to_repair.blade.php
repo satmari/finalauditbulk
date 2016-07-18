@@ -63,7 +63,11 @@
                                         <td>{{ $req->module_name }}</td>
                                         <td>{{ $req->cartonbox }}</td>
                                         <td>{{ $req->repaired }}</td>
-                                        <td><a href="{{ url('/cb_to_repair/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                                        <td>
+                                        @if(Auth::check() && ((Auth::user()->level() == 2)))
+                                            <a href="{{ url('/cb_to_repair/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a>
+                                        @endif
+                                        </td>
                                        
                                     </tr>
                                 @endforeach

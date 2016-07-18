@@ -7,7 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddRepaired' => $baseDir . '/database/migrations/2016_07_07_160739_add_repaired.php',
-    'AddRepairedDate' => $baseDir . '/database/migrations/2016_07_08_123145_add_repaired_date.php',
+    'CreateActivityLogsTable' => $baseDir . '/database/migrations/2016_07_11_083424_create_activity_logs_table.php',
+    'CreateActivityTypesTable' => $baseDir . '/database/migrations/2016_07_11_083410_create_activity_types_table.php',
     'CreateBatchCsTable' => $baseDir . '/database/migrations/2016_03_20_114137_create_batch_cs_table.php',
     'CreateBatchIsTable' => $baseDir . '/database/migrations/2016_03_20_114130_create_batch_is_table.php',
     'CreateBatchTable' => $baseDir . '/database/migrations/2016_03_29_122622_create_batch_table.php',

@@ -76,7 +76,9 @@
 						    <li><a href="{{ url('/batch_t') }}">Batch Tezenis</a></li>
 						    <li><a href="{{ url('/batch_i') }}">Batch Intimissimi</a></li>
 						    <li><a href="{{ url('/batch_c') }}">Batch Calzedonia</a></li>
-						    
+
+						    <li role="separator" class="divider"></li>
+							<li><a href="{{ url('/activity_type') }}">Activity Types</a></li>
 						  </ul>
 						</div>
 					</li>
@@ -87,11 +89,18 @@
 						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/cb_to_repair') }}">CB to repair</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset') }}">Size set <span class="badge"></span></a></li>
 					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/activity') }}">Activities <span class="badge"></span></a></li>
+					</ul>
+					
 				@endif
 
 				@if(Auth::check() && (Auth::user()->level() == 5))
@@ -117,6 +126,9 @@
 						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/cb_to_repair') }}">CB to repair</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
 					</ul>
 					<ul class="nav navbar-nav">
@@ -129,8 +141,12 @@
 						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/activity') }}">Activities <span class="badge"></span></a></li>
+					</ul>
+					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/import') }}">Import files</a></li>
 					</ul>
+
 				@endif
 				
 				@if (Auth::guest())

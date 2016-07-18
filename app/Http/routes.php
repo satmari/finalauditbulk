@@ -169,6 +169,7 @@ Route::post('/ecommerce/scanned/{id}', 'ControllerEcommerce@scanned');
 Route::post('/ecommerce/collected/{id}', 'ControllerEcommerce@collected');
 Route::post('/ecommerce/shipped/{id}', 'ControllerEcommerce@shipped');
 
+// Sizeset
 Route::get('/sizeset', 'ControllerSizeset@index');
 Route::get('/sizeset_all', 'ControllerSizeset@sizeset_all');
 Route::get('/sizeset/edit/{id}', 'ControllerSizeset@edit');
@@ -176,6 +177,20 @@ Route::post('/sizeset/{id}', 'ControllerSizeset@update');
 Route::post('/sizeset/scanned/{id}', 'ControllerSizeset@scanned');
 Route::post('/sizeset/collected/{id}', 'ControllerSizeset@collected');
 Route::post('/sizeset/shipped/{id}', 'ControllerSizeset@shipped');
+
+// Activity
+Route::get('/activity', 'ControllerActivity@index');
+// Route::get('/activityexist', 'ControllerActivity@activityexist');
+// Route::get('/activitynew', 'ControllerActivity@activitynew');
+Route::post('/activity_insert', 'ControllerActivity@activity_insert');
+Route::get('/activity_stop/{id}', 'ControllerActivity@activity_stop');
+
+Route::get('/activity_type', 'ControllerActivity@index_type');
+Route::get('/activity_type_new', 'ControllerActivity@activity_type_new');
+Route::post('/activity_type_insert', 'ControllerActivity@activity_type_insert');
+Route::get('/activity_type/{id}', 'ControllerActivity@activity_type_edit');
+Route::post('/activity_type/update/{id}', 'ControllerActivity@activity_type_update');
+Route::post('/activity_type/delete/{id}', 'ControllerActivity@activity_type_delete');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

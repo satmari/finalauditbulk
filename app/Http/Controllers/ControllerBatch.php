@@ -13,6 +13,7 @@ use App\Defect;
 use App\Category;
 use App\Ecommerce;
 use App\Sizeset;
+use App\ActivityLog;
 use DB;
 use Auth;
 use App\User;
@@ -187,8 +188,14 @@ class ControllerBatch extends Controller {
 			                    ->where('batch_status', '=', 'Not checked')
 			                    ->sum('batch_qty');
 				// dd($total_garments_not_today);
+			    
+		 		$activity = DB::table('activity_log')
+			                    ->where('activity_by_id', '=', $batch_user)
+			                    ->where('status', '=', 'Active')
+			                    ->count();
+			    //dd($activity);
 
-				return view('batch.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch', 'total_not_checked_batch', 'total_garments_today','total_garments_not_today'));
+				return view('batch.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch', 'total_not_checked_batch', 'total_garments_today','total_garments_not_today','activity'));
 			}
 			
 			
@@ -231,6 +238,7 @@ class ControllerBatch extends Controller {
 
 		// Live database
 		try {
+			
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 	
 			/*[CNF_CartonBox].IntKeyPO, */
 			[CNF_CartonBox].BoxNum,
@@ -401,8 +409,8 @@ class ControllerBatch extends Controller {
 		      	return view('batch.error', compact('msg'));
 		  	}
 
-			$rejected = 0; // exist but ?
-			//$batch_status = "Pending"; // new batch
+			$rejected = 0; // exist but not used ?
+			//$batch_status = "Pending"; // new batch // no Pending anymore
 			$batch_status = "Suspend"; // new batch
 
 			// Samples Ecommerce

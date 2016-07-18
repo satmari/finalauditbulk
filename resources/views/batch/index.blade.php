@@ -78,7 +78,11 @@
 
                                         @if(Auth::check() && Auth::user()->level() == 2)
                                             @if( $req->batch_status == "Pending" || $req->batch_status == "Suspend")
-                                                <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block">Edit</a>
+                                                @if( $activity == 0)                                                    
+                                                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block">Edit</a>
+                                                @else
+                                                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block" disabled>Edit</a>
+                                                @endif
                                             @endif
                                         @endif
 
@@ -102,14 +106,21 @@
                       
 
                         @if(Auth::check() && Auth::user()->level() == 2)
-                        <div class="panel panel-default">
-                        <div class="panel-heading">Options</div>
-                            <div class="panel-body">
-                                <div class="">
-                                    <a href="{{url('/searchinteos')}}" class="btn btn-default btn-info side-button"><br>New Batch</a>
+                                <div class="panel panel-default">
+                                <div class="panel-heading">Options</div>
+                                    <div class="panel-body">
+                                        @if( $activity == 0)
+                                        <div class="">
+                                            <a href="{{url('/searchinteos')}}" class="btn btn-default btn-info side-button"><br>New Batch</a>
+                                        </div>
+                                        @else
+                                            <p style="color:red;"><b>Extra activity is active</b></p>
+                                            <div class="">
+                                                <a href="{{url('/searchinteos')}}" class="btn btn-default btn-info side-button" disabled><br>New Batch</a>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
                         @endif
 
 
