@@ -286,7 +286,7 @@ class ControllerBatch extends Controller {
 			if ($inteos) {
 				//continue
 			} else {
-	        	$msg = 'Cannot find CB in Inteos, NE POSTOJI KARTONSKA KUTIJA U INTEOSU ! ';
+	        	$msg = 'Cannot find CB in Inteos, NE POSTOJI KARTONSKA KUTIJA U INTEOSU !';
 	        	return view('batch.error', compact('msg'));
 	    	}
 
@@ -411,10 +411,9 @@ class ControllerBatch extends Controller {
 
 			$rejected = 0; // exist but not used ?
 			//$batch_status = "Pending"; // new batch // no Pending anymore
-			$batch_status = "Suspend"; // new batch
+			$batch_status = "Suspend"; // new batch have Suspend status
 
 			// Samples Ecommerce
-			
 			$ecommerce_sample = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM ecommerce WHERE style = '".$style."' AND size = '".$size."' AND color = '".$color."' "));
 			
 			if ($ecommerce_sample) {
@@ -439,13 +438,12 @@ class ControllerBatch extends Controller {
 				}
 				
 			} else {
-				$msg = 'This SKU not exist in Ecommerce table, OVAJ SKU NE POSTOJI U Ecommerce TABELI !!!';
+				$msg = 'This SKU not exist in Ecommerce table, OVAJ SKU NE POSTOJI U E-commerce TABELI !!!';
 		      	//return view('batch.error', compact('msg'));
 			}
 			
 
 			// Samples Setsize
-			
 			$sizeset_sample = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM sizeset WHERE style = '".$style."' AND size = '".$size."' "));
 			
 			if ($sizeset_sample) {
@@ -453,7 +451,7 @@ class ControllerBatch extends Controller {
 				$scanned_color = $sizeset_sample[0]->color;
 				$scanned = $sizeset_sample[0]->scanned;
 
-				//if color is not set
+				//if color in table is not set
 				if ($scanned_color == '' OR $scanned_color == NULL) {
 					$sizeset_sample_style = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM sizeset WHERE style = '".$style."' "));	
 
@@ -470,7 +468,6 @@ class ControllerBatch extends Controller {
 						}
 					}
 				}
-
 				//if sytle + size scanned
 				if ($scanned == 'NO') {
 
@@ -488,17 +485,13 @@ class ControllerBatch extends Controller {
 						// $msg = "Problem to save in sizeset table";
 						// return view('batch.error',compact('msg'));
 					}
-
-					}
 				}
-				
-			// } else {
-			// 	// $msg = 'This SKU not exist in sizeset table, OVAJ SKU NE POSTOJI U sizeset TABELI !!!';
-		 	//  // return view('batch.error', compact('msg'));
-			// }
+			} else {
+				$msg = $msg.' This SKU not exist in sizeset table, OVAJ SKU NE POSTOJI U Sizeset TABELI !!!';
+		 	 	// return view('batch.error', compact('msg'));
+			}
 			
-			
-			
+			// Record Batch
 			try {
 				$table = new Batch;
 
@@ -538,6 +531,7 @@ class ControllerBatch extends Controller {
 				$table->batch_brand_max_reject = $batch_brand_max_reject;
 
 				$table->rejected = $rejected;
+
 				$table->batch_status = $batch_status;
 
 				$table->deleted = FALSE;
@@ -549,6 +543,7 @@ class ControllerBatch extends Controller {
 				return view('batch.error',compact('msg'));
 			}
 
+			// Record Garmets
 			$batch_qty;
 
 			for ($i=1; $i < $batch_qty+1 ; $i++) { 
@@ -588,9 +583,7 @@ class ControllerBatch extends Controller {
 			if ($msg1 != ''){
 				return view('batch.sample', compact('msg1','batch_name'));
 			}
-			// if ($msg2 != ''){
-			// 	return view('batch.sample', compact('msg2','batch_name'));
-			// }
+			
 			return Redirect::to('/batch/checkbarcode/'.$batch_name);
 
 		}
