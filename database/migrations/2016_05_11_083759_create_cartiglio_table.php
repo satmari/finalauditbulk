@@ -18,7 +18,7 @@ class CreateCartiglioTable extends Migration {
 			$table->string('Cod_Bar');		
 			$table->string('Cod_Art_CZ');
 			$table->string('Cod_Col_CZ');
-			$table->string('Tgl_ENG');
+			$table->string('Tgl_EUR');
 
 			// $table->timestamps();
 		});
@@ -53,7 +53,8 @@ CREATE TABLE [dbo].[cartiglio](
 	[Cod_Bar] [nvarchar](255) NOT NULL,
 	[Cod_Art_CZ] [nvarchar](255) NOT NULL,
 	[Cod_Col_CZ] [nvarchar](255) NOT NULL,
-	[Tgl_ENG] [nvarchar](255) NOT NULL,
+	[Tgl_EUR] [nvarchar](255) NOT NULL,
+	[Descr_Col_CZ] [nvarchar](255) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
