@@ -50,7 +50,7 @@ class CreateBatchTable extends Migration {
 
 			$table->string('checked_by_id');
 			$table->string('checked_by_name');
-						
+		
 			$table->integer('rejected')->nullable(); // exist but ?
 			$table->string('batch_status');
 			$table->string('batch_barcode_match')->nullable();
