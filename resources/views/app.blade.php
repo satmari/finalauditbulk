@@ -95,7 +95,13 @@
 						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
 					</ul>
 					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/ecommerce_all') }}">E-commerce (All)</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset') }}">Size set <span class="badge"></span></a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/activity') }}">Activities <span class="badge"></span></a></li>

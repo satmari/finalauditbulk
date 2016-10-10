@@ -5,7 +5,7 @@
     <div class="row vertical-center-row">
         <div class="text-center">
             <div class="panel panel-default">
-                <div class="panel-heading">Batch Intimissimi Table</div>
+                <div class="panel-heading">Batch <b>ntimissimi</b> Table</div>
                 
                 @if (Auth::check() && Auth::user()->level() != 3)
                 <div class="panel-body">
@@ -45,7 +45,7 @@
                 -->
                     <thead>
                         <tr>
-                            <td>Id</td>
+                            <!-- <td>Id</td> -->
                             <td><b>Batch Id</b></td>
                             <td><b>Pcs Box MIN</b></td>
                             <td><b>Pcs Box MAX</b></td>
@@ -57,7 +57,7 @@
                     <tbody class="searchable">
                     @foreach ($batch_i as $req)
                         <tr>
-                            <td>{{ $req->id }}</td>
+                            {{--<td>{{ $req->id }}</td>--}}
                             <td>{{ $req->batch_id }}</td>
                             <td>{{ $req->batch_min }}</td>
                             <td>{{ $req->batch_max }}</td>

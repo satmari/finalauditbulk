@@ -15,10 +15,11 @@ class AddRepaired extends Migration {
 		//
 		Schema::table('batch', function($table)
 		{
-    		$table->string('repaired')->nullable();
-    		$table->string('repaired_by_id')->nullable();
-			$table->string('repaired_by_name')->nullable();
-			$table->dateTime('repaired_date')->nullable();
+   			
+   			// $table->string('repaired')->nullable();
+   			// $table->string('repaired_by_id')->nullable();
+			// $table->string('repaired_by_name')->nullable();
+			// $table->dateTime('repaired_date')->nullable();
     		
 		});
 	}

@@ -45,7 +45,7 @@
                                         <td>Color</td>
                                         <td>Size</td>
                                         <td>Color Desc</td>
-
+                                        
                                         <td style="background-color: aliceblue;">Scanned</td>
                                         <!-- <td style="background-color: aliceblue;">Date</td> -->
                                         <!-- <td style="background-color: aliceblue;">User</td> -->
@@ -57,7 +57,7 @@
                                         <td style="background-color: floralwhite;">Shipped</td>
                                         <td style="background-color: floralwhite;">Date</td>
                                         <!-- <td style="background-color: floralwhite;">User</td> -->
-
+                                        <td>Comment</td>
                                         <td></td>
                                         <!-- <td></td> -->
                                     </tr>
@@ -71,7 +71,7 @@
                                         <td>{{ $req->color }}</td>
                                         <td>{{ $req->size }}</td>
                                         <td>{{ $req->color_desc }}</td>
-
+                                        
                                         <td style="background-color: aliceblue;">{{ $req->scanned }}</td>
                                         <!-- <td style="background-color: aliceblue;">{{-- {{ $req->scanned_date }} --}}</td> -->
                                         <!-- <td style="background-color: aliceblue;">{{-- {{ $req->scanned_user }} --}}</td> -->
@@ -83,6 +83,8 @@
                                         <td style="background-color: floralwhite;">{{ $req->shipped }}</td>
                                         <td style="background-color: floralwhite;">{{ $req->shipped_date }}</td>
                                         <!-- <td style="background-color: floralwhite;">{{-- {{ $req->shipped_user }} --}}</td> -->
+
+                                        <td>{{ $req->temp_coloumn }}</td>
 
                                         @if(Auth::check() && Auth::user()->level() != 3)
                                             <td><a href="{{ url('/ecommerce/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>

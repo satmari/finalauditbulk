@@ -135,6 +135,12 @@ class ControllerSizeset extends Controller {
 		$input = $request->all();
 		$date = $input['date'];
 
+		if ($input['comment']) {
+			$comment = $input['comment'];	
+		} else {
+			$comment = '';
+		}
+		
 		try {
 			$sizeset = Sizeset::findOrFail($id);
 
@@ -147,6 +153,7 @@ class ControllerSizeset extends Controller {
 			//$sizeset->shipped_date = date("Y-m-d H:i:s");
 			$sizeset->shipped_date = $date;
 			$sizeset->shipped_user = Auth::user()->username;
+			$sizeset->temp_coloumn = $comment;
 			$sizeset->save();
 			return Redirect::to('/sizeset');
 		}

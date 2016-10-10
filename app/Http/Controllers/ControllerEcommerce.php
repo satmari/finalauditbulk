@@ -134,6 +134,11 @@ class ControllerEcommerce extends Controller {
 		$this->validate($request, ['date'=>'required']);
 		$input = $request->all();
 		$date = $input['date'];
+		if ($input['comment']) {
+			$comment = $input['comment'];	
+		} else {
+			$comment = '';
+		}
 
 		try {
 			$ecommerce = Ecommerce::findOrFail($id);
@@ -143,6 +148,7 @@ class ControllerEcommerce extends Controller {
 			//$ecommerce->shipped_date = date("Y-m-d H:i:s");
 			$ecommerce->shipped_date = $date;
 			$ecommerce->shipped_user = Auth::user()->username;
+			$ecommerce->temp_coloumn = $comment;
 			$ecommerce->save();
 			return Redirect::to('/ecommerce');
 		}

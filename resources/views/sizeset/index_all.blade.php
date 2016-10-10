@@ -57,7 +57,7 @@
                                         <td style="background-color: floralwhite;">Shipped</td>
                                         <td style="background-color: floralwhite;">Date</td>
                                         <td style="background-color: floralwhite;">User</td>
-
+                                        <td>Comment</td>
                                         <td></td>
                                         <!-- <td></td> -->
                                     </tr>
@@ -84,6 +84,8 @@
                                         <td style="background-color: floralwhite;">{{ $req->shipped_date }}</td>
                                         <td style="background-color: floralwhite;">{{ $req->shipped_user }}</td>
 
+                                        <td>{{ $req->temp_coloumn }}</td>
+                                        
                                         @if(Auth::check() && Auth::user()->level() == 5)
                                             @if($req->shipped == 'NO')
                                             <td><a href="{{ url('/sizeset/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>

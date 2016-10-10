@@ -10,6 +10,8 @@ use App\Sizeset;
 use App\Ecommerce;
 use DB;
 
+use Session;
+
 class HomeController extends Controller {
 
 	/*
@@ -99,6 +101,8 @@ class HomeController extends Controller {
 		if ($user->is('operator')) { 
 		    // if user has at least one role
 		    $msg = "Hi statistica operator";
+		    //Get from session-----------------
+
 		    return redirect('/batch')/*->with(compact('sizeset','ecommerce'))*/;
 		}
 		if ($user->is('notcheck')) { 

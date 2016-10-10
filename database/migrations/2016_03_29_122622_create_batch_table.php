@@ -33,9 +33,9 @@ class CreateBatchTable extends Migration {
 
 			$table->string('module_name');
 			
-			$table->string('cartonbox');
+			$table->string('cartonbox');						// must be nullable for bulk
 			$table->integer('cartonbox_qty')->nullable();
-			$table->integer('cartonbox_produced');
+			$table->integer('cartonbox_produced');					
 			$table->string('cartonbox_status')->nullable();
 			$table->dateTime('cartonbox_start_date')->nullable();
 			$table->dateTime('cartonbox_finish_date')->nullable();

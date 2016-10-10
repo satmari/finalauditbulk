@@ -98,6 +98,10 @@
 						<span>Shipment date: <span style="color:red;">*</span></span><br>
 						{!! Form::text('date', '', array('id' => 'datepicker', 'class' => 'form-control')) !!}
 					</div>
+					<div class="panel-body">
+						<span>Comment: </span></span>
+						{!! Form::input('string', 'comment', null, ['class' => 'form-control']) !!}
+					</div>
 					{!! Form::submit('Ship', ['class' => 'btn  btn-danger /*btn-xs*/ center-block']) !!}
 					@include('errors.list')
 					{!! Form::close() !!}
