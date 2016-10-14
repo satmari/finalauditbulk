@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Check BARCODE on garment</div>
                 
-                {!! Form::open(['url' => '/garment/checkbarcode_store']) !!}
+                {!! Form::open(['url' => '/garment_bulk/checkbarcode_store']) !!}
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
                 {!! Form::hidden('garment_name', $name, ['class' => 'form-control']) !!}

@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">CB to repair
+                            <div class="panel-heading">Batch to repair
                             
 
                             </div>

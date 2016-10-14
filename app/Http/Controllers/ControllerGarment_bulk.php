@@ -59,17 +59,15 @@ class ControllerGarment_bulk extends Controller {
 
 	public function garment_checkbarcode ($name) 
 	{
-		// $garment = DB::connection('sqlsrv')->select(DB::raw("SELECT garment_barcode_match FROM garment_batch WHERE garment_name = '".$name."'"));
+		$garment = DB::connection('sqlsrv')->select(DB::raw("SELECT garment_barcode_match FROM garment_bulk WHERE garment_name = '".$name."'"));
 
-		// if ($garment[0]->garment_barcode_match == NULL ) {
-		// 	return view('garment.checkbarcode',compact('name'));
-		// } else {
+		if ($garment[0]->garment_barcode_match == NULL ) {
+			return view('garment_bulk.checkbarcode',compact('name'));
+		} else {
 			return Redirect::to('/defect_bulk/by_garment/'.$name);
-		// }
+		}
 	}
 
-
-/*
 	public function garment_checkbarcode_store (Request $request) 
 	{
 		$this->validate($request, ['garment_name' => 'required', 'barcode' => 'required']);
@@ -80,16 +78,8 @@ class ControllerGarment_bulk extends Controller {
 
 		try {
 
-			// if you check barcode form batch barcode
-			
-			// $garment = DB::connection('sqlsrv')->select(DB::raw("SELECT batch_name FROM garment WHERE garment_name = '".$garment_name."'"));		
-			// $batch_name = $garment[0]->batch_name;
-			// $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT batch_barcode FROM batch WHERE batch_name = '".$batch_name."'"));
-			// $barcode = $batch[0]->batch_barcode;
-			
-
 			//if you check barcode from cartiglio database
-			$garment = DB::connection('sqlsrv')->select(DB::raw("SELECT id,sku FROM garment WHERE garment_name = '".$garment_name."'"));		
+			$garment = DB::connection('sqlsrv')->select(DB::raw("SELECT id,sku FROM garment_bulk WHERE garment_name = '".$garment_name."'"));		
 			$sku = $garment[0]->sku; //1MC875 019-M
 
 			$a = explode(' ', $sku);
@@ -110,7 +100,7 @@ class ControllerGarment_bulk extends Controller {
 				$barcode_match = "NO";
 			}
 
-			$b = Garment::findOrFail($garment[0]->id);
+			$b = Garment_bulk::findOrFail($garment[0]->id);
 			$b->garment_barcode_match = $barcode_match;
 			$b->garment_barcode = $barcode_indb;
 			$b->save();
@@ -118,17 +108,15 @@ class ControllerGarment_bulk extends Controller {
 		}
 		catch (\Illuminate\Database\QueryException $e) {
 			$msg = "Barcode not found in cartiglio database";
-			return view('garment.error',compact('msg'));
+			return view('garment_bulk.error',compact('msg'));
 		}		
 
 		if ($barcode_insert != $barcode_indb) {
 			$msg = "Barcode not match with barcode from cartiglio database";
-			return view('garment.error_continue',compact('msg','garment_name'));
+			return view('garment_bulk.error_continue',compact('msg','garment_name'));
 		}
-		return Redirect::to('/defect/by_garment/'.$garment_name);
-		
-		
+		return Redirect::to('/defect_bulk/by_garment/'.$garment_name);
+	
 	}
-*/
 
 }

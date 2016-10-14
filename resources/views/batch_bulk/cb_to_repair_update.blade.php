@@ -8,28 +8,10 @@
 				<div class="panel-heading">Edit:</div>
 				<br>
 					
-				@if(Auth::check() && Auth::user()->level() == 100)
-
-					{!! Form::model($batch , ['method' => 'POST', 'url' => '/batch/'.$batch->id /*, 'class' => 'form-inline'*/]) !!}
-
-					<div class="panel-body">
-						<span>Id:</span>
-						{!! Form::input('number', 'id', null, ['class' => 'form-control']) !!}
-					</div>
-										
-					<div class="panel-body">
-						{!! Form::submit('Save', ['class' => 'btn btn-success center-block']) !!}
-					</div>
-
-					@include('errors.list')
-					{!! Form::close() !!}
-
-				@endif
-
 				@if(Auth::check() && (Auth::user()->level() == 1) OR (Auth::user()->level() == 2))
 					@if ($batch->repaired == 'NO')
 					<br>
-					{!! Form::open(['method'=>'POST', 'url'=>'/cb_to_repair/reparied/'.$batch->id]) !!}
+					{!! Form::open(['method'=>'POST', 'url'=>'/cb_to_repair_bulk/reparied/'.$batch->id]) !!}
 					{!! Form::hidden('id', $batch->id, ['class' => 'form-control']) !!}
 					{!! Form::submit('Carton Box Repaired', ['class' => 'btn  btn-danger /*btn-xs*/ center-block']) !!}
 					{!! Form::close() !!}
@@ -41,7 +23,7 @@
 				<hr>
 				<div class="panel-body">
 					<div class="">
-						<a href="{{url('/cb_to_repair')}}" class="btn btn-default">Back</a>
+						<a href="{{url('/cb_to_repair_bulk')}}" class="btn btn-default">Back</a>
 					</div>
 				</div>
 			</div>

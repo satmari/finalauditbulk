@@ -161,11 +161,27 @@ Route::post('/searchinteos_bulk', 'ControllerBatch_bulk@searchinteos_bulk');
 Route::post('/searchinteos_store_bulk', 'ControllerBatch_bulk@searchinteos_store_bulk');
 Route::post('/stop_store_bulk', 'ControllerBatch_bulk@stop_store_bulk');
 Route::post('/stop_producer_store_bulk', 'ControllerBatch_bulk@stop_producer_store_bulk');
+// Route::get('/batch_bulk/edit/{id}', 'ControllerBatch_bulk@edit');
+Route::get('/batch_bulk/edit_status/{id}', 'ControllerBatch_bulk@edit_status');
+Route::post('/batch_bulk/edit_status_update/{id}', 'ControllerBatch_bulk@edit_status_update');
+Route::get('/batch_bulk/confirm/{id}', 'ControllerBatch_bulk@confirm');
+Route::get('/batch_bulk/accept/{id}', 'ControllerBatch_bulk@accept');
+Route::get('/batch_bulk/acceptwithreservetion/{id}', 'ControllerBatch_bulk@acceptwithreservetion');
+Route::get('/batch_bulk/reject/{id}', 'ControllerBatch_bulk@reject');
+Route::get('/batch_bulk/suspend/{id}', 'ControllerBatch_bulk@suspend');
+Route::get('/batch_bulk/not_checked/{id}', 'ControllerBatch_bulk@not_checked');
+Route::get('/batch_bulk/delete/{id}', 'ControllerBatch_bulk@delete');
 
 // CB to repair
 Route::get('/cb_to_repair', 'ControllerBatch@cb_to_repair');
 Route::get('/cb_to_repair/edit/{id}', 'ControllerBatch@cb_to_repair_edit');
 Route::post('/cb_to_repair/reparied/{id}', 'ControllerBatch@cb_to_repair_repair');
+
+// Batch BULK to repar
+Route::get('/cb_to_repair_bulk', 'ControllerBatch_bulk@cb_to_repair_bulk');
+Route::get('/cb_to_repair_bulk/edit/{id}', 'ControllerBatch_bulk@cb_to_repair_bulk_edit');
+Route::post('/cb_to_repair_bulk/reparied/{id}', 'ControllerBatch_bulk@cb_to_repair_bulk_repair');
+
 
 Route::get('/garment', 'ControllerGarment@index');
 //Route::get('/garment_new', 'ControllerGarment@create');
@@ -181,7 +197,7 @@ Route::post('/garment/checkbarcode_store', 'ControllerGarment@garment_checkbarco
 // Route::get('/garment_bulk/edit/{id}', 'ControllerGarment_bulk@edit');
 Route::get('/garment_bulk/by_batch/{batch_name}', 'ControllerGarment_bulk@by_batch');
 Route::get('/garment_bulk/checkbarcode/{name}', 'ControllerGarment_bulk@garment_checkbarcode');
-// Route::post('/garment_bulk/checkbarcode_store', 'ControllerGarment_bulk@garment_checkbarcode_store');
+Route::post('/garment_bulk/checkbarcode_store', 'ControllerGarment_bulk@garment_checkbarcode_store');
 
 Route::get('/defect', 'ControllerDefect@index');
 Route::get('/defect_new/{garment_name}', 'ControllerDefect@newdefect');

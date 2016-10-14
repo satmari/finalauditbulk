@@ -29,13 +29,15 @@
                 {!! Form::submit('Bulk Batch completly scanned', ['class' => 'btn  btn-warning btn-lg center-block']) !!}
                 {!! Form::close() !!}
 
+                {{-- 
                 <hr>
-                {!! Form::open(['method'=>'POST', 'url'=>'stop_producer_store_bulk']) !!}
-                
+                {!! Form::open(['method'=>'POST', 'url'=>'stop_producer_store_bulk']) !!}         
                 {!! Form::submit('Producer completly scanned', ['class' => 'btn  btn-danger btn-lg center-block']) !!}
                 {!! Form::close() !!}
-
+                --}}
+                
                 <br>
+
 
                 
             </div>

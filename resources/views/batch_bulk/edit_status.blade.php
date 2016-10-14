@@ -10,7 +10,7 @@
 					
 				@if(Auth::check() && Auth::user()->level() == 1)
 
-					{!! Form::model($batch , ['method' => 'POST', 'url' => '/batch/edit_status_update/'.$batch->id /*, 'class' => 'form-inline'*/]) !!}
+					{!! Form::model($batch , ['method' => 'POST', 'url' => '/batch_bulk/edit_status_update/'.$batch->id /*, 'class' => 'form-inline'*/]) !!}
 
 					<div class="panel-body">
 						<span>Status: <span style="color:red;">*</span></span>
@@ -29,7 +29,7 @@
 				<hr>
 				<div class="panel-body">
 					<div class="">
-						<a href="{{url('/batch')}}" class="btn btn-default">Back</a>
+						<a href="{{url('/batch_bulk')}}" class="btn btn-default">Back</a>
 					</div>
 				</div>
 			</div>

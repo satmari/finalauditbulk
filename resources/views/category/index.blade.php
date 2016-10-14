@@ -45,7 +45,7 @@
                 -->
                     <thead>
                         <tr>
-                            <td>Id</td>
+                            <!-- <td>Id</td> -->
                             <td><b>Category Id</b></td>
                             <td><b>Category Name</b></td>
                             <td>Category Name 1</td>
@@ -59,7 +59,7 @@
                     <tbody class="searchable">
                     @foreach ($category as $req)
                         <tr>
-                            <td>{{ $req->id }}</td>
+                            {{--<td>{{ $req->id }}</td>--}}
                             <td>{{ $req->category_id }}</td>
                             <td>{{ $req->category_name }}</td>
                             <td>{{ $req->category_name_1 }}</td>

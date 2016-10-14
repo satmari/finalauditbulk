@@ -45,7 +45,7 @@
                 -->
                     <thead>
                     	<tr>
-	                        <td>Id</td>
+	                        <!-- <td>Id</td> -->
 	                        <td><b>Defect Level Id</b></td>
 	                        <td><b>Defect Name</b></td>
 	                        <td>Defect Rejected</td>
@@ -56,7 +56,7 @@
                     <tbody class="searchable">
 			        @foreach ($defect_levels as $req)
                         <tr>
-                            <td>{{ $req->id }}</td>
+                            {{--<td>{{ $req->id }}</td>--}}
                             <td>{{ $req->defect_level_id }}</td>
                             <td>{{ $req->defect_level_name }}</td>
                             <td>{{ $req->defect_level_rejected }}</td>

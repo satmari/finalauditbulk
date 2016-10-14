@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><b>2.</b> Check item BARCODE on cartobox</div>
                 
-                {!! Form::open(['url' => '/batch/checkbarcode_store']) !!}
+                {!! Form::open(['url' => '/batch_bulk/checkbarcode_store']) !!}
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
                 {!! Form::hidden('batch_name', $name, ['class' => 'form-control']) !!}

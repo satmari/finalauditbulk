@@ -21,7 +21,7 @@
             	<div class="panel-body">
 	            	@foreach ($batch as $req)
 						<div class="row">
-		                          <a href="{{url('/batch/not_checked/'.$req->id)}}" class="btn btn-warning side-button"><br>Not checked<br><br></a>
+		                          <a href="{{url('/batch_bulk/not_checked/'.$req->id)}}" class="btn btn-warning side-button"><br>Not checked<br><br></a>
 		                </div>
 		            @endforeach
 	        	</div>

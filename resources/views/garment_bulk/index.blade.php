@@ -129,26 +129,26 @@
 
                       @foreach ($batch as $req)
                         <div class="row">
-                          <a href="{{url('/batch/suspend/'.$req->id)}}" class="btn btn-default side-button"><br>Suspend Batch <br><br></a>
+                          <a href="{{url('/batch_bulk/suspend/'.$req->id)}}" class="btn btn-default side-button"><br>Suspend Batch <br><br></a>
                         </div>
 
                         @if ($req->to_check == "NO")
                         <div class="row">
-                          <a href="{{url('/batch/not_checked/'.$req->id)}}" class="btn btn-warning side-button"><br>Not checked<br><br></a>
+                          <a href="{{url('/batch_bulk/not_checked/'.$req->id)}}" class="btn btn-warning side-button"><br>Not checked<br><br></a>
                         </div>
                         @endif
 
                         <div class="row">
-                          <a href="{{ url('/batch/confirm/'.$req->id) }}" class="btn btn-success side-button"><br>Close Batch <br><br></a>
+                          <a href="{{ url('/batch_bulk/confirm/'.$req->id) }}" class="btn btn-success side-button"><br>Close Batch <br><br></a>
                         </div>
                         {{-- 
                         <div class="row">
-                          <a href="{{ url('/batch/delete/'.$req->id) }}" class="btn btn-danger side-button"><br>Delete Batch <br><br></a>
+                          <a href="{{ url('/batch_bulk/delete/'.$req->id) }}" class="btn btn-danger side-button"><br>Delete Batch <br><br></a>
                         </div>
                         --}}
 
                         <!--  <div class="row">
-                          <a href="{{ url('/batch') }}" class="btn btn-warning side-button"><br>Back<br><br></a>
+                          <a href="{{ url('/batch_bulk') }}" class="btn btn-warning side-button"><br>Back<br><br></a>
                         </div> -->
                         
                       @endforeach

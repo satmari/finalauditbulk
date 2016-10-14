@@ -11,7 +11,7 @@
 				
 				<div class="panel-body">
 					<div class="">
-						<a href="{{url('/defect/by_garment/'.$garment_name)}}" class="btn btn-default center-block">Back</a>
+						<a href="{{url('/defect_bulk/by_garment/'.$garment_name)}}" class="btn btn-default center-block">Back</a>
 					</div>
 				</div>
 			</div>

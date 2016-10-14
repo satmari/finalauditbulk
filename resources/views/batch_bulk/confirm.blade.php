@@ -80,13 +80,13 @@
                             <div class="row">
                                 <br><br>
                               <div class="col-md-6">
-                                <a href="{{url('/batch/accept/'.$batchid->id)}}" class="btn btn-success final-button"><br>Accept</a>
+                                <a href="{{url('/batch_bulk/accept/'.$batchid->id)}}" class="btn btn-success final-button"><br>Accept</a>
                               </div>
                               <!-- <div class="col-md-4">
                                 <a href="{{url('/batch/acceptwithreservetion/'.$batchid->id)}}" class="btn btn-info btn-lg">Accept with reservation</a>
                               </div> -->
                               <div class="col-md-6">
-                                <a href="{{url('/batch/reject/'.$batchid->id)}}" class="btn btn-danger final-button"><br>Reject</a>
+                                <a href="{{url('/batch_bulk/reject/'.$batchid->id)}}" class="btn btn-danger final-button"><br>Reject</a>
                               </div>
                                 <br>
                             </div>
@@ -101,13 +101,13 @@
                             <br><br>
                             <div class="row">
                               <!-- <div class="col-md-6"> -->
-                                <a href="{{url('/batch/suspend/'.$batchid->id)}}" class="btn btn-default side-button"><br>Suspend</a>
+                                <a href="{{url('/batch_bulk/suspend/'.$batchid->id)}}" class="btn btn-default side-button"><br>Suspend</a>
 
                             </div>
                             {{--
                             <div class="row">
                               <!-- <div class="col-md-6"> -->
-                                <a href="{{ url('/batch/delete/'.$batchid->id) }}" class="btn btn-danger side-button"><br>Delete</a>
+                                <a href="{{ url('/batch_bulk/delete/'.$batchid->id) }}" class="btn btn-danger side-button"><br>Delete</a>
                               <!-- </div> -->
                             </div>
                             --}}
