@@ -1177,7 +1177,7 @@ class ControllerBatch_bulk extends Controller {
 	public function cb_to_repair_edit($id)
 	{
 		$batch = Batch_bulk::findOrFail($id);
-		return view('batch_bulk.cb_to_repair_update', compact('batch'));
+		return view('batch_bulk.cb_to_repair_update', compact('batch')); 
 	}
 
 	public function cb_to_repair_repair($id)
