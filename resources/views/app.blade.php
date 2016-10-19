@@ -91,6 +91,7 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/cb_to_repair') }}">CB to repair</a></li>
 					</ul>
+					{{-- 
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
 					</ul>
@@ -103,6 +104,7 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
 					</ul>
+					--}}
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/activity') }}">Activities <span class="badge"></span></a></li>
 					</ul>
@@ -110,6 +112,7 @@
 				@endif
 
 				@if(Auth::check() && (Auth::user()->level() == 5))
+					{{--
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
 					</ul>
@@ -122,6 +125,7 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
 					</ul>
+					--}}
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/import') }}">Import files</a></li>
 					</ul>
@@ -134,6 +138,7 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/cb_to_repair') }}">CB to repair</a></li>
 					</ul>
+					{{--
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/ecommerce') }}">E-commerce <span class="badge"></span></a></li>
 					</ul>
@@ -146,6 +151,7 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
 					</ul>
+					--}}
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/activity') }}">Activities <span class="badge"></span></a></li>
 					</ul>

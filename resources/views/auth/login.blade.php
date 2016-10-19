@@ -29,20 +29,18 @@
 
 								<!-- <label>Select operator</label> -->
 					            <select id = "email" class="form-control" name="email">
-					            	<option name="email" value=""></option>
-					               	<option name="email" value="audit1">Audit1 - Željka Majoroš</option>
-					               	<option name="email" value="audit2">Audit2 - Biljana Živanović</option>
-					               	<option name="email" value="audit3">Audit3 - Klementina Nikolajević</option>
-					               	<option name="email" value="audit4">Audit4 - Jelena Šeritović</option>
-					               	<option name="email" value="audit5">Audit5 - Dragana Živanović</option>
-					               	<option name="email" value="audit6">Audit6 - Dajana Ivanković</option>
-					               	<option name="email" value="audit10">Audit - Not check user</option>
-					               	<option name="email" value="audit9">Planer</option>
-					               	<option name="email" value="admin">Admin</option>
-					               	<option name="email" value="guest">Guest</option>
+					            	<option name="" value=""></option>
+
+					            	@foreach ($users as $user)
+					               		<option name="email" value="{{$user->name}}">{{$user->username}}</option>
+									@endforeach
+					               	
+									
 					            </select>
 							</div>
 						</div>
+
+						
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Password</label>

@@ -3,6 +3,8 @@
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
+use App\User;
+
 class Authenticate {
 
 	/**
@@ -39,8 +41,11 @@ class Authenticate {
 				return response('Unauthorized.', 401);
 			}
 			else
-			{
-				return redirect()->guest('auth/login');
+			{	
+				
+				// return redirect()->guest('auth/login');
+				$users = User::all();
+				return view('auth.login',compact('users'));	
 			}
 		}
 
