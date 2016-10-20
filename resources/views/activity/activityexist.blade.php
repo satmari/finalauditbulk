@@ -31,8 +31,15 @@
                                     <a href="{{url('/activity_stop/'.$req->id) }}" class="btn btn-danger btn-default">Stop Activity</a>
 
                                 </div>
-                                <br>
+                                
                                 @endforeach
+                                <br>
+                                <hr>
+                                 <div class="panel-body">
+                                    <div class="">
+                                        <a href="{{url('/')}}" class="btn btn-default">Back</a>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -40,11 +47,7 @@
 
                 @endif
 
-                <div class="panel-body">
-                    <div class="">
-                        <a href="{{url('/activity')}}" class="btn btn-default">Back</a>
-                    </div>
-                </div>
+               
 
          </div>
     </div>

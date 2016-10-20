@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">CB to repair
+                            <div class="panel-heading">Batch to repair
                             
 
                             </div>
@@ -47,8 +47,8 @@
                                         <td>SKU</td>
                                         <td>PO</td>
                                         <td>Module</td>
-                                        <td>CB barcode</td>
-                                        <td>CB repaired</td>
+                                        <td>Batch barcode</td>
+                                        <td>Batch repaired</td>
                                         <td></td>
                                         <!-- <td></td> -->
                                     </tr>
@@ -76,8 +76,6 @@
                                 </table> 
                         </div>
                     </div>
-
-                    
                     <div class="col-md-2 pull-right">
                       
                     </div>

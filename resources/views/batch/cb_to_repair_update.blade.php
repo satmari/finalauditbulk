@@ -31,7 +31,7 @@
 					<br>
 					{!! Form::open(['method'=>'POST', 'url'=>'/cb_to_repair/reparied/'.$batch->id]) !!}
 					{!! Form::hidden('id', $batch->id, ['class' => 'form-control']) !!}
-					{!! Form::submit('Carton Box Repaired', ['class' => 'btn  btn-danger /*btn-xs*/ center-block']) !!}
+					{!! Form::submit('Batch Repaired', ['class' => 'btn  btn-danger /*btn-xs*/ center-block']) !!}
 					{!! Form::close() !!}
 					@else
 					<p>Already repaired or not rejected</p>

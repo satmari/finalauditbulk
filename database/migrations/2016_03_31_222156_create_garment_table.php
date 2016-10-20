@@ -21,7 +21,7 @@ class CreateGarmentTable extends Migration {
 
 			$table->string('batch_name');
 
-			$table->string('cartonbox');	// must be nullable for bulk
+			$table->string('cartonbox')->nullable();	// must be nullable for bulk
 
 			$table->string('sku');
 

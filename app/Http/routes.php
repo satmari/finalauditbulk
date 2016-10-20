@@ -133,6 +133,8 @@ Route::get('/batch_c_bulk/delete/{id}', 'ControllerBatch_c_bulk@delete');
 Route::post('/batch_c_bulk/delete/{id}', 'ControllerBatch_c_bulk@delete');
 
 Route::get('/batch', 'ControllerBatch@index');
+Route::get('/selectproducertype', 'ControllerBatch@selectproducertype');
+Route::post('/selectproducer', 'ControllerBatch@selectproducer');
 //Route::get('/batch_new', 'ControllerBatch@create');
 //Route::post('/batch_insert', 'ControllerBatch@insert');
 Route::get('/batch/edit/{id}', 'ControllerBatch@edit');
@@ -142,6 +144,7 @@ Route::post('/batch/edit_status_update/{id}', 'ControllerBatch@edit_status_updat
 Route::get('/batch/delete/{id}', 'ControllerBatch@delete');
 Route::post('/batch/delete/{id}', 'ControllerBatch@delete');
 Route::get('/searchinteos', 'ControllerBatch@searchinteos');
+Route::post('/searchinteos', 'ControllerBatch@searchinteos');
 Route::post('/searchinteos_store', 'ControllerBatch@searchinteos_store');
 Route::get('/batch/checkbarcode/{name}', 'ControllerBatch@batch_checkbarcode');
 Route::post('/batch/checkbarcode_store', 'ControllerBatch@batch_checkbarcode_store');
@@ -153,9 +156,9 @@ Route::get('/batch/suspend/{id}', 'ControllerBatch@suspend');
 Route::get('/batch/not_checked/{id}', 'ControllerBatch@not_checked');
 
 // Batch BULK
-Route::get('/batch_bulk', 'ControllerBatch_bulk@index');
-Route::get('/selectproducertype', 'ControllerBatch_bulk@selectproducertype');
-Route::post('/selectproducer', 'ControllerBatch_bulk@selectproducer');
+Route::get('/batch_bulk', 'ControllerBatch@index'); 
+Route::get('/selectproducertype_bulk', 'ControllerBatch_bulk@selectproducertype_bulk');
+Route::post('/selectproducer_bulk', 'ControllerBatch_bulk@selectproducer_bulk');
 Route::get('/searchinteos_bulk', 'ControllerBatch_bulk@searchinteos_bulk');
 Route::post('/searchinteos_bulk', 'ControllerBatch_bulk@searchinteos_bulk');
 Route::post('/searchinteos_store_bulk', 'ControllerBatch_bulk@searchinteos_store_bulk');

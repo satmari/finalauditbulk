@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeDefectTypeTable extends Migration {
+class ChangeUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -13,13 +13,10 @@ class ChangeDefectTypeTable extends Migration {
 	public function up()
 	{
 		//
-		// composer require doctrine/dbal
-		// tip: How about deleting vendor/compiled.php manually?
-
-		Schema::table('defect_types', function ($table) {
+		Schema::table('users', function ($table) {
 
 			
-			$table->string('visible')->nullable(); //added latter
+			$table->string('company')->nullable(); //added latter
 			//$table->dropColumn('defect_type_status'); //drop
 			// $table->string('name', 50)->nullable()->change(); //change
    			//$table->renameColumn('defect_type_status', 'visible'); //rename

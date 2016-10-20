@@ -5,19 +5,18 @@
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Check BARCODE on cartobox</div>
+                <div class="panel-heading"><b>Select producer</b></div>
                 
-                {!! Form::open(['url' => '/batch/checkbarcode_store']) !!}
+                {!! Form::open(['url' => 'searchinteos_bulk']) !!}
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
-                {!! Form::hidden('batch_name', $name, ['class' => 'form-control']) !!}
-
                 <div class="panel-body">
-                    {!! Form::input('barcode', 'barcode', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
+                <p>Producer:</p>
+                    {!! Form::select('producer_id', $list_of_producers, null,['class' => 'form-control']) !!}
                 </div>
 
                 <div class="panel-body">
-                    {!! Form::submit('Check', ['class' => 'btn btn-success btn-lg center-block']) !!}
+                    {!! Form::submit('Select', ['class' => 'btn btn-success btn-lg center-block']) !!}
                 </div>
 
                 @include('errors.list')

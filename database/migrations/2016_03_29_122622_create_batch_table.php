@@ -33,7 +33,7 @@ class CreateBatchTable extends Migration {
 
 			$table->string('module_name');
 			
-			$table->string('cartonbox');						// must be nullable for bulk
+			$table->string('cartonbox')->nullable(); // must be nullable for bulk
 			$table->integer('cartonbox_qty')->nullable();
 			$table->integer('cartonbox_produced');					
 			$table->string('cartonbox_status')->nullable();
@@ -51,10 +51,15 @@ class CreateBatchTable extends Migration {
 			$table->string('checked_by_id');
 			$table->string('checked_by_name');
 		
-			$table->integer('rejected')->nullable(); // exist but ?
+			$table->integer('rejected')->nullable(); // exist but not using
 			$table->string('batch_status');
 			$table->string('batch_barcode_match')->nullable();
 			$table->string('batch_barcode')->nullable();
+
+			$table->string('repaired')->nullable(); //added latter
+			$table->string('repaired_by_id')->nullable(); //added latter
+			$table->string('repaired_by_name')->nullable(); //added latter
+			$table->dateTime('repaired_date')->nullable(); //added latter
 
 			$table->boolean('deleted')->nullable();
 			

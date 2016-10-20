@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 
 use App\Batch;
 use App\Garment;
+use App\Producer;
 use App\Defect;
 use App\Category;
 use App\Ecommerce;
@@ -17,6 +18,8 @@ use App\ActivityLog;
 use DB;
 use Auth;
 use App\User;
+
+use Session;
 
 class ControllerBatch extends Controller {
 
@@ -205,9 +208,70 @@ class ControllerBatch extends Controller {
 		}
 	}
 
-	public function searchinteos()
+	public function selectproducertype()
 	{
 		//
+		$company = Auth::user()->company;
+		// dd($company);
+
+		if ($company == 'zalli') {
+			try {
+				return view('batch.selectproducertype');
+			}
+			catch (\Illuminate\Database\QueryException $e) {
+				return view('batch.selectproducertype');
+			}
+		} elseif ($company == 'gordon') {
+
+			// Session::set('producer', 'test');
+			try {
+				return view('batch.searchinteos');
+			}
+			catch (\Illuminate\Database\QueryException $e) {
+				return view('batch.searchinteos');
+			}
+		}
+		
+	}
+
+	public function selectproducer(Request $request)
+	{
+		//
+		$this->validate($request, ['type' => 'required']);
+		$input = $request->all();
+
+		$list_of_producers = Producer::orderBy('id')->where('producer_type','=',$input['type'])->lists('producer_name','id');
+		
+		try {
+			return view('batch.selectproducer', compact('list_of_producers'));
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return view('batch.selectproducer', compact('list_of_producers'));
+		}
+	}
+
+	public function searchinteos(Request $request)
+	{
+		/*
+		//
+		try {
+			return view('batch.searchinteos');
+		}
+		catch (\Illuminate\Database\QueryException $e) {
+			return view('batch.searchinteos');
+		}
+		*/
+		if ((Session::get('producer')) == NULL) {
+			$this->validate($request, ['producer_id' => 'required']);
+			$input = $request->all();
+
+			$producer = Producer::findOrFail($input['producer_id']);
+			Session::set('producer', $producer);
+			// dd($producer." was null");
+		} else {
+			// dd($producer."was set");
+		}
+		
 		try {
 			return view('batch.searchinteos');
 		}
@@ -219,7 +283,7 @@ class ControllerBatch extends Controller {
 	public function searchinteos_store(Request $request)
 	{	
 		//
-		$this->validate($request, ['cb_code' => 'required|min:12|max:13']);
+		$this->validate($request, ['cb_code' => 'required']);
 
 		$input = $request->all(); // change use (delete or comment user Requestl; )
 		//1971107960
@@ -231,16 +295,24 @@ class ControllerBatch extends Controller {
 		$msg1 = '';
 		//$msg2 = '';
 
-		// Test database
-		// $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT [CNF_BlueBox].INTKEY,[CNF_BlueBox].IntKeyPO,[CNF_BlueBox].BlueBoxNum,[CNF_BlueBox].BoxQuant, [CNF_PO].POnum,[CNF_SKU].Variant,[CNF_SKU].ClrDesc,[CNF_STYLE].StyCod FROM [BdkCLZGtest].[dbo].[CNF_BlueBox] FULL outer join [BdkCLZGtest].[dbo].CNF_PO on [CNF_PO].INTKEY = [CNF_BlueBox].IntKeyPO FULL outer join [BdkCLZGtest].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY FULL outer join [BdkCLZGtest].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY WHERE [CNF_BlueBox].INTKEY =  :somevariable"), array(
-		// 	'somevariable' => $inteosbbcode,
-		// ));
+		// User authenticated--------------
+		if (Auth::check())
+		{
+			$name_id = Auth::user()->name_id;
+		    $username = Auth::user()->username;
+		    $company = Auth::user()->company;
+		} else {
+			$msg = 'User is not autenticated';
+			return view('batch.error',compact('msg'));
+		}
+		//---------------------------------
 
-		// Live database
-		try {
+	if ($company == 'gordon') {
+
+// Gordon Inteos Live -----------------------------
 			
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 	
-			/*[CNF_CartonBox].IntKeyPO, */
+			[CNF_CartonBox].IntKeyPO,
 			[CNF_CartonBox].BoxNum,
 			[CNF_CartonBox].BoxQuant,
 			[CNF_CartonBox].Produced,
@@ -248,22 +320,22 @@ class ControllerBatch extends Controller {
 					WHEN [CNF_CartonBox].Status = '20' THEN 'On Module' 
 					WHEN [CNF_CartonBox].Status = '99' THEN 'Completed'
 			END) AS CB_Status,
-			/*[CNF_CartonBox].Module, */
-			/*[CNF_CartonBox].BBcreated, */
-			/*[CNF_CartonBox].BBalternativ,*/
+			[CNF_CartonBox].Module, 
+			[CNF_CartonBox].BBcreated,
+			[CNF_CartonBox].BBalternativ,
 			[CNF_CartonBox].CREATEDATE,
 			[CNF_CartonBox].EDITDATE,
 
 			[CNF_BlueBox].BlueBoxNum,
 			
-			/*[CNF_PO].BoxComplete,*/
-			/*[CNF_PO].BoxQuant,*/
-			/*[CNF_PO].Line,*/
+			[CNF_PO].BoxComplete,
+			[CNF_PO].BoxQuant,
+			[CNF_PO].Line,
 			[CNF_PO].POnum,
 
-			/*[CNF_SKU].StyDesc,*/
+			[CNF_SKU].StyDesc,
 			[CNF_SKU].Variant,
-			/*[CNF_SKU].ClrDesc,*/
+			[CNF_SKU].ClrDesc,
 			
 			[CNF_STYLE].StyCod,
 			
@@ -306,14 +378,115 @@ class ControllerBatch extends Controller {
 		
 	    	$inteos_array = object_to_array($inteos);
 
-	    	if (Auth::check())
-			{
-				$name_id = Auth::user()->name_id;
-			    $username = Auth::user()->username;
+	    	$style = $inteos_array[0]['StyCod'];
+	    	$variant = $inteos_array[0]['Variant'];
+	    	$sku = $style." ".$variant;
+	    	list($color, $size) = explode('-', $variant);
+
+	    	$cartonbox = $cbcode;	//$inteos_array[0]['BoxNum'];
+	    	$cartonbox_qty = $inteos_array[0]['BoxQuant'];
+	    	$cartonbox_produced = $inteos_array[0]['Produced'];
+	    	if ($cartonbox_produced > 0) {
+				//continue
 			} else {
-				$msg = 'User is not autenticated';
-				return view('batch.error',compact('msg'));
+				$msg = 'Carton box have 0 quantity inside, KUTIJA IMA 0 KOMADA! ';
+	        	return view('batch.error', compact('msg'));
 			}
+
+			$po = $inteos_array[0]['POnum'];
+						
+	    	$module_name = $inteos_array[0]['ModNam'];
+	    	$cartonbox_start_date_tmp = $inteos_array[0]['CREATEDATE'];
+	    	$timestamp_s = strtotime($cartonbox_start_date_tmp);
+			$cartonbox_start_date = date('Y-m-d H:i:s', $timestamp_s);
+	    	$cartonbox_finish_date_tmp = $inteos_array[0]['EDITDATE'];
+	    	$timestamp_f = strtotime($cartonbox_finish_date_tmp);
+			$cartonbox_finish_date = date('Y-m-d H:i:s', $timestamp_f);
+	   		$bluebox = $inteos_array[0]['BlueBoxNum']; 	
+
+	   		$cartonbox_status = $inteos_array[0]['CB_Status'];
+	    	if ($cartonbox_status == "Completed") {
+				//continue
+			} else {
+				$msg = 'Carton box is NOT completed in Inteos (on Module), KUTIJA NIJE ZAVRSENA U MODULU! ';
+	        	return view('batch.error', compact('msg'));
+			}
+// ------------------------------------------------
+
+	} elseif ($company == 'zalli') {
+
+// Zalli Navision test ----------------------------
+	    $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
+	      	[Barcode]
+	      	,[Item No_]
+	      	,[Variant Code]
+	      	,[Color Code]
+	     	,[Size Code]
+	    	,[Pieces in box]
+	     	,[Prod_Order No_]
+	    	,[ORDER_COMMESSA]
+	    	,[Box Number]
+	     	,[Subcontractor code]
+	    	,[User ID]
+	    	,[Creation Date]
+	      
+	  		FROM [TESTnav].[dbo].[TEST zalli\$Box Lables]
+	  		WHERE [Barcode] = :somevariable"), array(
+			'somevariable' => $cbcode,
+			));
+		
+		if ($inteos) {
+			//continue
+		} else {
+        	$msg = 'Cannot find CB in Navision!';
+        	return view('batch.error', compact('msg'));
+    	}
+
+		function object_to_array($data)
+		{
+		    if (is_array($data) || is_object($data))
+		    {
+		        $result = array();
+		        foreach ($data as $key => $value)
+		        {
+		            $result[$key] = object_to_array($value);
+		        }
+		        return $result;
+		    }
+		    return $data;
+		}
+	
+    	$inteos_array = object_to_array($inteos);
+
+    	$style = $inteos_array[0]['Item No_'];
+    	$variant = $inteos_array[0]['Variant Code'];
+    	$sku = $style." ".$variant;
+    	//list($color, $size) = explode('-', $variant);
+
+    	$cartonbox = $cbcode;
+	    // $cartonbox_qty = $inteos_array[0]['BoxQuant'];
+	    $cartonbox_produced = intval($inteos_array[0]['Pieces in box']);
+	    // $cartonbox_produced = intval($inteos_array[0]['Produced']);
+
+	    // dd($cartonbox_produced);
+    	if ($cartonbox_produced > 0) {
+			//continue
+			// dd($cartonbox_produced);
+		} else {
+			$msg = 'Carton box have 0 quantity inside! ';
+        	return view('batch.error', compact('msg'));
+		}
+
+    	$color = $inteos_array[0]['Color Code'];
+    	$size = $inteos_array[0]['Size Code'];
+    	$po = $inteos_array[0]['ORDER_COMMESSA'];
+
+    	$ses_producer = Session::get('producer');
+		$module_name = $ses_producer->producer_name;
+		// $module_id = $ses_producer->producer_id;
+//-------------------------------------------------
+
+	}
 
 	    	$checked_by_name = $username;
 	    	$checked_by_id = $name_id;
@@ -326,19 +499,13 @@ class ControllerBatch extends Controller {
 			                    ->where('batch_user', '=', $batch_user)
 			                    ->count();
 
+//   Single vs bulk
+
 		   	$batch_order_num = $today_batch_byuser + 1;
 		   	$batch_order = str_pad($batch_order_num, 3, "0", STR_PAD_LEFT); 
 		   	
 	    	$batch_name = $batch_date."-".$batch_user."-".$batch_order;
-	    	
-	    	$style = $inteos_array[0]['StyCod'];
-	    	$variant = $inteos_array[0]['Variant'];
-	    	$sku = $style." ".$variant;
-	    	list($color, $size) = explode('-', $variant);
 
-	    	$po = $inteos_array[0]['POnum'];
-
-	  		//$brand = substr($po, 2, 1); // T;I;C
 			
 			$models = DB::connection('sqlsrv')->select(DB::raw("SELECT category_name,category_id,model_brand,mandatory_to_check FROM models WHERE model_name = '".$style."'"));
 			
@@ -348,44 +515,15 @@ class ControllerBatch extends Controller {
 				$category_id = $models[0]->category_id;
 				$mandatory_to_check = $models[0]->mandatory_to_check;
 			} else {
-	        	$msg = 'Cannot find Style '.$style.' in Model table, NE POSTOJI MODEL '.$style.' U TABELI!!!';
+	        	$msg = 'Cannot find Style '.$style.' in Model table!';
 	        	return view('batch.error', compact('msg'));
 	    	}
 
 	    	/* If User NotCheck */
 	    	if ($mandatory_to_check == "YES" AND $name_id == '10') {
-	    		$msg = 'This Style '.$style.' is MANDATORY to check, OVAJ MODEL SE MORA PREGLEDATI!!! ';
+	    		$msg = 'This Style '.$style.' is MANDATORY to check!';
 	        	return view('batch.error', compact('msg'));
 	    	}
-
-	    	$module_name = $inteos_array[0]['ModNam'];
-			
-	    	$cartonbox = $cbcode;	//$inteos_array[0]['BoxNum'];
-	    	$cartonbox_qty = $inteos_array[0]['BoxQuant'];
-	    	$cartonbox_produced = $inteos_array[0]['Produced'];
-	    	if ($cartonbox_produced > 0) {
-				//continue
-			} else {
-				$msg = 'Carton box have 0 quantity inside, KUTIJA IMA 0 KOMADA! ';
-	        	return view('batch.error', compact('msg'));
-			}
-
-	    	$cartonbox_status = $inteos_array[0]['CB_Status'];
-	    	if ($cartonbox_status == "Completed") {
-				//continue
-			} else {
-				$msg = 'Carton box is NOT completed in Inteos (on Module), KUTIJA NIJE ZAVRSENA U MODULU! ';
-	        	return view('batch.error', compact('msg'));
-			}
-
-	    	$cartonbox_start_date_tmp = $inteos_array[0]['CREATEDATE'];
-	    	$timestamp_s = strtotime($cartonbox_start_date_tmp);
-			$cartonbox_start_date = date('Y-m-d H:i:s', $timestamp_s);
-	    	$cartonbox_finish_date_tmp = $inteos_array[0]['EDITDATE'];
-	    	$timestamp_f = strtotime($cartonbox_finish_date_tmp);
-			$cartonbox_finish_date = date('Y-m-d H:i:s', $timestamp_f);
-
-	    	$bluebox = $inteos_array[0]['BlueBoxNum']; 	
 	    	
 	    	if ($brand == "TEZENIS") {
 				$batch_brand = "batch_ts";
@@ -405,7 +543,7 @@ class ControllerBatch extends Controller {
 		  		$batch_brand_max = $batch_brand_table[0]->batch_max;
 		  		$batch_brand_max_reject = $batch_brand_table[0]->batch_reject;
 			} else {
-		      	$msg = 'Cannot find proper line in Batch table for this Brand, OVA KOLICINA NIJE DEFINISANA U TABELI ZA OVAJ BREND!!!';
+		      	$msg = 'Cannot find proper line in Batch table for this Brand!';
 		      	return view('batch.error', compact('msg'));
 		  	}
 
@@ -413,6 +551,7 @@ class ControllerBatch extends Controller {
 			//$batch_status = "Pending"; // new batch // no Pending anymore
 			$batch_status = "Suspend"; // new batch have Suspend status
 
+/*
 			// Samples Ecommerce
 			$ecommerce_sample = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM ecommerce WHERE style = '".$style."' AND size = '".$size."' AND color = '".$color."' "));
 			
@@ -490,7 +629,7 @@ class ControllerBatch extends Controller {
 				$msg = $msg.' This SKU not exist in sizeset table, OVAJ SKU NE POSTOJI U Sizeset TABELI !!!';
 		 	 	// return view('batch.error', compact('msg'));
 			}
-			
+*/
 			// Record Batch
 			try {
 				$table = new Batch;
@@ -515,14 +654,14 @@ class ControllerBatch extends Controller {
 
 				$table->module_name = $module_name;
 				
-				$table->cartonbox = $cartonbox;
-				$table->cartonbox_qty = $cartonbox_qty;
+				// $table->cartonbox = $cartonbox;
+				// $table->cartonbox_qty = $cartonbox_qty;
 				$table->cartonbox_produced = $cartonbox_produced;
-				$table->cartonbox_status = $cartonbox_status;
-				$table->cartonbox_start_date = $cartonbox_start_date;
-				$table->cartonbox_finish_date = $cartonbox_finish_date;
+				// $table->cartonbox_status = $cartonbox_status;
+				// $table->cartonbox_start_date = $cartonbox_start_date;
+				// $table->cartonbox_finish_date = $cartonbox_finish_date;
 
-				$table->bluebox = $bluebox;
+				// $table->bluebox = $bluebox;
 				
 				$table->batch_qty = $batch_qty;
 				$table->batch_brand_id = $batch_brand_id;
@@ -539,7 +678,7 @@ class ControllerBatch extends Controller {
 				$table->save();
 			}
 			catch (\Illuminate\Database\QueryException $e) {
-				$msg = "Problem to save batch in table";
+				$msg = "Problem to save batch in table!";
 				return view('batch.error',compact('msg'));
 			}
 
@@ -573,7 +712,7 @@ class ControllerBatch extends Controller {
 					$table->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
-					$msg = "Problem to save garment in table";
+					$msg = "Problem to save garment in table!";
 					return view('batch.error',compact('msg'));
 				}
 			}
@@ -586,12 +725,12 @@ class ControllerBatch extends Controller {
 			
 			return Redirect::to('/batch/checkbarcode/'.$batch_name);
 
-		}
-		catch (\Illuminate\Database\QueryException $e) {
-			//return Redirect::to('/searchinteos');
-			$msg = "Problem to save batch in table. try agan.";
-			return view('batch.error',compact('msg'));
-		}	
+		// }
+		// catch (\Illuminate\Database\QueryException $e) {
+		// 	//return Redirect::to('/searchinteos');
+		// 	$msg = "Problem to save batch in table. try agan.";
+		// 	return view('batch.error',compact('msg'));
+		// }	
 	}
 
 	public function batch_checkbarcode ($name)
@@ -633,17 +772,17 @@ class ControllerBatch extends Controller {
 					if ($barcode[0]->Cod_Bar) {
 					$barcode_indb = $barcode[0]->Cod_Bar;
 					} else {
-						$msg = "Item is not in Cartiglio table, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
+						$msg = "Item is not in Cartiglio table! (Call IT department)";
 						return view('batch.error',compact('msg'));
 					}
 				}
 				else {
-					$msg = "Item is not in Cartiglio table, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
+					$msg = "Item is not in Cartiglio table! (Call IT department)";
 					return view('batch.error',compact('msg'));
 				}
 			   	
 			} catch (Exception $e) {
-			    $msg = "Item is not in Cartiglio table, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
+			    $msg = "Item is not in Cartiglio table! (Call IT department)";
 				return view('batch.error',compact('msg'));
 			}
 
@@ -662,12 +801,12 @@ class ControllerBatch extends Controller {
 
 		}
 		catch (\Illuminate\Database\QueryException $e) {
-			$msg = "Barcode not found in cartiglio database, PROIZVOD NE POSTOJI U Cartiglio BAZI!!! (Javi IT sektoru)";
+			$msg = "Barcode not found in cartiglio database! (Call IT department))";
 			return view('batch.error',compact('msg'));
 		}
 
 		if ($barcode_insert != $barcode_indb) {
-			$msg = "Barcode not match with barcode from cartiglio database, BARKODOVI SE NE SLAZU! ";
+			$msg = "Barcode not match with barcode from cartiglio database!";
 			return view('batch.error_continue',compact('msg','batch_name'));
 		}
 
@@ -747,7 +886,7 @@ class ControllerBatch extends Controller {
 			return Redirect::to('/batch/accept/'.$id);
 		}
 	}
-
+/*
 	public function acceptwithreservetion($id) 
 	{
 		try {
@@ -760,7 +899,7 @@ class ControllerBatch extends Controller {
 			return Redirect::to('/batch/acceptwithreservetion/'.$id);
 		}
 	}
-
+*/
 	public function edit_status ($id)
 	{
 		$batch = Batch::findOrFail($id);

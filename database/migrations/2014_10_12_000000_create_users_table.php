@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration {
 			$table->string('password', 60);
 			$table->string('username');
 			$table->string('name_id');
+			$table->string('company')->nullable(); //added latter
 			$table->rememberToken();
 			$table->timestamps();
 		});

@@ -24,7 +24,7 @@
                 <hr>
                 <div class="panel-body">
                     <div class="">
-                        <a href="{{url('/activity')}}" class="btn btn-default">Back</a>
+                        <a href="{{url('/')}}" class="btn btn-default">Back</a>
                     </div>
                 </div>
             </div>

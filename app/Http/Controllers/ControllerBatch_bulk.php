@@ -7,10 +7,11 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use App\Batch;
+use App\Garment;
 use App\Batch_bulk;
 use App\Garment_bulk;
 use App\Producer;
-use App\Garment;
 use App\Defect;
 use App\Category;
 use App\Ecommerce;
@@ -64,56 +65,56 @@ class ControllerBatch_bulk extends Controller {
 
 			     $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT 
 																*,
-																(SELECT COUNT(garment_bulk.batch_name) FROM garment_bulk WHERE garment_bulk.batch_name = batch_bulk.batch_name AND garment_bulk.garment_status = 'Rejected') as RejectedCount
-																FROM batch_bulk 
-																WHERE (batch_bulk.deleted = 0) AND created_at >= DATEADD(day,-30,GETDATE())
-																ORDER BY batch_bulk.id desc"));
+																(SELECT COUNT(garment.batch_name) FROM garment WHERE garment.batch_name = batch.batch_name AND garment.garment_status = 'Rejected') as RejectedCount
+																FROM batch 
+																WHERE (batch.deleted = 0) AND created_at >= DATEADD(day,-30,GETDATE())
+																ORDER BY batch.id desc"));
 
 			    $batch_date = date("Ymd");
 	    		
-			    $total_checked_batch = DB::table('batch_bulk')
+			    $total_checked_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('deleted', '=', 0)
 			                    ->where('batch_status', '!=', 'Not checked')
 			                    ->count();
 				// dd($total_checked_batch);
 
-			    $total_accept_batch = DB::table('batch_bulk')
+			    $total_accept_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('deleted', '=', 0)
 			                    ->where('batch_status', '=', 'Accept')
 			                    ->count();
 				// dd($total_accept_batch);
 
-			    $total_reject_batch = DB::table('batch_bulk')
+			    $total_reject_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('deleted', '=', 0)
 			                    ->where('batch_status', '=', 'Reject')
 			                    ->count();
 				// dd($total_reject_batch);
 
-			    $total_suspend_batch = DB::table('batch_bulk')
+			    $total_suspend_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('deleted', '=', 0)
 			                    ->where('batch_status', '=', 'Suspend')
 			                    ->count();
 				// dd($total_suspend_batch);
 
-			    $total_not_checked_batch = DB::table('batch_bulk')
+			    $total_not_checked_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('deleted', '=', 0)
 			                    ->where('batch_status', '=', 'Not checked')
 			                    ->count();
 				// dd($total_not_checked_batch);
 
-				$total_garments_today = DB::table('batch_bulk')
+				$total_garments_today = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('deleted', '=', 0)
 			                    ->where('batch_status', '!=', 'Not checked')
 			                    ->sum('batch_qty');
 				// dd($total_suspend_batch);		
 
-				$total_garments_not_today = DB::table('batch_bulk')
+				$total_garments_not_today = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('deleted', '=', 0)
 			                    ->where('batch_status', '=', 'Not checked')
@@ -128,13 +129,13 @@ class ControllerBatch_bulk extends Controller {
 				
 			    $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT 
 																*,
-																(SELECT COUNT(garment_bulk.batch_name) FROM garment_bulk WHERE garment_bulk.batch_name = batch_bulk.batch_name AND garment_bulk.garment_status = 'Rejected') as RejectedCount
-																FROM batch_bulk 
-																WHERE (batch_bulk.batch_user = '".$name_id."') AND 
-																(batch_bulk.deleted = 0) AND 
-																((CAST(batch_bulk.created_at AS DATE) = CAST(GETDATE() AS DATE)) OR
-																((batch_bulk.batch_status = 'Pending') OR (batch_bulk.batch_status = 'Suspend')))
-																ORDER BY batch_bulk.id asc"));
+																(SELECT COUNT(garment.batch_name) FROM garment WHERE garment.batch_name = batch.batch_name AND garment.garment_status = 'Rejected') as RejectedCount
+																FROM batch 
+																WHERE (batch.batch_user = '".$name_id."') AND 
+																(batch.deleted = 0) AND 
+																((CAST(batch.created_at AS DATE) = CAST(GETDATE() AS DATE)) OR
+																((batch.batch_status = 'Pending') OR (batch.batch_status = 'Suspend')))
+																ORDER BY batch.id asc"));
 				
 				/* // with mandatory to check
 			    $batch = DB::connection('sqlsrv')->select(DB::raw("SELECT 
@@ -157,7 +158,7 @@ class ControllerBatch_bulk extends Controller {
 			    $batch_date = date("Ymd");
 	    		$batch_user = $name_id;
 
-			    $total_checked_batch = DB::table('batch_bulk')
+			    $total_checked_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('batch_user', '=', $batch_user)
 			                    ->where('batch_status', '!=', 'Not checked')
@@ -165,7 +166,7 @@ class ControllerBatch_bulk extends Controller {
 			                    ->count();
 				// dd($total_checked_batch);
 
-			    $total_accept_batch = DB::table('batch_bulk')
+			    $total_accept_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('batch_user', '=', $batch_user)
 			                    ->where('deleted', '=', 0)
@@ -173,7 +174,7 @@ class ControllerBatch_bulk extends Controller {
 			                    ->count();
 				// dd($total_accept_batch);
 
-			    $total_reject_batch = DB::table('batch_bulk')
+			    $total_reject_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('batch_user', '=', $batch_user)
 			                    ->where('deleted', '=', 0)
@@ -181,7 +182,7 @@ class ControllerBatch_bulk extends Controller {
 			                    ->count();
 				// dd($total_reject_batch);
 
-			    $total_suspend_batch = DB::table('batch_bulk')
+			    $total_suspend_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('batch_user', '=', $batch_user)
 			                    ->where('deleted', '=', 0)
@@ -189,7 +190,7 @@ class ControllerBatch_bulk extends Controller {
 			                    ->count();
 				// dd($total_suspend_batch);
 
-			    $total_not_checked_batch = DB::table('batch_bulk')
+			    $total_not_checked_batch = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('batch_user', '=', $batch_user)
 			                    ->where('deleted', '=', 0)
@@ -197,7 +198,7 @@ class ControllerBatch_bulk extends Controller {
 			                    ->count();
 				// dd($total_not_checked_batch);
 
-			    $total_garments_today = DB::table('batch_bulk')
+			    $total_garments_today = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('batch_user', '=', $batch_user)
 			                    ->where('deleted', '=', 0)
@@ -205,7 +206,7 @@ class ControllerBatch_bulk extends Controller {
 			                    ->sum('batch_qty');
 				// dd($total_suspend_batch);
 
-			    $total_garments_not_today = DB::table('batch_bulk')
+			    $total_garments_not_today = DB::table('batch')
 			                    ->where('batch_date', '=', $batch_date)
 			                    ->where('batch_user', '=', $batch_user)
 			                    ->where('deleted', '=', 0)
@@ -219,28 +220,43 @@ class ControllerBatch_bulk extends Controller {
 			                    ->count();
 			    //dd($activity);
 
-				return view('batch_bulk.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch', 'total_not_checked_batch', 'total_garments_today','total_garments_not_today','activity'));
+				return view('batch.index', compact('batch','total_checked_batch','total_accept_batch','total_reject_batch','total_suspend_batch', 'total_not_checked_batch', 'total_garments_today','total_garments_not_today','activity'));
 			}
 			
 			
 		}
 		catch (\Illuminate\Database\QueryException $e) {
-			return Redirect::to('/batch_bulk');
+			return Redirect::to('/batch');
 		}
 	}
 
-	public function selectproducertype()
+	public function selectproducertype_bulk()
 	{
 		//
-		try {
-			return view('batch_bulk.selectproducertype');
+		$company = Auth::user()->company;
+		// dd($company);
+
+		if ($company == 'zalli') {
+			try {
+				return view('batch_bulk.selectproducertype_bulk');
+			}
+			catch (\Illuminate\Database\QueryException $e) {
+				return view('batch_bulk.selectproducertype_bulk');
+			}
+		} elseif ($company == 'gordon') {
+
+			// Session::set('producer', 'test');
+			try {
+				return view('batch_bulk.searchinteos');
+			}
+			catch (\Illuminate\Database\QueryException $e) {
+				return view('batch_bulk.searchinteos');
+			}
 		}
-		catch (\Illuminate\Database\QueryException $e) {
-			return view('batch_bulk.selectproducertype');
-		}
+
 	}
 
-	public function selectproducer(Request $request)
+	public function selectproducer_bulk(Request $request)
 	{
 		//
 		$this->validate($request, ['type' => 'required']);
@@ -249,16 +265,15 @@ class ControllerBatch_bulk extends Controller {
 		$list_of_producers = Producer::orderBy('id')->where('producer_type','=',$input['type'])->lists('producer_name','id');
 		
 		try {
-			return view('batch_bulk.selectproducer', compact('list_of_producers'));
+			return view('batch_bulk.selectproducer_bulk', compact('list_of_producers'));
 		}
 		catch (\Illuminate\Database\QueryException $e) {
-			return view('batch_bulk.selectproducer', compact('list_of_producers'));
+			return view('batch_bulk.selectproducer_bulk', compact('list_of_producers'));
 		}
 	}
 
 	public function searchinteos_bulk(Request $request)
 	{	
-		
 		if ((Session::get('producer')) == NULL) {
 			$this->validate($request, ['producer_id' => 'required']);
 			$input = $request->all();
@@ -304,15 +319,123 @@ class ControllerBatch_bulk extends Controller {
 		{
 			$name_id = Auth::user()->name_id;
 		    $username = Auth::user()->username;
+		    $company = Auth::user()->company;
 		} else {
 			$msg = 'User is not autenticated';
-			return view('batch_bulk.error',compact('msg'));
+			return view('batch.error',compact('msg'));
 		}
 		//---------------------------------
 
-/*	
-	// Zalli Navision test ----------------------------
-	    $inteos = DB::connection('sqlsrv3')->select(DB::raw("SELECT 
+	if ($company == 'gordon') {
+
+// Gordon Inteos Live -----------------------------
+			
+			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 	
+			[CNF_CartonBox].IntKeyPO, 
+			[CNF_CartonBox].BoxNum,
+			[CNF_CartonBox].BoxQuant,
+			[CNF_CartonBox].Produced,
+			(CASE	WHEN [CNF_CartonBox].Status = '0' THEN 'New' 
+					WHEN [CNF_CartonBox].Status = '20' THEN 'On Module' 
+					WHEN [CNF_CartonBox].Status = '99' THEN 'Completed'
+			END) AS CB_Status,
+			[CNF_CartonBox].Module, 
+			[CNF_CartonBox].BBcreated, 
+			[CNF_CartonBox].BBalternativ,
+			[CNF_CartonBox].CREATEDATE,
+			[CNF_CartonBox].EDITDATE,
+
+			[CNF_BlueBox].BlueBoxNum,
+			
+			[CNF_PO].BoxComplete,
+			[CNF_PO].BoxQuant,
+			[CNF_PO].Line,
+			[CNF_PO].POnum,
+
+			[CNF_SKU].StyDesc,
+			[CNF_SKU].Variant,
+			[CNF_SKU].ClrDesc,
+			
+			[CNF_STYLE].StyCod,
+			
+			[CNF_Modules].ModNam
+			
+			FROM [BdkCLZG].[dbo].[CNF_CartonBox]
+
+			FULL outer join [BdkCLZG].[dbo].[CNF_PO] on [CNF_PO].INTKEY = [CNF_CartonBox].IntKeyPO
+			FULL outer join [BdkCLZG].[dbo].[CNF_BlueBox] on [CNF_BlueBox].INTKEY = [CNF_CartonBox].BBalternativ
+			FULL outer join [BdkCLZG].[dbo].[CNF_Modules] on [CNF_Modules].Module = [CNF_CartonBox].Module
+			FULL outer join [BdkCLZG].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY
+			FULL outer join [BdkCLZG].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY
+			
+			where BoxNum = :somevariable"), array(
+			'somevariable' => $cbcode,
+			));
+
+			// dd($inteos);
+			
+			if ($inteos) {
+				//continue
+			} else {
+	        	$msg = 'Cannot find CB in Inteos, NE POSTOJI KARTONSKA KUTIJA U INTEOSU !';
+	        	return view('batch.error', compact('msg'));
+	    	}
+
+			function object_to_array($data)
+			{
+			    if (is_array($data) || is_object($data))
+			    {
+			        $result = array();
+			        foreach ($data as $key => $value)
+			        {
+			            $result[$key] = object_to_array($value);
+			        }
+			        return $result;
+			    }
+			    return $data;
+			}
+		
+	    	$inteos_array = object_to_array($inteos);
+
+	    	$style = $inteos_array[0]['StyCod'];
+	    	$variant = $inteos_array[0]['Variant'];
+	    	$sku = $style." ".$variant;
+	    	list($color, $size) = explode('-', $variant);
+
+	    	$cartonbox = $cbcode;	//$inteos_array[0]['BoxNum'];
+	    	$cartonbox_qty = $inteos_array[0]['BoxQuant'];
+	    	$cartonbox_produced = $inteos_array[0]['Produced'];
+	    	if ($cartonbox_produced > 0) {
+				//continue
+			} else {
+				$msg = 'Carton box have 0 quantity inside, KUTIJA IMA 0 KOMADA! ';
+	        	return view('batch.error', compact('msg'));
+			}
+
+			$po = $inteos_array[0]['POnum'];
+
+			$module_name = $inteos_array[0]['ModNam'];
+	    	$cartonbox_start_date_tmp = $inteos_array[0]['CREATEDATE'];
+	    	$timestamp_s = strtotime($cartonbox_start_date_tmp);
+			$cartonbox_start_date = date('Y-m-d H:i:s', $timestamp_s);
+	    	$cartonbox_finish_date_tmp = $inteos_array[0]['EDITDATE'];
+	    	$timestamp_f = strtotime($cartonbox_finish_date_tmp);
+			$cartonbox_finish_date = date('Y-m-d H:i:s', $timestamp_f);
+	   		$bluebox = $inteos_array[0]['BlueBoxNum']; 	
+
+	   		$cartonbox_status = $inteos_array[0]['CB_Status'];
+	    	if ($cartonbox_status == "Completed") {
+				//continue
+			} else {
+				$msg = 'Carton box is NOT completed in Inteos (on Module), KUTIJA NIJE ZAVRSENA U MODULU! ';
+	        	return view('batch.error', compact('msg'));
+			}		
+// ------------------------------------------------
+	
+	} elseif ($company == 'zalli') {
+
+// Zalli Navision test ----------------------------
+	    $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
 	      	[Barcode]
 	      	,[Item No_]
 	      	,[Variant Code]
@@ -326,7 +449,7 @@ class ControllerBatch_bulk extends Controller {
 	    	,[User ID]
 	    	,[Creation Date]
 	      
-	  		FROM [navdb3].[dbo].[ZALLI_live\$Box Lables]
+	  		FROM [TESTnav].[dbo].[TEST zalli\$Box Lables]
 	  		WHERE [Barcode] = :somevariable"), array(
 			'somevariable' => $cbcode,
 			));
@@ -335,7 +458,7 @@ class ControllerBatch_bulk extends Controller {
 			//continue
 		} else {
         	$msg = 'Cannot find CB in Navision, NE POSTOJI KARTONSKA KUTIJA !';
-        	return view('batch_bulk.error', compact('msg'));
+        	return view('batch.error', compact('msg'));
     	}
 
 		function object_to_array($data)
@@ -370,131 +493,41 @@ class ControllerBatch_bulk extends Controller {
 			// dd($cartonbox_produced);
 		} else {
 			$msg = 'Carton box have 0 quantity inside, KUTIJA IMA 0 KOMADA! ';
-        	return view('batch_bulk.error', compact('msg'));
+        	return view('batch.error', compact('msg'));
 		}
 
     	$color = $inteos_array[0]['Color Code'];
     	$size = $inteos_array[0]['Size Code'];
     	$po = $inteos_array[0]['ORDER_COMMESSA'];
-    //-------------------------------------------------
-*/    
 
-    // Gordon Inteos Live -----------------------------
-    	$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 	
-			/*[CNF_CartonBox].IntKeyPO, */
-			[CNF_CartonBox].BoxNum,
-			[CNF_CartonBox].BoxQuant,
-			[CNF_CartonBox].Produced,
-			(CASE	WHEN [CNF_CartonBox].Status = '0' THEN 'New' 
-					WHEN [CNF_CartonBox].Status = '20' THEN 'On Module' 
-					WHEN [CNF_CartonBox].Status = '99' THEN 'Completed'
-			END) AS CB_Status,
-			/*[CNF_CartonBox].Module, */
-			/*[CNF_CartonBox].BBcreated, */
-			/*[CNF_CartonBox].BBalternativ,*/
-			[CNF_CartonBox].CREATEDATE,
-			[CNF_CartonBox].EDITDATE,
+    	$ses_producer = Session::get('producer');
+		$module_name = $ses_producer->producer_name;
+		// $module_id = $ses_producer->producer_id;
+//-------------------------------------------------
+    
+	}
 
-			[CNF_BlueBox].BlueBoxNum,
-			
-			/*[CNF_PO].BoxComplete,*/
-			/*[CNF_PO].BoxQuant,*/
-			/*[CNF_PO].Line,*/
-			[CNF_PO].POnum,
+		$checked_by_name = $username;
+    	$checked_by_id = $name_id;
+    	//dd($name_id);
+    	$batch_date = date("Ymd");
+    	$batch_user = $name_id;
 
-			/*[CNF_SKU].StyDesc,*/
-			[CNF_SKU].Variant,
-			/*[CNF_SKU].ClrDesc,*/
-			
-			[CNF_STYLE].StyCod,
-			
-			[CNF_Modules].ModNam
-			
-			FROM [BdkCLZG].[dbo].[CNF_CartonBox]
-
-			FULL outer join [BdkCLZG].[dbo].[CNF_PO] on [CNF_PO].INTKEY = [CNF_CartonBox].IntKeyPO
-			FULL outer join [BdkCLZG].[dbo].[CNF_BlueBox] on [CNF_BlueBox].INTKEY = [CNF_CartonBox].BBalternativ
-			FULL outer join [BdkCLZG].[dbo].[CNF_Modules] on [CNF_Modules].Module = [CNF_CartonBox].Module
-			FULL outer join [BdkCLZG].[dbo].[CNF_SKU] on [CNF_SKU].INTKEY = [CNF_PO].SKUKEY
-			FULL outer join [BdkCLZG].[dbo].[CNF_STYLE] on [CNF_STYLE].INTKEY = [CNF_SKU].STYKEY
-			
-			where BoxNum = :somevariable"), array(
-			'somevariable' => $cbcode,
-		));
-
-		if ($inteos) {
-			//continue
-		} else {
-        	$msg = 'Cannot find CB in Inteos, NE POSTOJI KARTONSKA KUTIJA !';
-        	return view('batch_bulk.error', compact('msg'));
-    	}
+    	$today_batch_byuser = DB::table('batch')
+		                    ->where('batch_date', '=', $batch_date)
+		                    ->where('batch_user', '=', $batch_user)
+		                    ->count();
 		
-		function object_to_array($data)
-		{
-		    if (is_array($data) || is_object($data))
-		    {
-		        $result = array();
-		        foreach ($data as $key => $value)
-		        {
-		            $result[$key] = object_to_array($value);
-		        }
-		        return $result;
-		    }
-		    return $data;
-		}
-	
-    	$inteos_array = object_to_array($inteos);
-
-    	$style = $inteos_array[0]['StyCod'];
-    	$variant = $inteos_array[0]['Variant'];
-    	$sku = $style." ".$variant;
-    	list($color, $size) = explode('-', $variant);
-
-    	$cartonbox = $cbcode;
-	    // $cartonbox_qty = $inteos_array[0]['BoxQuant'];
-	    // $cartonbox_produced = intval($inteos_array[0]['Pieces in box']);
-	    $cartonbox_produced = intval($inteos_array[0]['Produced']);
-
-	    // dd($cartonbox_produced);
-    	if ($cartonbox_produced > 0) {
-			//continue
-			// dd($cartonbox_produced);
-		} else {
-			$msg = 'Carton box have 0 quantity inside, KUTIJA IMA 0 KOMADA! ';
-        	return view('batch_bulk.error', compact('msg'));
-		}
-
-    	// $color = $inteos_array[0]['Color Code'];
-    	// $size = $inteos_array[0]['Size Code'];
-    	$po = $inteos_array[0]['POnum'];
-    // ------------------------------------------------
-
-    	//Get from session-----------------
+		//Get from session-----------------
 		$ses_style = Session::get('style');
 	    $ses_size = Session::get('size');
 	    $ses_color = Session::get('color');
 	    $ses_batch_name = Session::get('batch_name');
-	    $ses_producer = Session::get('producer');
+		// --------------------------------
 
-		$module_name = $ses_producer->producer_name;
-		// $module_id = $ses_producer->producer_id;
-
-		//---------------------------------
 
 	    if (($ses_style == NULL) AND ($ses_size == NULL) AND ($ses_color == NULL) AND ($ses_batch_name == NULL)) {
 	    	// first box and new batch
-
-	    	// check user
-			$checked_by_name = $username;
-	    	$checked_by_id = $name_id;
-	    	//dd($name_id);
-	    	$batch_date = date("Ymd");
-	    	$batch_user = $name_id;
-
-	    	$today_batch_byuser = DB::table('batch_bulk')
-			                    ->where('batch_date', '=', $batch_date)
-			                    ->where('batch_user', '=', $batch_user)
-			                    ->count();
 
 		   	$batch_order_num = $today_batch_byuser + 1;
 		   	$batch_order = str_pad($batch_order_num, 3, "0", STR_PAD_LEFT); 
@@ -511,13 +544,13 @@ class ControllerBatch_bulk extends Controller {
 				$mandatory_to_check = $models[0]->mandatory_to_check;
 			} else {
 	        	$msg = 'Cannot find Style '.$style.' in Model table, NE POSTOJI MODEL '.$style.' U TABELI!!!';
-	        	return view('batch_bulk.error', compact('msg'));
+	        	return view('batch.error', compact('msg'));
 	    	}
 
 	    	/* If User NotCheck */
 	    	if ($mandatory_to_check == "YES" AND $name_id == '10') {
-	    		$msg = 'This Style '.$style.' is MANDATORY to check, OVAJ MODEL SE MORA PREGLEDATI!!! ';
-		    	return view('batch_bulk.error', compact('msg'));
+	    		$msg = 'This Style '.$style.' is MANDATORY to check!';
+		    	return view('batch.error', compact('msg'));
 	    	}
 
 	    	if ($brand == "TEZENIS") {
@@ -538,14 +571,15 @@ class ControllerBatch_bulk extends Controller {
 		  		$batch_brand_max = $batch_brand_table[0]->batch_max;
 		  		$batch_brand_max_reject = $batch_brand_table[0]->batch_reject;
 			} else {
-		      	$msg = 'Cannot find proper line in Batch table for this Brand, OVA KOLICINA NIJE DEFINISANA U TABELI ZA OVAJ BREND!!!';
-		      	return view('batch_bulk.error', compact('msg'));
+		      	$msg = 'Cannot find proper line in Batch table for this Brand!';
+		      	return view('batch.error', compact('msg'));
 		  	}
 
 			$rejected = 0; // exist but we are not using
 			//$batch_status = "Pending"; // new batch // no Pending anymore
 			$batch_status = "Suspend"; // new batch have Suspend status
 
+			
 			// Record Batch Cartonbox-------
 				try {
 					$table = new BatchCartonbox;
@@ -557,13 +591,13 @@ class ControllerBatch_bulk extends Controller {
 				}
 				catch (\Illuminate\Database\QueryException $e) {
 					$msg = "Problem to save in batch_cartonbox table";
-					return view('batch_bulk.error',compact('msg'));
+					return view('batch.error',compact('msg'));
 				}
 			//----------------------------
 
 			// Record Batch---------------
 				try {
-					$table = new Batch_bulk;
+					$table = new Batch;
 
 					$table->checked_by_name = $checked_by_name;
 					$table->checked_by_id = $checked_by_id;
@@ -614,8 +648,9 @@ class ControllerBatch_bulk extends Controller {
 				}
 			//--------------------
 
-			// Record Garmant -------------
-				for ($i=1; $i < $batch_qty + 1 ; $i++) { 
+			// Record Garment -------------
+				/*
+				for ($i=1; $i < $batch_qty + 1 ; $i++) {
 					
 					$times = $i;
 					// dd($i);
@@ -625,7 +660,7 @@ class ControllerBatch_bulk extends Controller {
 					$garment_status = "Accepted";
 
 					try {
-						$table = new Garment_bulk;
+						$table = new Garment;
 
 						$table->garment_name = $garment_name;
 						$table->garment_order = $garment_order;
@@ -642,37 +677,37 @@ class ControllerBatch_bulk extends Controller {
 						$table->save();
 					}
 					catch (\Illuminate\Database\QueryException $e) {
-						$msg = "Problem to save garment in table";
-						return view('batch_bulk.error',compact('msg'));
+						$msg = "Problem to save garment in table!";
+						return view('batch.error',compact('msg'));
 					}
 				}
+				*/
 			//-----------------------------
 
-			// Set session
+			// Set session for garment
+			Session::set('batch_date', $batch_date );
+			Session::set('batch_user', $batch_user );
+			Session::set('batch_order', $batch_order );
+			Session::set('batch_qty', $batch_qty );
+			Session::set('sku', $sku );
+			Session::set('po', $po );
+			Session::set('brand', $brand );
+			Session::set('category_id', $category_id );
+			Session::set('category_name', $category_name );
+
+			// Set session for first box
 	    	Session::set('style', $style );
 	    	Session::set('size', $size );
 	    	Session::set('color', $color );
 	    	Session::set('batch_name', $batch_name);
 
-	    	return view('batch_bulk.searchinteos');
+	    	return view('batch_bulk.searchinteos'); //must be bulk
 
 	    } else {
 
 	    	if (($ses_style == $style) AND ($ses_size == $size) AND ($ses_color == $color) AND ($batch_name = $ses_batch_name)) {
 	    		//existing SKU and batch
-
-	    		// check user
-				$checked_by_name = $username;
-		    	$checked_by_id = $name_id;
-		    	//dd($name_id);
-		    	$batch_date = date("Ymd");
-		    	$batch_user = $name_id;
-
-		    	$today_batch_byuser = DB::table('batch_bulk')
-				                    ->where('batch_date', '=', $batch_date)
-				                    ->where('batch_user', '=', $batch_user)
-				                    ->count();
-
+	    		
 			   	$batch_order_num = $today_batch_byuser;
 			   	$batch_order = str_pad($batch_order_num, 3, "0", STR_PAD_LEFT); 
 
@@ -698,13 +733,13 @@ class ControllerBatch_bulk extends Controller {
 					$category_id = $models[0]->category_id;
 					$mandatory_to_check = $models[0]->mandatory_to_check;
 				} else {
-		        	$msg = 'Cannot find Style '.$style.' in Model table, NE POSTOJI MODEL '.$style.' U TABELI!!!';
-		        	return view('batch_bulk.error', compact('msg'));
+		        	$msg = 'Cannot find Style '.$style.' in Model table!';
+		        	return view('batch.error', compact('msg'));
 		    	}
 
 		    	/* If User NotCheck */
 		    	if ($mandatory_to_check == "YES" AND $name_id == '10') {
-		    		$msg = 'This Style '.$style.' is MANDATORY to check, OVAJ MODEL SE MORA PREGLEDATI!!! ';
+		    		$msg = 'This Style '.$style.' is MANDATORY to check!';
 			    	return view('batch_bulk.error', compact('msg'));
 		    	}
 
@@ -717,13 +752,11 @@ class ControllerBatch_bulk extends Controller {
 				}
 		    	
 				//////////////////////////
-				$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT id, cartonbox_produced FROM batch_bulk WHERE batch_name = '".$ses_batch_name."'"));
-				// dd($batch);
-
+				$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT id, cartonbox_produced FROM batch WHERE batch_name = '".$ses_batch_name."'"));
+				
 				$cartonbox_produced_existing = $batch[0]->cartonbox_produced;
-
 				$cartonbox_produced_new = $cartonbox_produced_existing + $cartonbox_produced;
-				//////////////////////////
+				
 
 		    	$batch_brand_table = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM ".$batch_brand." WHERE batch_min <= '".$cartonbox_produced_new."' AND batch_max >= '".$cartonbox_produced_new."'"));
 				// dd($batch_brand_table);
@@ -735,8 +768,8 @@ class ControllerBatch_bulk extends Controller {
 			  		$batch_brand_max = $batch_brand_table[0]->batch_max;
 			  		$batch_brand_max_reject = $batch_brand_table[0]->batch_reject;
 				} else {
-			      	$msg = 'Cannot find proper line in Batch table for this Brand, OVA KOLICINA NIJE DEFINISANA U TABELI ZA OVAJ BREND!!!';
-			      	return view('batch_bulk.error', compact('msg'));
+			      	$msg = 'Cannot find proper line in Batch table for this Brand!';
+			      	return view('batch.error', compact('msg'));
 			  	}
 
 				$rejected = 0; // exist but we are not using
@@ -754,13 +787,13 @@ class ControllerBatch_bulk extends Controller {
 					$table->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
-					$msg = "Problem to save in batch_cartonbox table";
-					return view('batch_bulk.error',compact('msg'));
+					$msg = "Problem to save in batch_cartonbox table!!";
+					return view('batch.error',compact('msg'));
 				}			
 					
 				// Update Batch-------
 					try {
-						$batch = Batch_bulk::findOrFail($batch[0]->id);
+						$batch = Batch::findOrFail($batch[0]->id);
 						$batch->cartonbox_produced = $cartonbox_produced_new;
 
 						$batch->batch_qty = $batch_qty;
@@ -772,55 +805,69 @@ class ControllerBatch_bulk extends Controller {
 						$batch->save();
 					}
 					catch (\Illuminate\Database\QueryException $e) {
-						$msg = "Problem to save batch in table";
+						$msg = "Problem to save batch in table!!";
 						return view('batch.error',compact('msg'));
 					}
 				//--------------------
 
-				// But continue from already started number
-				$garments_by_batch = DB::table('garment_bulk')
-			                    ->where('batch_name', '=', $batch_name)
-			                    ->count();
-			    //$garments_by_batch = $garments_by_batch + 1;
+				// Record Garment -------------
+					/*
+					// But continue from already started number
+					$garments_by_batch = DB::table('garment')
+				                    ->where('batch_name', '=', $batch_name)
+				                    ->count();
+				    //$garments_by_batch = $garments_by_batch + 1;
 
-			   	for ($i=$garments_by_batch + 1; $i < $batch_qty+$garments_by_batch+1 ; $i++) { 
-					
-					$times = $i;
-					// dd($i);
+				   	for ($i=$garments_by_batch + 1; $i < $batch_qty+$garments_by_batch+1 ; $i++) { 
+						
+						$times = $i;
+						// dd($i);
 
-					$garment_order = str_pad($i, 2, "0", STR_PAD_LEFT);
-					$garment_name = $batch_date."-".$batch_user."-".$batch_order."-B"."-".$garment_order;
-					$garment_status = "Accepted";
+						$garment_order = str_pad($i, 2, "0", STR_PAD_LEFT);
+						$garment_name = $batch_date."-".$batch_user."-".$batch_order."-B"."-".$garment_order;
+						$garment_status = "Accepted";
 
-					try {
-						$table = new Garment_bulk;
+						try {
+							$table = new Garment;
 
-						$table->garment_name = $garment_name;
-						$table->garment_order = $garment_order;
-						$table->batch_name = $batch_name;
-						$table->cartonbox = $cartonbox;
-						$table->sku = $sku;
-						$table->po = $po;
-						$table->brand = $brand;
-						$table->category_id = $category_id;
-						$table->category_name = $category_name;
-						$table->garment_status = $garment_status;
-						$table->deleted = FALSE;
-								
-						$table->save();
+							$table->garment_name = $garment_name;
+							$table->garment_order = $garment_order;
+							$table->batch_name = $batch_name;
+							$table->cartonbox = $cartonbox;
+							$table->sku = $sku;
+							$table->po = $po;
+							$table->brand = $brand;
+							$table->category_id = $category_id;
+							$table->category_name = $category_name;
+							$table->garment_status = $garment_status;
+							$table->deleted = FALSE;
+									
+							$table->save();
+						}
+						catch (\Illuminate\Database\QueryException $e) {
+							$msg = "Problem to save garment in table!!";
+							return view('batch.error',compact('msg'));
+						}
 					}
-					catch (\Illuminate\Database\QueryException $e) {
-						$msg = "Problem to save garment in table";
-						return view('batch_bulk.error',compact('msg'));
-					}
-				}
+					*/
 				//-----------------------------	
+
+				// Set session for garment
+				Session::set('batch_date', $batch_date );
+				Session::set('batch_user', $batch_user );
+				Session::set('batch_order', $batch_order );
+				Session::set('batch_qty', $batch_qty );
+				Session::set('sku', $sku );
+				Session::set('po', $po );
+				Session::set('brand', $brand );
+				Session::set('category_id', $category_id );
+				Session::set('category_name', $category_name );
 				
-				return view('batch_bulk.searchinteos');
+				return view('batch_bulk.searchinteos'); //mora biti batch_bulk
 
 	    	} else {
 	    		// different SKU or batch
-	    		$msg = "Style, size or color is not the same for this batch";
+	    		$msg = "Style, size or color is not the same for this batch!";
 				return view('batch.error',compact('msg'));
 	    	}
 	    }
@@ -840,6 +887,71 @@ class ControllerBatch_bulk extends Controller {
 		// 	$msg = "Problem to save batch in table. try agan.";
 		// 	return view('batch.error',compact('msg'));
 		// }
+	}
+
+	public function stop_store_bulk () {
+
+		$batch_name = Session::get('batch_name');
+
+		$batch_date = Session::get('batch_date');
+		$batch_user = Session::get('batch_user');
+		$batch_order = Session::get('batch_order');
+		$batch_qty = Session::get('batch_qty');
+		$sku = Session::get('sku');
+		$po = Session::get('po');
+		$brand = Session::get('brand');
+		$category_id = Session::get('category_id');
+		$category_name = Session::get('category_name');
+
+		// Record Garment -------------
+			for ($i=1; $i <= $batch_qty; $i++) { 
+				
+				$garment_order = str_pad($i, 2, "0", STR_PAD_LEFT);
+				$garment_name = $batch_date."-".$batch_user."-".$batch_order."-B"."-".$garment_order;
+				$garment_status = "Accepted";
+
+				try {
+					$table = new Garment;
+
+					$table->garment_name = $garment_name;
+					$table->garment_order = $garment_order;
+					$table->batch_name = $batch_name;
+					$table->cartonbox;
+					$table->sku = $sku;
+					$table->po = $po;
+					$table->brand = $brand;
+					$table->category_id = $category_id;
+					$table->category_name = $category_name;
+					$table->garment_status = $garment_status;
+					$table->deleted = FALSE;
+							
+					$table->save();
+				}
+				catch (\Illuminate\Database\QueryException $e) {
+					$msg = "Problem to save garment in table!!";
+					return view('batch.error',compact('msg'));
+				}
+			}
+		//-----------------------------	
+
+		Session::set('batch_date', NULL );
+		Session::set('batch_user', NULL );
+		Session::set('batch_order', NULL );
+		Session::set('batch_qty', NULL );
+		Session::set('sku', NULL );
+		Session::set('po', NULL );
+		Session::set('brand', NULL );
+		Session::set('category_id', NULL );
+		Session::set('category_name', NULL );
+
+		Session::set('style', NULL );
+    	Session::set('size', NULL );
+    	Session::set('color', NULL);
+    	Session::set('batch_name', NULL);
+    	Session::set('producer', NULL);
+
+    	// return view('batch_bulk.searchinteos');
+    	return Redirect::to('/garment/by_batch/'.$batch_name);	
 	}
 
 /*
@@ -926,20 +1038,6 @@ class ControllerBatch_bulk extends Controller {
 			return Redirect::to('/garment/by_batch/'.$batch_name);	
 		}
 	}
-*/
-
-	public function stop_store_bulk () {
-		$batch_name = Session::get('batch_name');
-
-		Session::set('style', NULL );
-    	Session::set('size', NULL );
-    	Session::set('color', NULL);
-    	Session::set('batch_name', NULL);
-    	Session::set('producer', NULL);
-
-    	// return view('batch_bulk.searchinteos');
-    	return Redirect::to('/garment_bulk/by_batch/'.$batch_name);	
-	}
 
 	public function stop_producer_store_bulk () {
 		Session::set('style', NULL );
@@ -948,10 +1046,9 @@ class ControllerBatch_bulk extends Controller {
     	Session::set('batch_name', NULL);
     	Session::set('producer', NULL);
 
-    	return view('batch_bulk.selectproducertype');
+    	return view('batch.selectproducertype');
 	}
 
-/*
 	public function inside()
 	{
 		//
@@ -962,31 +1059,30 @@ class ControllerBatch_bulk extends Controller {
 			return view('batch.searchinteos');		
 		}
 	}
-*/
 
 	public function confirm($id) 
 	{
 		// 
 		// dd($batchid->id);
 		try {
-			$batchid = Batch_bulk::findOrFail($id);
+			$batchid = Batch::findOrFail($id);
 			// dd($batchid->id);
-			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch_bulk WHERE batch_name = '".$batchid->batch_name."'"));
-			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment_bulk WHERE batch_name = '".$batchid->batch_name."'"));
-			$defects = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM defect_bulk WHERE batch_name = '".$batchid->batch_name."'"));
+			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch WHERE batch_name = '".$batchid->batch_name."'"));
+			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batchid->batch_name."'"));
+			$defects = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM defect WHERE batch_name = '".$batchid->batch_name."'"));
 
-			$total_defects = DB::table('defect_bulk')
+			$total_defects = DB::table('defect')
 			                    ->where('batch_name', '=', $batchid->batch_name)
 			                    ->where('deleted', '=', FALSE)
 			                    ->count();
 
-			$total_rejected_defects = DB::table('defect_bulk')
+			$total_rejected_defects = DB::table('defect')
 			                    	->where('batch_name', '=', $batchid->batch_name)
 			                    	->where('deleted', '=', FALSE)
 			                    	->where('defect_level_rejected', '=', "YES")
 			                    	->count();
 
-			$total_rejected_garments = DB::table('garment_bulk')
+			$total_rejected_garments = DB::table('garment')
 			                    	->where('batch_name', '=', $batchid->batch_name)
 			                    	->where('deleted', '=', FALSE)
 			                    	->where('garment_status', '=', "Rejected")
@@ -1012,7 +1108,7 @@ class ControllerBatch_bulk extends Controller {
 	public function accept($id) 
 	{
 		try {
-			$batch = Batch_bulk::findOrFail($id);
+			$batch = Batch::findOrFail($id);
 			$batch->batch_status = "Accept";
 			$batch->save();
 			return Redirect::to('/batch_bulk/');
@@ -1021,7 +1117,7 @@ class ControllerBatch_bulk extends Controller {
 			return Redirect::to('/batch_bulk/accept/'.$id);
 		}
 	}
-/*
+
 	public function acceptwithreservetion($id) 
 	{
 		try {
@@ -1034,10 +1130,10 @@ class ControllerBatch_bulk extends Controller {
 			return Redirect::to('/batch_bulk/acceptwithreservetion/'.$id);
 		}
 	}
-*/
+
 	public function edit_status ($id)
 	{
-		$batch = Batch_bulk::findOrFail($id);
+		$batch = Batch::findOrFail($id);
 		return view('batch_bulk.edit_status', compact('batch'));
 	}
 
@@ -1049,7 +1145,7 @@ class ControllerBatch_bulk extends Controller {
 		$batch_status = $input['batch_status'];
 
 		try {
-			$batch = Batch_bulk::findOrFail($id);
+			$batch = Batch::findOrFail($id);
 			$batch->batch_status = $batch_status;
 
 			$batch->save();
@@ -1063,7 +1159,7 @@ class ControllerBatch_bulk extends Controller {
 	public function reject($id) 
 	{
 		try {
-			$batch = Batch_bulk::findOrFail($id);
+			$batch = Batch::findOrFail($id);
 			$batch->batch_status = "Reject";
 			$batch->repaired = "NO";
 			$batch->save();
@@ -1077,7 +1173,7 @@ class ControllerBatch_bulk extends Controller {
 	public function suspend($id) 
 	{
 		try {
-			$batch = Batch_bulk::findOrFail($id);
+			$batch = Batch::findOrFail($id);
 			$batch->batch_status = "Suspend";
 			$batch->save();
 			return Redirect::to('/batch_bulk/');
@@ -1091,22 +1187,22 @@ class ControllerBatch_bulk extends Controller {
 	{
 		try {
 			// Add status to batch
-			$batch = Batch_bulk::findOrFail($id);
+			$batch = Batch::findOrFail($id);
 			$batch->batch_status = "Not checked";
 			$batch->save();
 
 			// Add status to garments inside batch
 			
-			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment_bulk WHERE batch_name = '".$batch->batch_name."'"));
+			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batch->batch_name."'"));
 			foreach ($garments as $garment) {
-				$gar = Garment_bulk::findOrFail($garment->id);
+				$gar = Garment::findOrFail($garment->id);
 				$gar->garment_status = "Not checked";
 				$gar->save();
 			}
 
-			$defects = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM defect_bulk WHERE batch_name = '".$batch->batch_name."'"));
+			$defects = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM defect WHERE batch_name = '".$batch->batch_name."'"));
 			foreach ($defects as $defect) {
-				$def = Defect_bulk::findOrFail($defect->id);
+				$def = Defect::findOrFail($defect->id);
 				$def->deleted = TRUE;
 				$def->save();
 			}
@@ -1129,22 +1225,22 @@ class ControllerBatch_bulk extends Controller {
 	{
 		
 		try {
-			$batch = Batch_bulk::findOrFail($id);
+			$batch = Batch::findOrFail($id);
 			$batch->deleted = TRUE;
 			$batch->batch_status = "Deleted";
 			$batch->save();
 
-			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment_bulk WHERE batch_name = '".$batch->batch_name."'"));
+			$garments = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM garment WHERE batch_name = '".$batch->batch_name."'"));
 			foreach ($garments as $garment) {
-				$gar = Garment_bulk::findOrFail($garment->id);
+				$gar = Garment::findOrFail($garment->id);
 				$gar->deleted = TRUE;
 				$gar->garment_status = "Deleted";
 				$gar->save();
 			}
 
-			$defects = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM defect_bulk WHERE batch_name = '".$batch->batch_name."'"));
+			$defects = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM defect WHERE batch_name = '".$batch->batch_name."'"));
 			foreach ($defects as $defect) {
-				$def = Defect_bulk::findOrFail($defect->id);
+				$def = Defect::findOrFail($defect->id);
 				$def->deleted = TRUE;
 				$def->save();
 			}
@@ -1166,7 +1262,7 @@ class ControllerBatch_bulk extends Controller {
 															      ,[batch_status]
 															      ,[repaired]
 															      ,[repaired_by_name]
-															  FROM [finalaudit].[dbo].[batch_bulk]
+															  FROM [finalaudit].[dbo].[batch]
 															  WHERE batch_status = 'Reject' AND [repaired] = 'NO'
 															  ORDER BY [created_at] asc
 															  "));
@@ -1176,14 +1272,14 @@ class ControllerBatch_bulk extends Controller {
 
 	public function cb_to_repair_edit($id)
 	{
-		$batch = Batch_bulk::findOrFail($id);
+		$batch = Batch::findOrFail($id);
 		return view('batch_bulk.cb_to_repair_update', compact('batch')); 
 	}
 
 	public function cb_to_repair_repair($id)
 	{
 		try {
-			$batch = Batch_bulk::findOrFail($id);
+			$batch = Batch::findOrFail($id);
 			$batch->repaired = "YES";
 			$batch->repaired_by_name = Auth::user()->username;
 			$batch->repaired_by_id = Auth::user()->name_id;
@@ -1196,5 +1292,6 @@ class ControllerBatch_bulk extends Controller {
 			return Redirect::to('/cb_to_repair_bulk');
 		}
 	}
+	*/	
 
 }

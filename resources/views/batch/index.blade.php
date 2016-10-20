@@ -48,6 +48,7 @@
                                         <td><b>Batch Name</b></td>
                                         <td>SKU</td>
                                         <td>Module</td>
+                                        <td>Produced qty</td>
                                         <td>Batch qty</td>
                                         <td>Rejected Garments</td>
                                         <td>Final Status</td>
@@ -62,6 +63,7 @@
                                         <td>{{ $req->batch_name }}</td>
                                         <td>{{ $req->sku }}</td>
                                         <td>{{ $req->module_name }}</td>
+                                        <td>{{ $req->cartonbox_produced }}</td>
                                         <td>{{ $req->batch_qty }}</td>
                                         <td>{{ $req->RejectedCount }}</td>
                                         {{-- <td><b>{{ $req->batch_status }}</b></td> --}}
@@ -111,13 +113,19 @@
                                     <div class="panel-body">
                                         @if( $activity == 0)
                                         <div class="">
-                                            <a href="{{url('/searchinteos')}}" class="btn btn-default btn-info side-button"><br>New Batch</a>
+                                            <a href="{{url('/selectproducertype')}}" class="btn btn-default btn-info side-button"><br>New Box Batch</a>
+                                        </div>
+                                        <div class="">
+                                            <a href="{{url('/selectproducertype_bulk')}}" class="btn btn-default btn-info side-button"><br>New BULK Batch </a>
                                         </div>
                                         @else
                                             <p style="color:red;"><b>Extra activity is active</b></p>
                                             <div class="">
-                                                <a href="{{url('/searchinteos')}}" class="btn btn-default btn-info side-button" disabled><br>New Batch</a>
+                                                <a href="{{url('/selectproducertype')}}" class="btn btn-default btn-info side-button" disabled><br>New Box Batch</a>
                                             </div>
+                                            <div class="">
+                                            <a href="{{url('/selectproducertype_bulk')}}" class="btn btn-default btn-info side-button" disabled><br>New BULK Batch </a>
+                                        </div>
                                         @endif
                                     </div>
                                 </div>

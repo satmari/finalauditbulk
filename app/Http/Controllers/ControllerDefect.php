@@ -76,6 +76,7 @@ class ControllerDefect extends Controller {
 			g.id,
 			dt.defect_type_id,
 			dt.defect_type_name,
+			dt.defect_type_name_1,
 			dt.defect_level_rejected,
 			c.category_name
 			FROM defect_types as dt
@@ -90,6 +91,7 @@ class ControllerDefect extends Controller {
 			g.id,
 			dt.defect_type_id,
 			dt.defect_type_name,
+			dt.defect_type_name_1,
 			dt.defect_level_rejected,
 			c.category_name 
 			"));
@@ -99,6 +101,7 @@ class ControllerDefect extends Controller {
 			g.id,
 			p.position_id,
 			p.position_name,
+			p.position_name_1,
 			c.category_name
 			FROM positions as p
 
@@ -112,6 +115,7 @@ class ControllerDefect extends Controller {
 			g.id,
 			p.position_id,
 			p.position_name,
+			p.position_name_1,
 			c.category_name 
 			"));
 			//dd($positions);

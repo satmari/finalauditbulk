@@ -27,6 +27,8 @@ class CreateDefectTypesTable extends Migration {
 			$table->string('defect_level_name');
 			$table->string('defect_level_rejected', 3); // yes/no
 			$table->string('defect_applay_to_all', 3);  //yes/no
+
+			$table->string('visible')->nullable(); //added latter
 			
 			$table->timestamps();
 		});
