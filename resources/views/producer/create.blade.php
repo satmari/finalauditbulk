@@ -20,7 +20,7 @@
 						</div>
 						<div class="panel-body">
 						<p>Producer Type </p>
-							{!! Form::select('producer_type', ['EXTERNAL' => 'EXTERNAL', 'INTERNAL' => 'INTERNAL'], null,['class' => 'form-control']) !!}
+							{!! Form::select('producer_type', ['INTERNAL' => 'INTERNAL','EXTERNAL' => 'EXTERNAL'], null,['class' => 'form-control']) !!}
 						</div>
 						
 						{!! Form::submit('Add', ['class' => 'btn  btn-success center-block']) !!}

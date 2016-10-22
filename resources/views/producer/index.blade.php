@@ -45,7 +45,7 @@
                 -->
                     <thead>
                         <tr>
-                            <td><b>Id</b></td>
+                            <!-- <td><b>Id</b></td> -->
                             <td><b>Producer Id</b></td>
                             <td><b>Producer Name</b></td>
                             <td><b>Producer Type</b></td>
@@ -55,7 +55,7 @@
                     <tbody class="searchable">
                     @foreach ($producer as $req)
                         <tr>
-                            <td>{{ $req->id }}</td>
+                            {{--<td>{{ $req->id }}</td>--}}
                             <td>{{ $req->producer_id }}</td>
                             <td>{{ $req->producer_name }}</td>
                             <td>{{ $req->producer_type }}</td>

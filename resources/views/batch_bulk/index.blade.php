@@ -47,7 +47,8 @@
                                         <!-- <td>Id</td> -->
                                         <td><b>Batch Name</b></td>
                                         <td>SKU</td>
-                                        <td>Module</td>
+                                        <td>Producer</td>
+                                        <td>Producer Type</td>
                                         <td>Batch qty</td>
                                         <td>Rejected Garments</td>
                                         <td>Final Status</td>
@@ -61,7 +62,8 @@
                                         {{-- <td>{{ $req->id }}</td> --}}
                                         <td>{{ $req->batch_name }}</td>
                                         <td>{{ $req->sku }}</td>
-                                        <td>{{ $req->module_name }}</td>
+                                        <td>{{ $req->producer }}</td>
+                                        <td>{{ $req->producer_type }}</td>
                                         <td>{{ $req->batch_qty }}</td>
                                         <td>{{ $req->RejectedCount }}</td>
                                         {{-- <td><b>{{ $req->batch_status }}</b></td> --}}

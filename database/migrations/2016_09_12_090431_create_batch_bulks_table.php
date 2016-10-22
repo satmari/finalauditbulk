@@ -31,7 +31,9 @@ class CreateBatchBulksTable extends Migration {
 			$table->string('category_id');
 			$table->string('category_name');
 
-			$table->string('module_name');
+			$table->string('producer_id')->nullable(); 		// added for zalli
+			$table->string('producer')->nullable();			// $table->string('module_name'); // added for zalli
+			$table->string('producer_type')->nullable();	// added for zalli
 			
 			$table->string('cartonbox')->nullable();						// must be nullable for bulk
 			$table->integer('cartonbox_qty')->nullable();

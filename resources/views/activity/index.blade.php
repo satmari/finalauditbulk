@@ -18,7 +18,7 @@
 
                 @endif
 
-                @if(Auth::check() && Auth::user()->level() == 1)
+                @if(Auth::check() && (Auth::user()->level() == 1) OR (Auth::user()->level() == 3))
                     <div class="row">
                         <div class="col-md-12">
                             <div class="panel panel-default">

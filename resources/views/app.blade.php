@@ -97,7 +97,7 @@
 						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/cb_to_repair') }}">CB to repair</a></li>
+						<li><a href="{{ url('/cb_to_repair') }}">Batch to repair</a></li>
 					</ul>
 					{{-- 
 					<ul class="nav navbar-nav">
@@ -144,7 +144,7 @@
 						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/cb_to_repair') }}">CB to repair</a></li>
+						<li><a href="{{ url('/cb_to_repair') }}">Batch to repair</a></li>
 					</ul>
 					{{--
 					<ul class="nav navbar-nav">

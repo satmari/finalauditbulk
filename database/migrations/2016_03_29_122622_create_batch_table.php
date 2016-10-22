@@ -31,7 +31,9 @@ class CreateBatchTable extends Migration {
 			$table->string('category_id');
 			$table->string('category_name');
 
-			$table->string('module_name');
+			$table->string('producer_id')->nullable(); 		// added for zalli
+			$table->string('producer');						// $table->string('module_name'); // added for zalli
+			$table->string('producer_type')->nullable();	// added for zalli
 			
 			$table->string('cartonbox')->nullable(); // must be nullable for bulk
 			$table->integer('cartonbox_qty')->nullable();
@@ -56,10 +58,10 @@ class CreateBatchTable extends Migration {
 			$table->string('batch_barcode_match')->nullable();
 			$table->string('batch_barcode')->nullable();
 
-			$table->string('repaired')->nullable(); //added latter
-			$table->string('repaired_by_id')->nullable(); //added latter
+			$table->string('repaired')->nullable(); 		//added latter
+			$table->string('repaired_by_id')->nullable(); 	//added latter
 			$table->string('repaired_by_name')->nullable(); //added latter
-			$table->dateTime('repaired_date')->nullable(); //added latter
+			$table->dateTime('repaired_date')->nullable(); 	//added latter
 
 			$table->boolean('deleted')->nullable();
 			

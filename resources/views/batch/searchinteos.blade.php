@@ -5,7 +5,7 @@
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Find Box in database:</div>
+                <div class="panel-heading">Scan <b>BOX BARCODE</b> on carton box</div>
                 
                 {!! Form::open(['url' => 'searchinteos_store']) !!}
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">

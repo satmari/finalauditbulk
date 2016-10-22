@@ -60,7 +60,8 @@
                                         <td>{{ $req->batch_name }}</td>
                                         <td>{{ $req->sku }}</td>
                                         <td>{{ $req->po  }}</td>
-                                        <td>{{ $req->module_name }}</td>
+                                        <td>{{ $req->producer }}</td>
+                                        <td>{{ $req->producer_type }}</td>
                                         <td>{{ $req->cartonbox }}</td>
                                         <td>{{ $req->repaired }}</td>
                                         <td>

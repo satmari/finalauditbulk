@@ -119,12 +119,12 @@ class ControllerGarment extends Controller {
 
 		}
 		catch (\Illuminate\Database\QueryException $e) {
-			$msg = "Barcode not found in cartiglio database";
+			$msg = "Баркодът не присъства в базата данни за етикетите (Обадете се на ИТ отдела) !";
 			return view('garment.error',compact('msg'));
 		}		
 
 		if ($barcode_insert != $barcode_indb) {
-			$msg = "Barcode not match with barcode from cartiglio database";
+			$msg = "Баркодовете не съответсват с тези от базата данни на етикетите !";
 			return view('garment.error_continue',compact('msg','garment_name'));
 		}
 		return Redirect::to('/defect/by_garment/'.$garment_name);

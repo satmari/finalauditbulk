@@ -242,7 +242,7 @@ class ControllerDefect extends Controller {
 		catch (\Illuminate\Database\QueryException $e) {
 			//return Redirect::to('/defect/by_garment/'.$garment_name);
 
-			$msg = "Problem to save defect in table, try again.";
+			$msg = "Problem to save defect in table";
 			return view('defect.error',compact('msg'));
 		}
 

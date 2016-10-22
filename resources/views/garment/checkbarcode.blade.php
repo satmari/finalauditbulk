@@ -5,7 +5,7 @@
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Check BARCODE on garment</div>
+                <div class="panel-heading">Check <b>PRODUCT BARCODE</b> on on garment</div>
                 
                 {!! Form::open(['url' => '/garment/checkbarcode_store']) !!}
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">

@@ -46,8 +46,9 @@
                                         <td><b>Batch Name</b></td>
                                         <td>SKU</td>
                                         <td>PO</td>
-                                        <td>Module</td>
-                                        <td>Batch barcode</td>
+                                        <td>Producer</td>
+                                        <td>Producer Type</td>
+                                        <!-- <td>Batch barcode</td> -->
                                         <td>Batch repaired</td>
                                         <td></td>
                                         <!-- <td></td> -->
@@ -60,8 +61,9 @@
                                         <td>{{ $req->batch_name }}</td>
                                         <td>{{ $req->sku }}</td>
                                         <td>{{ $req->po  }}</td>
-                                        <td>{{ $req->module_name }}</td>
-                                        <td>{{ $req->cartonbox }}</td>
+                                        <td>{{ $req->producer }}</td>
+                                        <td>{{ $req->producer_type }}</td>
+                                        {{--<td>{{ $req->cartonbox }}</td> --}}
                                         <td>{{ $req->repaired }}</td>
                                         <td>
                                         @if(Auth::check() && ((Auth::user()->level() == 2)))

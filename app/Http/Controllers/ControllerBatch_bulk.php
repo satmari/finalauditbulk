@@ -321,7 +321,7 @@ class ControllerBatch_bulk extends Controller {
 		    $username = Auth::user()->username;
 		    $company = Auth::user()->company;
 		} else {
-			$msg = 'User is not autenticated';
+			$msg = 'Потребителят не е оторизиран !';
 			return view('batch.error',compact('msg'));
 		}
 		//---------------------------------
@@ -414,7 +414,11 @@ class ControllerBatch_bulk extends Controller {
 
 			$po = $inteos_array[0]['POnum'];
 
-			$module_name = $inteos_array[0]['ModNam'];
+			// $module_name = $inteos_array[0]['ModNam'];
+			$producer_id = NULL;			
+	    	$producer = $inteos_array[0]['ModNam'];
+	    	$producer_type = NULL;
+	    	
 	    	$cartonbox_start_date_tmp = $inteos_array[0]['CREATEDATE'];
 	    	$timestamp_s = strtotime($cartonbox_start_date_tmp);
 			$cartonbox_start_date = date('Y-m-d H:i:s', $timestamp_s);
@@ -457,8 +461,8 @@ class ControllerBatch_bulk extends Controller {
 		if ($inteos) {
 			//continue
 		} else {
-        	$msg = 'Cannot find CB in Navision, NE POSTOJI KARTONSKA KUTIJA !';
-        	return view('batch.error', compact('msg'));
+        	$msg = 'Няма БарКод в Навижън!';
+        	return view('batch_bulk.error', compact('msg'));
     	}
 
 		function object_to_array($data)
@@ -492,8 +496,8 @@ class ControllerBatch_bulk extends Controller {
 			//continue
 			// dd($cartonbox_produced);
 		} else {
-			$msg = 'Carton box have 0 quantity inside, KUTIJA IMA 0 KOMADA! ';
-        	return view('batch.error', compact('msg'));
+			$msg = 'Кашонът е с нулево количество !';
+        	return view('batch_bulk.error', compact('msg'));
 		}
 
     	$color = $inteos_array[0]['Color Code'];
@@ -501,8 +505,10 @@ class ControllerBatch_bulk extends Controller {
     	$po = $inteos_array[0]['ORDER_COMMESSA'];
 
     	$ses_producer = Session::get('producer');
-		$module_name = $ses_producer->producer_name;
-		// $module_id = $ses_producer->producer_id;
+		$producer = $ses_producer->producer_name;
+		$producer_id = $ses_producer->producer_id;
+		$producer_type = $ses_producer->producer_type;
+
 //-------------------------------------------------
     
 	}
@@ -543,14 +549,14 @@ class ControllerBatch_bulk extends Controller {
 				$category_id = $models[0]->category_id;
 				$mandatory_to_check = $models[0]->mandatory_to_check;
 			} else {
-	        	$msg = 'Cannot find Style '.$style.' in Model table, NE POSTOJI MODEL '.$style.' U TABELI!!!';
-	        	return view('batch.error', compact('msg'));
+	        	$msg = 'Не се открива артикул '.$style.' в таблицата с моделите !';
+	        	return view('batch_bulk.error', compact('msg'));
 	    	}
 
 	    	/* If User NotCheck */
 	    	if ($mandatory_to_check == "YES" AND $name_id == '10') {
-	    		$msg = 'This Style '.$style.' is MANDATORY to check!';
-		    	return view('batch.error', compact('msg'));
+	    		$msg = 'Артикул '.$style.' трябва ЗАДЪЛЖИТЕЛНО да се провери!';
+		    	return view('batch_bulk.error', compact('msg'));
 	    	}
 
 	    	if ($brand == "TEZENIS") {
@@ -571,8 +577,8 @@ class ControllerBatch_bulk extends Controller {
 		  		$batch_brand_max = $batch_brand_table[0]->batch_max;
 		  		$batch_brand_max_reject = $batch_brand_table[0]->batch_reject;
 			} else {
-		      	$msg = 'Cannot find proper line in Batch table for this Brand!';
-		      	return view('batch.error', compact('msg'));
+		      	$msg = 'Не се открива правилната линия в таблицата със заявки за тази марка !';
+		      	return view('batch_bulk.error', compact('msg'));
 		  	}
 
 			$rejected = 0; // exist but we are not using
@@ -590,8 +596,8 @@ class ControllerBatch_bulk extends Controller {
 					$table->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
-					$msg = "Problem to save in batch_cartonbox table";
-					return view('batch.error',compact('msg'));
+					$msg = "Проблем със записване на заявката в таблицата !";
+					return view('batch_bulk.error',compact('msg'));
 				}
 			//----------------------------
 
@@ -617,8 +623,11 @@ class ControllerBatch_bulk extends Controller {
 					$table->category_name = $category_name;
 					$table->category_id = $category_id;
 
-					$table->module_name = $module_name;
-					
+					//$table->module_name = $module_name;
+					$table->producer_id = $producer_id;
+					$table->producer = $producer;
+					$table->producer_type = $producer_type;
+										
 					// $table->cartonbox = $cartonbox;
 					// $table->cartonbox_qty = $cartonbox_qty;
 					$table->cartonbox_produced = $cartonbox_produced;
@@ -643,7 +652,7 @@ class ControllerBatch_bulk extends Controller {
 					$table->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
-					$msg = "Problem to save batch in table";
+					$msg = "Проблем със записване на заявката в таблицата !";
 					return view('batch.error',compact('msg'));
 				}
 			//--------------------
@@ -713,16 +722,17 @@ class ControllerBatch_bulk extends Controller {
 
 			   	$batch_name = $ses_batch_name;
 
-			   	// box already scanned-------------
-					// $count_batch_cartonbox = DB::table('batch_cartonboxes')
-					// 	                    ->where('cartonbox', '=', $cbcode)
-					// 						->where('batch_name', '=', $ses_batch_name)	
-					// 	                    ->count();
+			 	//	box already scanned-------------
+					$count_batch_cartonbox = DB::table('batch_cartonboxes')
+						                    ->where('cartonbox', '=', $cbcode)
+											->where('batch_name', '=', $ses_batch_name)	
+						                    ->count();
 
-					// if ($count_batch_cartonbox > 0) {
-					// 	$msg = 'Box already scanned in this batch!';
-				 	//  return view('batch_bulk.error', compact('msg'));
-					// }
+					if ($count_batch_cartonbox > 0) {
+						// $msg = 'Box already scanned in this batch!';
+				 	 	// return view('batch_bulk.error', compact('msg'));
+						return view('batch_bulk.searchinteos');	 	 	
+					}
 				// ---------------------------------
 
 	    		$models = DB::connection('sqlsrv')->select(DB::raw("SELECT category_name,category_id,model_brand,mandatory_to_check FROM models WHERE model_name = '".$style."'"));
@@ -733,13 +743,13 @@ class ControllerBatch_bulk extends Controller {
 					$category_id = $models[0]->category_id;
 					$mandatory_to_check = $models[0]->mandatory_to_check;
 				} else {
-		        	$msg = 'Cannot find Style '.$style.' in Model table!';
-		        	return view('batch.error', compact('msg'));
+		        	$msg = 'Не се открива артикул '.$style.' в таблицата с моделите !';
+		        	return view('batch_bulk.error', compact('msg'));
 		    	}
 
 		    	/* If User NotCheck */
 		    	if ($mandatory_to_check == "YES" AND $name_id == '10') {
-		    		$msg = 'This Style '.$style.' is MANDATORY to check!';
+		    		$msg = 'Артикул '.$style.' трябва ЗАДЪЛЖИТЕЛНО да се провери!';
 			    	return view('batch_bulk.error', compact('msg'));
 		    	}
 
@@ -768,8 +778,8 @@ class ControllerBatch_bulk extends Controller {
 			  		$batch_brand_max = $batch_brand_table[0]->batch_max;
 			  		$batch_brand_max_reject = $batch_brand_table[0]->batch_reject;
 				} else {
-			      	$msg = 'Cannot find proper line in Batch table for this Brand!';
-			      	return view('batch.error', compact('msg'));
+			      	$msg = 'Не се открива правилната линия в таблицата със заявки за тази марка !';
+			      	return view('batch_bulk.error', compact('msg'));
 			  	}
 
 				$rejected = 0; // exist but we are not using
@@ -787,8 +797,8 @@ class ControllerBatch_bulk extends Controller {
 					$table->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
-					$msg = "Problem to save in batch_cartonbox table!!";
-					return view('batch.error',compact('msg'));
+					$msg = "Проблем със записване на BatchCartonbox в таблицата !";
+					return view('batch_bulk.error',compact('msg'));
 				}			
 					
 				// Update Batch-------
@@ -805,8 +815,8 @@ class ControllerBatch_bulk extends Controller {
 						$batch->save();
 					}
 					catch (\Illuminate\Database\QueryException $e) {
-						$msg = "Problem to save batch in table!!";
-						return view('batch.error',compact('msg'));
+						$msg = "Проблем със записване на заявката в таблицата !";
+						return view('batch_bulk.error',compact('msg'));
 					}
 				//--------------------
 
@@ -867,8 +877,9 @@ class ControllerBatch_bulk extends Controller {
 
 	    	} else {
 	    		// different SKU or batch
-	    		$msg = "Style, size or color is not the same for this batch!";
-				return view('batch.error',compact('msg'));
+	    		// $msg = "Style, size or color is not the same for this bulk batch!";
+				// return view('batch_bulk.error',compact('msg'));
+				return view('batch_bulk.searchinteos');	 	
 	    	}
 	    }
 
@@ -928,8 +939,8 @@ class ControllerBatch_bulk extends Controller {
 					$table->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
-					$msg = "Problem to save garment in table!!";
-					return view('batch.error',compact('msg'));
+					$msg = "Проблем със записване на артикула в таблицата !";
+					return view('batch_bulk.error',compact('msg'));
 				}
 			}
 		//-----------------------------	
@@ -1257,7 +1268,7 @@ class ControllerBatch_bulk extends Controller {
 															      ,[batch_name]
 															      ,[sku]
 															      ,[po]
-															      ,[module_name]
+															      ,[producer]
 															      ,[cartonbox]
 															      ,[batch_status]
 															      ,[repaired]

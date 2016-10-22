@@ -47,7 +47,8 @@
                                         <!-- <td>Id</td> -->
                                         <td><b>Batch Name</b></td>
                                         <td>SKU</td>
-                                        <td>Module</td>
+                                        <td>Producer</td>
+                                        <td>Producer Type</td>
                                         <td>Produced qty</td>
                                         <td>Batch qty</td>
                                         <td>Rejected Garments</td>
@@ -62,7 +63,8 @@
                                         {{-- <td>{{ $req->id }}</td> --}}
                                         <td>{{ $req->batch_name }}</td>
                                         <td>{{ $req->sku }}</td>
-                                        <td>{{ $req->module_name }}</td>
+                                        <td>{{ $req->producer }}</td>
+                                        <td>{{ $req->producer_type }}</td>
                                         <td>{{ $req->cartonbox_produced }}</td>
                                         <td>{{ $req->batch_qty }}</td>
                                         <td>{{ $req->RejectedCount }}</td>
@@ -93,8 +95,6 @@
                                         @endif
 
                                         </td>
-
-                                        
                                     </tr>
                                 @endforeach
                                 
@@ -103,10 +103,8 @@
                         </div>
                     </div>
 
-                    
                     <div class="col-md-2 pull-right">
                       
-
                         @if(Auth::check() && Auth::user()->level() == 2)
                                 <div class="panel panel-default">
                                 <div class="panel-heading">Options</div>

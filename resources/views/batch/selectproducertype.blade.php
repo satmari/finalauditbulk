@@ -11,7 +11,7 @@
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
                 <div class="panel-body">
-                <p>Producer:</p>
+                <p>Producer type:</p>
                     {!! Form::select('type', ['EXTERNAL' => 'EXTERNAL', 'INTERNAL' => 'INTERNAL'], null,['class' => 'form-control']) !!}
                 </div>
 

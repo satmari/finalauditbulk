@@ -15,7 +15,8 @@
                             <tr>
                                 <td><b>Batch Name</b></td>
                                 <td>SKU</td>
-                                <td>Module</td>
+                                <td>Producer</td>
+                                <td>Producer Type</td>
                                 <td>CB Qty</td>
                                 <td>CB Code</td>
                                 <td>CB finished</td>
@@ -28,7 +29,8 @@
                             <tr>
                                 <td>{{ $req->batch_name }}</td>
                                 <td>{{ $req->sku }}</td>
-                                <td>{{ $req->module_name }}</td>
+                                <td>{{ $req->producer }}</td>
+                                <td>{{ $req->producer_type }}</td>
                                 <td>{{ $req->cartonbox_produced }}</td>
                                 <td>{{ $req->cartonbox }}</td>
                                 <td>{{ $req->cartonbox_finish_date }}</td>

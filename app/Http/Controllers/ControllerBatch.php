@@ -302,7 +302,7 @@ class ControllerBatch extends Controller {
 		    $username = Auth::user()->username;
 		    $company = Auth::user()->company;
 		} else {
-			$msg = 'User is not autenticated';
+			$msg = 'Потребителят не е оторизиран !';
 			return view('batch.error',compact('msg'));
 		}
 		//---------------------------------
@@ -394,8 +394,12 @@ class ControllerBatch extends Controller {
 			}
 
 			$po = $inteos_array[0]['POnum'];
-						
-	    	$module_name = $inteos_array[0]['ModNam'];
+			
+			// $module_name = $inteos_array[0]['ModNam'];
+			$producer_id = NULL;			
+	    	$producer = $inteos_array[0]['ModNam'];
+	    	$producer_type = NULL;
+
 	    	$cartonbox_start_date_tmp = $inteos_array[0]['CREATEDATE'];
 	    	$timestamp_s = strtotime($cartonbox_start_date_tmp);
 			$cartonbox_start_date = date('Y-m-d H:i:s', $timestamp_s);
@@ -438,7 +442,7 @@ class ControllerBatch extends Controller {
 		if ($inteos) {
 			//continue
 		} else {
-        	$msg = 'Cannot find CB in Navision!';
+        	$msg = 'Няма БарКод в Навижън!';
         	return view('batch.error', compact('msg'));
     	}
 
@@ -473,7 +477,7 @@ class ControllerBatch extends Controller {
 			//continue
 			// dd($cartonbox_produced);
 		} else {
-			$msg = 'Carton box have 0 quantity inside! ';
+			$msg = 'Кашонът е с нулево количество !';
         	return view('batch.error', compact('msg'));
 		}
 
@@ -482,8 +486,10 @@ class ControllerBatch extends Controller {
     	$po = $inteos_array[0]['ORDER_COMMESSA'];
 
     	$ses_producer = Session::get('producer');
-		$module_name = $ses_producer->producer_name;
-		// $module_id = $ses_producer->producer_id;
+		$producer = $ses_producer->producer_name;
+		$producer_id = $ses_producer->producer_id;
+		$producer_type = $ses_producer->producer_type;
+		
 //-------------------------------------------------
 
 	}
@@ -511,17 +517,17 @@ class ControllerBatch extends Controller {
 			
 	    	if ($models) {
 	    		$brand = $models[0]->model_brand;
-				$category_name = $models[0]->category_name;
+				$category_name = $models[0]->category_name; //dd($category_name);
 				$category_id = $models[0]->category_id;
 				$mandatory_to_check = $models[0]->mandatory_to_check;
 			} else {
-	        	$msg = 'Cannot find Style '.$style.' in Model table!';
+	        	$msg = 'Не се открива артикул '.$style.' в таблицата с моделите !';
 	        	return view('batch.error', compact('msg'));
 	    	}
 
 	    	/* If User NotCheck */
 	    	if ($mandatory_to_check == "YES" AND $name_id == '10') {
-	    		$msg = 'This Style '.$style.' is MANDATORY to check!';
+	    		$msg = 'Артикул '.$style.' трябва ЗАДЪЛЖИТЕЛНО да се провери!';
 	        	return view('batch.error', compact('msg'));
 	    	}
 	    	
@@ -543,7 +549,7 @@ class ControllerBatch extends Controller {
 		  		$batch_brand_max = $batch_brand_table[0]->batch_max;
 		  		$batch_brand_max_reject = $batch_brand_table[0]->batch_reject;
 			} else {
-		      	$msg = 'Cannot find proper line in Batch table for this Brand!';
+		      	$msg = 'Не се открива правилната линия в таблицата със заявки за тази марка !';
 		      	return view('batch.error', compact('msg'));
 		  	}
 
@@ -551,7 +557,7 @@ class ControllerBatch extends Controller {
 			//$batch_status = "Pending"; // new batch // no Pending anymore
 			$batch_status = "Suspend"; // new batch have Suspend status
 
-/*
+/* // Ecommerce and Sizeset
 			// Samples Ecommerce
 			$ecommerce_sample = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM ecommerce WHERE style = '".$style."' AND size = '".$size."' AND color = '".$color."' "));
 			
@@ -652,7 +658,10 @@ class ControllerBatch extends Controller {
 				$table->category_name = $category_name;
 				$table->category_id = $category_id;
 
-				$table->module_name = $module_name;
+				//$table->module_name = $module_name;
+				$table->producer_id = $producer_id;
+				$table->producer = $producer;
+				$table->producer_type = $producer_type;
 				
 				// $table->cartonbox = $cartonbox;
 				// $table->cartonbox_qty = $cartonbox_qty;
@@ -678,7 +687,7 @@ class ControllerBatch extends Controller {
 				$table->save();
 			}
 			catch (\Illuminate\Database\QueryException $e) {
-				$msg = "Problem to save batch in table!";
+				$msg = "Проблем със записване на заявката в таблицата !";
 				return view('batch.error',compact('msg'));
 			}
 
@@ -712,7 +721,7 @@ class ControllerBatch extends Controller {
 					$table->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {
-					$msg = "Problem to save garment in table!";
+					$msg = "Проблем със записване на артикула в таблицата !";
 					return view('batch.error',compact('msg'));
 				}
 			}
@@ -772,17 +781,17 @@ class ControllerBatch extends Controller {
 					if ($barcode[0]->Cod_Bar) {
 					$barcode_indb = $barcode[0]->Cod_Bar;
 					} else {
-						$msg = "Item is not in Cartiglio table! (Call IT department)";
+						$msg = "Артикулът не присъства в базата данни за етикетите (Обадете се на ИТ отдела) !";
 						return view('batch.error',compact('msg'));
 					}
 				}
 				else {
-					$msg = "Item is not in Cartiglio table! (Call IT department)";
+					$msg = "Артикулът не присъства в базата данни за етикетите (Обадете се на ИТ отдела) !";
 					return view('batch.error',compact('msg'));
 				}
 			   	
 			} catch (Exception $e) {
-			    $msg = "Item is not in Cartiglio table! (Call IT department)";
+			    $msg = "Артикулът не присъства в базата данни за етикетите (Обадете се на ИТ отдела) !";
 				return view('batch.error',compact('msg'));
 			}
 
@@ -801,12 +810,12 @@ class ControllerBatch extends Controller {
 
 		}
 		catch (\Illuminate\Database\QueryException $e) {
-			$msg = "Barcode not found in cartiglio database! (Call IT department))";
+			$msg = "Баркодът не присъства в базата данни за етикетите (Обадете се на ИТ отдела) !";
 			return view('batch.error',compact('msg'));
 		}
 
 		if ($barcode_insert != $barcode_indb) {
-			$msg = "Barcode not match with barcode from cartiglio database!";
+			$msg = "Баркодовете не съответсват с тези от базата данни на етикетите !";
 			return view('batch.error_continue',compact('msg','batch_name'));
 		}
 
@@ -1027,7 +1036,8 @@ class ControllerBatch extends Controller {
 															      ,[batch_name]
 															      ,[sku]
 															      ,[po]
-															      ,[module_name]
+															      ,[producer]
+															      ,[producer_type]
 															      ,[cartonbox]
 															      ,[batch_status]
 															      ,[repaired]

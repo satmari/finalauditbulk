@@ -45,7 +45,13 @@ class Authenticate {
 				
 				// return redirect()->guest('auth/login');
 				$users = User::all();
-				return view('auth.login',compact('users'));	
+
+				if ($users){
+					return view('auth.login',compact('users'));
+				} else {
+					return view('auth.login');
+				}
+				
 			}
 		}
 
