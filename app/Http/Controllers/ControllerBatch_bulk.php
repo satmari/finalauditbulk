@@ -438,7 +438,7 @@ class ControllerBatch_bulk extends Controller {
 	
 	} elseif ($company == 'zalli') {
 
-// Zalli Navision test ----------------------------
+// Zalli Navision --------------------------------
 	    $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
 	      	[Barcode]
 	      	,[Item No_]
@@ -505,10 +505,15 @@ class ControllerBatch_bulk extends Controller {
     	$po = $inteos_array[0]['ORDER_COMMESSA'];
 
     	$ses_producer = Session::get('producer');
-		$producer = $ses_producer->producer_name;
-		$producer_id = $ses_producer->producer_id;
-		$producer_type = $ses_producer->producer_type;
 
+    	if  ($ses_producer != NULL ){
+    		$producer = $ses_producer->producer_name;
+			$producer_id = $ses_producer->producer_id;
+			$producer_type = $ses_producer->producer_type;
+    	} else {
+    		$msg = 'Producer not selected!';
+        	return view('batch.error_back', compact('msg'));
+    	}		
 //-------------------------------------------------
     
 	}
@@ -913,6 +918,11 @@ class ControllerBatch_bulk extends Controller {
 		$brand = Session::get('brand');
 		$category_id = Session::get('category_id');
 		$category_name = Session::get('category_name');
+
+		if (($batch_name == NULL) OR (!isset($batch_name))) {
+			$msg = "Any Box must be scanned!";
+			return view('batch_bulk.error',compact('msg'));
+		}
 
 		// Record Garment -------------
 			for ($i=1; $i <= $batch_qty; $i++) { 

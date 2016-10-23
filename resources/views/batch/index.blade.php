@@ -53,6 +53,7 @@
                                         <td>Batch qty</td>
                                         <td>Rejected Garments</td>
                                         <td>Final Status</td>
+                                        <td>Repaired</td>
                                         <td></td>
                                         <!-- <td></td> -->
                                     </tr>
@@ -78,8 +79,9 @@
                                           @else 
                                            <td><span><b>{{ $req->batch_status }}</b></span></td>
                                           @endif 
-                                        <td>
+                                        <td>{{ $req->repaired }}</td>
 
+                                        <td>
                                         @if(Auth::check() && Auth::user()->level() == 2)
                                             @if( $req->batch_status == "Pending" || $req->batch_status == "Suspend")
                                                 @if( $activity == 0)                                                    

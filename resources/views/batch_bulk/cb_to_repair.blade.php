@@ -9,7 +9,9 @@
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">Batch to repair
-                            
+                            @if (Auth::check() && (Auth::user()->level() == 1 OR Auth::user()->level() == 3))
+                            (Last 30 days)
+                            @endif
 
                             </div>
                             <div class="input-group"> <span class="input-group-addon">Filter</span>

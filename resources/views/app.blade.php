@@ -73,9 +73,9 @@
 						    <li><a href="{{ url('/model') }}">Models</a></li>
 
 						    <li role="separator" class="divider"></li>
-						    <li><a href="{{ url('/batch_t') }}">Batch Tezenis</a></li>
-						    <li><a href="{{ url('/batch_i') }}">Batch Intimissimi</a></li>
-						    <li><a href="{{ url('/batch_c') }}">Batch Calzedonia</a></li>
+						    <li><a href="{{ url('/batch_t') }}">Batch Tezenis (Box)</a></li>
+						    <li><a href="{{ url('/batch_i') }}">Batch Intimissimi (Box)</a></li>
+						    <li><a href="{{ url('/batch_c') }}">Batch Calzedonia (Box)</a></li>
 
 						    <li role="separator" class="divider"></li>
 						    <li><a href="{{ url('/batch_t_bulk') }}">Batch Tezenis (Bulk)</a></li>
@@ -133,10 +133,10 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
 					</ul>
-					--}}
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/import') }}">Import files</a></li>
 					</ul>
+					--}}
 				@endif
 
 				@if(Auth::check() && ((Auth::user()->level() == 3)  OR (Auth::user()->level() == 1)))
@@ -159,14 +159,14 @@
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/sizeset_all') }}">Size set (All)</a></li>
 					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/import') }}">Import files</a></li>
+					</ul>
 					--}}
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('/activity') }}">Activities <span class="badge"></span></a></li>
 					</ul>
-					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/import') }}">Import files</a></li>
-					</ul>
-
+					
 				@endif
 				
 				@if (Auth::guest())

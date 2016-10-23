@@ -419,7 +419,7 @@ class ControllerBatch extends Controller {
 
 	} elseif ($company == 'zalli') {
 
-// Zalli Navision test ----------------------------
+// Zalli Navision ---------------------------------
 	    $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
 	      	[Barcode]
 	      	,[Item No_]
@@ -486,10 +486,15 @@ class ControllerBatch extends Controller {
     	$po = $inteos_array[0]['ORDER_COMMESSA'];
 
     	$ses_producer = Session::get('producer');
-		$producer = $ses_producer->producer_name;
-		$producer_id = $ses_producer->producer_id;
-		$producer_type = $ses_producer->producer_type;
-		
+
+    	if  ($ses_producer != NULL ){
+    		$producer = $ses_producer->producer_name;
+			$producer_id = $ses_producer->producer_id;
+			$producer_type = $ses_producer->producer_type;
+    	} else {
+    		$msg = 'Producer not selected!';
+        	return view('batch.error_back', compact('msg'));
+    	}
 //-------------------------------------------------
 
 	}
@@ -731,6 +736,8 @@ class ControllerBatch extends Controller {
 			if ($msg1 != ''){
 				return view('batch.sample', compact('msg1','batch_name'));
 			}
+
+			Session::set('producer', NULL);
 			
 			return Redirect::to('/batch/checkbarcode/'.$batch_name);
 
@@ -922,9 +929,17 @@ class ControllerBatch extends Controller {
 
 		$batch_status = $input['batch_status'];
 
+		if ($batch_status == 'Reject') {
+			$repaired = "NO";
+
+		} else {
+			$repaired = NULL;	
+		}
+
 		try {
 			$batch = Batch::findOrFail($id);
 			$batch->batch_status = $batch_status;
+			$batch->repaired = $repaired;
 
 			$batch->save();
 			return Redirect::to('/batch');
@@ -1031,8 +1046,14 @@ class ControllerBatch extends Controller {
 	}
 
 	public function cb_to_repair()
-	{
-		$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT [id]
+	{	
+		$name_id = Auth::user()->name_id;
+		// dd($name_id);
+		$user = User::find(Auth::id());
+		
+		if (($user->is('admin')) OR ($user->is('guest'))) { 
+
+			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT [id]
 															      ,[batch_name]
 															      ,[sku]
 															      ,[po]
@@ -1041,13 +1062,36 @@ class ControllerBatch extends Controller {
 															      ,[cartonbox]
 															      ,[batch_status]
 															      ,[repaired]
+															      ,[checked_by_name]
+															      ,[repaired_by_name]
+															  FROM [finalaudit].[dbo].[batch]
+															  WHERE batch_status = 'Reject' AND [created_at] >= DATEADD(day,-30,GETDATE())
+															  ORDER BY [created_at] asc
+															  "));
+
+			return view('batch.cb_to_repair', compact('batch'));
+
+		} else {
+
+			$batch = DB::connection('sqlsrv')->select(DB::raw("SELECT [id]
+															      ,[batch_name]
+															      ,[sku]
+															      ,[po]
+															      ,[producer]
+															      ,[producer_type]
+															      ,[cartonbox]
+															      ,[batch_status]
+															      ,[repaired]
+															      ,[checked_by_name]
 															      ,[repaired_by_name]
 															  FROM [finalaudit].[dbo].[batch]
 															  WHERE batch_status = 'Reject' AND [repaired] = 'NO'
 															  ORDER BY [created_at] asc
 															  "));
 
-		return view('batch.cb_to_repair', compact('batch'));
+			return view('batch.cb_to_repair', compact('batch'));	
+		}
+
 	}
 
 	public function cb_to_repair_edit($id)
