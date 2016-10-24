@@ -21,6 +21,8 @@ use App\User;
 
 use Session;
 
+use App\BatchCartonbox;
+
 class ControllerBatch extends Controller {
 
 	public function __construct()
@@ -516,7 +518,7 @@ class ControllerBatch extends Controller {
 		   	$batch_order = str_pad($batch_order_num, 3, "0", STR_PAD_LEFT); 
 		   	
 	    	$batch_name = $batch_date."-".$batch_user."-".$batch_order;
-
+	    	$batch_type = 'BOX';
 			
 			$models = DB::connection('sqlsrv')->select(DB::raw("SELECT category_name,category_id,model_brand,mandatory_to_check FROM models WHERE model_name = '".$style."'"));
 			
@@ -641,6 +643,22 @@ class ControllerBatch extends Controller {
 		 	 	// return view('batch.error', compact('msg'));
 			}
 */
+
+			// Record Batch Cartonbox-------
+				try {
+					$table = new BatchCartonbox;
+
+					$table->batch_name = $batch_name;
+					$table->cartonbox = $cbcode;
+			
+					$table->save();
+				}
+				catch (\Illuminate\Database\QueryException $e) {
+					$msg = "Проблем със записване на заявката в таблицата !";
+					return view('batch.error',compact('msg'));
+				}
+			//----------------------------
+
 			// Record Batch
 			try {
 				$table = new Batch;
@@ -686,6 +704,7 @@ class ControllerBatch extends Controller {
 				$table->rejected = $rejected;
 
 				$table->batch_status = $batch_status;
+				$table->batch_type = $batch_type;
 
 				$table->deleted = FALSE;
 						

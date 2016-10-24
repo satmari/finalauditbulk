@@ -28,15 +28,19 @@
 								<!-- <input type="text" class="form-control" name="email" value="{{ old('email') }}"> -->
 
 								<!-- <label>Select operator</label> -->
+								@if( ! empty($users))
 					            <select id = "email" class="form-control" name="email">
-					            	<option name="" value=""></option>
-
-					            	@foreach ($users as $user)
-					               		<option name="email" value="{{$user->name}}">{{$user->username}}</option>
-									@endforeach
-					               	
-									
+					      			
+    									<option name="" value=""></option>
+						            	@foreach ($users as $user)
+						               		<option name="email" value="{{$user->name}}">{{$user->username}}</option>
+										@endforeach
 					            </select>
+
+					            @endif
+					            @if( empty($users))
+										<input type="text" class="form-control" name="email" value="{{ old('username') }}">
+								@endif
 							</div>
 						</div>
 

@@ -486,8 +486,7 @@ class ControllerBatch_bulk extends Controller {
     	$sku = $style." ".$variant;
     	//list($color, $size) = explode('-', $variant);
 
-    	$cartonbox = $cbcode;
-	    // $cartonbox_qty = $inteos_array[0]['BoxQuant'];
+    	// $cartonbox_qty = $inteos_array[0]['BoxQuant'];
 	    $cartonbox_produced = intval($inteos_array[0]['Pieces in box']);
 	    // $cartonbox_produced = intval($inteos_array[0]['Produced']);
 
@@ -544,7 +543,7 @@ class ControllerBatch_bulk extends Controller {
 		   	$batch_order = str_pad($batch_order_num, 3, "0", STR_PAD_LEFT); 
 		   	
 	    	$batch_name = $batch_date."-".$batch_user."-".$batch_order."-B";
-	    	// Session::set('batch_name', $batch_name);
+	    	$batch_type = 'BULK';
 
 	    	$models = DB::connection('sqlsrv')->select(DB::raw("SELECT category_name,category_id,model_brand,mandatory_to_check FROM models WHERE model_name = '".$style."'"));
 			
@@ -651,6 +650,7 @@ class ControllerBatch_bulk extends Controller {
 					$table->rejected = $rejected;
 
 					$table->batch_status = $batch_status;
+					$table->batch_type = $batch_type;
 
 					$table->deleted = FALSE;
 							

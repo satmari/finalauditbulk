@@ -64,6 +64,7 @@ class CreateBatchTable extends Migration {
 			$table->dateTime('repaired_date')->nullable(); 	//added latter
 
 			$table->boolean('deleted')->nullable();
+			$table->string('batch_type')->nullable();		//added latter
 			
 			$table->timestamps();
 		});
