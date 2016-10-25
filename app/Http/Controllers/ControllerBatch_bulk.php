@@ -453,7 +453,7 @@ class ControllerBatch_bulk extends Controller {
 	    	,[User ID]
 	    	,[Creation Date]
 	      
-	  		FROM [TESTnav].[dbo].[TEST zalli\$Box Lables]
+	  		FROM [ZALLI_RESTORED].[dbo].[ZALLI_live\$Box Lables]
 	  		WHERE [Barcode] = :somevariable"), array(
 			'somevariable' => $cbcode,
 			));
@@ -575,11 +575,11 @@ class ControllerBatch_bulk extends Controller {
 
 			// dd($batch_brand_table);
 		  	if ($batch_brand_table) {
-		  		$batch_qty = $batch_brand_table[0]->batch_check;
+		  		$batch_qty_p = $batch_brand_table[0]->batch_check;
 		  		$batch_brand_id = $batch_brand_table[0]->batch_id;
 		  		$batch_brand_min = $batch_brand_table[0]->batch_min;
 		  		$batch_brand_max = $batch_brand_table[0]->batch_max;
-		  		$batch_brand_max_reject = $batch_brand_table[0]->batch_reject;
+		  		$batch_brand_max_reject_p = $batch_brand_table[0]->batch_reject;
 			} else {
 		      	$msg = 'Не се открива правилната линия в таблицата със заявки за тази марка !';
 		      	return view('batch_bulk.error', compact('msg'));
@@ -588,7 +588,9 @@ class ControllerBatch_bulk extends Controller {
 			$rejected = 0; // exist but we are not using
 			//$batch_status = "Pending"; // new batch // no Pending anymore
 			$batch_status = "Suspend"; // new batch have Suspend status
-
+			$batch_qty = round($cartonbox_produced * $batch_qty_p / 100);
+			$batch_brand_max_reject = round($cartonbox_produced * $batch_brand_max_reject_p / 100);
+			// dd($batch_brand_max_reject);
 			
 			// Record Batch Cartonbox-------
 				try {
@@ -777,11 +779,11 @@ class ControllerBatch_bulk extends Controller {
 				// dd($batch_brand_table);
 
 			  	if ($batch_brand_table) {
-			  		$batch_qty = $batch_brand_table[0]->batch_check;
+			  		$batch_qty_p = $batch_brand_table[0]->batch_check;
 			  		$batch_brand_id = $batch_brand_table[0]->batch_id;
 			  		$batch_brand_min = $batch_brand_table[0]->batch_min;
 			  		$batch_brand_max = $batch_brand_table[0]->batch_max;
-			  		$batch_brand_max_reject = $batch_brand_table[0]->batch_reject;
+			  		$batch_brand_max_reject_p = $batch_brand_table[0]->batch_reject;
 				} else {
 			      	$msg = 'Не се открива правилната линия в таблицата със заявки за тази марка !';
 			      	return view('batch_bulk.error', compact('msg'));
@@ -790,6 +792,9 @@ class ControllerBatch_bulk extends Controller {
 				$rejected = 0; // exist but we are not using
 				//$batch_status = "Pending"; // new batch // no Pending anymore
 				$batch_status = "Suspend"; // new batch have Suspend status
+				$batch_qty = round($cartonbox_produced_new * $batch_qty_p / 100);
+				$batch_brand_max_reject = round($cartonbox_produced_new * $batch_brand_max_reject_p / 100);
+				// dd($batch_brand_max_reject);
 
 
 				// Batch Cartonbox add
@@ -798,7 +803,7 @@ class ControllerBatch_bulk extends Controller {
 
 					$table->batch_name = $batch_name;
 					$table->cartonbox = $cartonbox;
-			
+					
 					$table->save();
 				}
 				catch (\Illuminate\Database\QueryException $e) {

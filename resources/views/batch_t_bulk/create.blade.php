@@ -23,11 +23,11 @@
 							{!! Form::number('batch_max', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="panel-body">
-						<p>Batch (Pcs to Check): <span style="color:red;">*</span> </p>
+						<p>Batch Qty (Percentage) <span style="color:red;">*</span> </p>
 							{!! Form::number('batch_check', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="panel-body">
-						<p>Max Rejected Pcs Accepted: <span style="color:red;">*</span></p>
+						<p>Max Rejected Qty (Percentage): <span style="color:red;">*</span></p>
 							{!! Form::number('batch_reject', null, ['class' => 'form-control']) !!}
 						</div>
 						

@@ -49,8 +49,8 @@
                             <td><b>Batch Id</b></td>
                             <td><b>Pcs Box MIN</b></td>
                             <td><b>Pcs Box MAX</b></td>
-                            <td><b>Batch (Pcs to Check)</b></td>
-                            <td><b>Max Rejected Pcs Accepted</b></td>
+                            <td><b>Batch Qty (Percentage)</b></td>
+                            <td><b>Max Rejected Qty (Percentage)</b></td>
                             <td></td>
                         </tr>
                     </thead>

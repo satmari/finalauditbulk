@@ -436,7 +436,7 @@ class ControllerBatch extends Controller {
 	    	,[User ID]
 	    	,[Creation Date]
 	      
-	  		FROM [TESTnav].[dbo].[TEST zalli\$Box Lables]
+	  		FROM [ZALLI_RESTORED].[dbo].[ZALLI_live\$Box Lables]
 	  		WHERE [Barcode] = :somevariable"), array(
 			'somevariable' => $cbcode,
 			));
