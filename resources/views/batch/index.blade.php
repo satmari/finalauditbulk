@@ -112,17 +112,21 @@
                                 <div class="panel-heading">Options</div>
                                     <div class="panel-body">
                                         @if( $activity == 0)
+                                        {{-- 
                                         <div class="">
                                             <a href="{{url('/selectproducertype')}}" class="btn btn-default btn-info side-button"><br>New Box Batch</a>
                                         </div>
+                                        --}}
                                         <div class="">
                                             <a href="{{url('/selectproducertype_bulk')}}" class="btn btn-default btn-info side-button"><br>New BULK Batch </a>
                                         </div>
                                         @else
                                             <p style="color:red;"><b>Extra activity is active</b></p>
+                                            {{-- 
                                             <div class="">
                                                 <a href="{{url('/selectproducertype')}}" class="btn btn-default btn-info side-button" disabled><br>New Box Batch</a>
                                             </div>
+                                            --}}
                                             <div class="">
                                             <a href="{{url('/selectproducertype_bulk')}}" class="btn btn-default btn-info side-button" disabled><br>New BULK Batch </a>
                                         </div>

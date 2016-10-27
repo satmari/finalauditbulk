@@ -145,6 +145,7 @@
                                   @foreach ($machines as $machine)
                                     <div class="col-md-1 visina">
                                       <div class="visina_text"><b>{{ $machine->machine_type }}</b></div>
+                                      <div class="visina_text_mali"><b>{{ $machine->machine_description }}</b></div>
                                       {!! Form::radio('machine_id', $machine->machine_id, null, ['id' => 'check', 'class' => 'form-control']); !!}
                                       <br>
                                     </div>

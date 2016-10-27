@@ -959,7 +959,10 @@ class ControllerBatch extends Controller {
 			$batch = Batch::findOrFail($id);
 			$batch->batch_status = $batch_status;
 			$batch->repaired = $repaired;
-
+			$batch->repaired_by_id = NULL;
+			$batch->repaired_by_name = NULL;
+			$batch->repaired_date = NULL;
+			
 			$batch->save();
 			return Redirect::to('/batch');
 		}

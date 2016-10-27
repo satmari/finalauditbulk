@@ -120,7 +120,7 @@ class ControllerDefect extends Controller {
 			"));
 			//dd($positions);
 
-			$machines = DB::connection('sqlsrv')->select(DB::raw("SELECT id,machine_id,machine_type FROM machines"));
+			$machines = DB::connection('sqlsrv')->select(DB::raw("SELECT id,machine_id,machine_type,machine_description FROM machines"));
 			//dd($machines);
 
 			return view('defect.new', compact('defects','garment','batch','defect_types','positions','machines'));
