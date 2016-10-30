@@ -35,6 +35,9 @@ body {
     margin: 14px !important;
     padding-left: 10% !important;
 }
+.borderless td, .borderless th {
+    border: none !important;
+}
 .span-right {
   margin-left: 220px;
 }
@@ -61,6 +64,9 @@ body {
     margin-left: 0px !important;
     margin-right: 0px !important;
 }
+.biggerfont {
+    font-size: 16px;
+}
 .visina {
     height: 100px !important;
     /*border: 1px #eee solid;*/
@@ -75,18 +81,18 @@ body {
     /*border: 1px #eee solid;*/
     /*margin: 1px;*/
     padding: 3px;
-    -webkit-box-shadow:inset 0px 0px 10px 1px #9F9;
-    -moz-box-shadow:inset 0px 0px 10px 1px #9F9;
-    box-shadow: inset 0px 0px 20px 1px #9F9;
+    -webkit-box-shadow: inset 0px 0px 20px 1px rgb(0, 255, 67);
+    -moz-box-shadow: inset 0px 0px 20px 1px rgb(0, 255, 67);
+    box-shadow: inset 0px 0px 20px 1px rgb(0, 255, 67);
 }
 .visina-critical {
     height: 100px !important;
     /*border: 1px #eee solid;*/
     /*margin: 1px;*/
     padding: 3px;
-    -webkit-box-shadow:inset 0px 0px 10px 1px #FBB;
-    -moz-box-shadow:inset 0px 0px 10px 1px #FBB;
-    box-shadow: inset 0px 0px 20px 1px #FBB;
+    -webkit-box-shadow: inset 0px 0px 20px 1px #ff3535;
+    -moz-box-shadow: inset 0px 0px 20px 1px #ff3535;
+    box-shadow: inset 0px 0px 20px 1px #ff3535;
 }
 .visina-panel{
     padding: 0px !important;

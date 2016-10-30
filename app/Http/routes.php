@@ -154,11 +154,13 @@ Route::get('/batch/acceptwithreservetion/{id}', 'ControllerBatch@acceptwithreser
 Route::get('/batch/reject/{id}', 'ControllerBatch@reject');
 Route::get('/batch/suspend/{id}', 'ControllerBatch@suspend');
 Route::get('/batch/not_checked/{id}', 'ControllerBatch@not_checked');
+Route::get('/batch_cartonbox', 'ControllerBatch@batch_cartonbox');
 
 // Batch BULK
 Route::get('/batch_bulk', 'ControllerBatch@index'); 
 Route::get('/selectproducertype_bulk', 'ControllerBatch_bulk@selectproducertype_bulk');
 Route::post('/selectproducer_bulk', 'ControllerBatch_bulk@selectproducer_bulk');
+Route::get('/selectproducer_bulk/{type}', 'ControllerBatch_bulk@selectproducer_bulk');
 Route::get('/searchinteos_bulk', 'ControllerBatch_bulk@searchinteos_bulk');
 Route::post('/searchinteos_bulk', 'ControllerBatch_bulk@searchinteos_bulk');
 Route::post('/searchinteos_store_bulk', 'ControllerBatch_bulk@searchinteos_store_bulk');

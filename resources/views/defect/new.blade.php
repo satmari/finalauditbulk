@@ -26,7 +26,7 @@
                         </tr>
                       </thead>
                       <tbody class="searchable">
-                        <tr>
+                        <tr class="biggerfont">
                             <td>{{ $req->batch_name }}</td>
                             <td>{{ $req->sku }}</td>
                             <td>{{ $req->producer }}</td>
@@ -89,9 +89,9 @@
                       @endforeach
 
                       <ul class="nav nav-tabs nav-justified" role="tablist">
-                        <li id="lidefects" role="presentation" class="active"><a href="#defects" aria-controls="defects" role="tab" data-toggle="tab"><big><b>Defects <span style="color:red">*</span></b></big></a></li>
-                        <li id="lipositions" role="presentation"><a href="#positions" aria-controls="positions" role="tab" data-toggle="tab"><big><b>Positions</b></big></a></li>
-                        <li id="limachines"  role="presentation"><a href="#machines" aria-controls="machines" role="tab" data-toggle="tab"><big><b>Machines</b></big></a></li>
+                        <li id="lidefects" role="presentation" class="active"><a href="#defects" aria-controls="defects" role="tab" data-toggle="tab"><big><b>{{--Defects--}}Дефект <span style="color:red">*</span></b></big></a></li>
+                        <li id="lipositions" role="presentation"><a href="#positions" aria-controls="positions" role="tab" data-toggle="tab"><big><b>{{--Positions--}}Позиция </b></big></a></li>
+                        <li id="limachines"  role="presentation"><a href="#machines" aria-controls="machines" role="tab" data-toggle="tab"><big><b>{{--Machines--}}Машини </b></big></a></li>
                       </ul>
 
                       <!-- Tab panes -->
@@ -166,13 +166,14 @@
                   <br>
                   <br>
                   <div class="row">  
-                    {!! Form::submit('Confirm Defect', ['class' => 'btn  btn-success center-block side-button']) !!}
+                    {{-- Form::submit('Confirm Defect', ['class' => 'btn  btn-success center-block side-button']) --}}
+                    {!! Form::submit('Потвърди Дефект', ['class' => 'btn  btn-success center-block side-button']) !!}
                     {!! Form::close() !!}
                   </div>
                   
                   <div class="row">
                     @foreach ($garment as $req)
-                      <a href="{{url('/defect/by_garment/'.$req->garment_name)}}" class="btn btn-warning side-button"><br>Back</a>
+                      <a href="{{url('/defect/by_garment/'.$req->garment_name)}}" class="btn btn-warning side-button"><br>{{--Back--}} Назад</a>
                     @endforeach
                   </div>
                   

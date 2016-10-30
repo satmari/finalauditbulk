@@ -60,7 +60,7 @@
                                 </thead>
                                 <tbody class="searchable">
                                 @foreach ($batch as $req)
-                                    <tr>
+                                    <tr class="biggerfont">
                                         {{-- <td>{{ $req->id }}</td> --}}
                                         <td>{{ $req->batch_name }}</td>
                                         <td>{{ $req->sku }}</td>
@@ -85,9 +85,9 @@
                                         @if(Auth::check() && Auth::user()->level() == 2)
                                             @if( $req->batch_status == "Pending" || $req->batch_status == "Suspend")
                                                 @if( $activity == 0)                                                    
-                                                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block">Edit</a>
+                                                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block">{{--Edit--}}Редакция</a>
                                                 @else
-                                                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block" disabled>Edit</a>
+                                                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-info btn-xs center-block" disabled>{{--Edit--}}Редакция</a>
                                                 @endif
                                             @endif
                                         @endif
@@ -118,7 +118,7 @@
                                         </div>
                                         --}}
                                         <div class="">
-                                            <a href="{{url('/selectproducertype_bulk')}}" class="btn btn-default btn-info side-button"><br>New BULK Batch </a>
+                                            <a href="{{url('/selectproducertype_bulk')}}" class="btn btn-default btn-info side-button"><br>{{--New BULK Batch --}} Нова проверка </a>
                                         </div>
                                         @else
                                             <p style="color:red;"><b>Extra activity is active</b></p>
@@ -128,7 +128,7 @@
                                             </div>
                                             --}}
                                             <div class="">
-                                            <a href="{{url('/selectproducertype_bulk')}}" class="btn btn-default btn-info side-button" disabled><br>New BULK Batch </a>
+                                            <a href="{{url('/selectproducertype_bulk')}}" class="btn btn-default btn-info side-button" disabled><br>{{--New BULK Batch --}} Нова проверка </a>
                                         </div>
                                         @endif
                                     </div>

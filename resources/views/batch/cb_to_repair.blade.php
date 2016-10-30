@@ -59,7 +59,7 @@
                                 </thead>
                                 <tbody class="searchable">
                                 @foreach ($batch as $req)
-                                    <tr>
+                                    <tr class="biggerfont">
                                         {{-- <td>{{ $req->id }}</td> --}}
                                         <td>{{ $req->batch_name }}</td>
                                         <td>{{ $req->sku }}</td>
@@ -71,7 +71,7 @@
                                         <td>{{ $req->repaired }}</td>
                                         <td>
                                         @if(Auth::check() && ((Auth::user()->level() == 2)))
-                                            <a href="{{ url('/cb_to_repair/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a>
+                                            <a href="{{ url('/cb_to_repair/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">{{--Edit--}}Редакция</a>
                                         @endif
                                         </td>
                                        

@@ -94,10 +94,10 @@
 
 				@if(Auth::check() && ((Auth::user()->level() == 2)))
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
+						<li><a href="{{ url('/batch') }}">{{--Batch Table--}} Таблица за проверка</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/cb_to_repair') }}">Batch to repair</a></li>
+						<li><a href="{{ url('/cb_to_repair') }}">{{--Batch to repair--}} Таблица с бройки за ремонт</a></li>
 					</ul>
 					{{-- 
 					<ul class="nav navbar-nav">
@@ -114,7 +114,10 @@
 					</ul>
 					--}}
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/activity') }}">Activities <span class="badge"></span></a></li>
+						<li><a href="{{ url('/activity') }}">{{--Activities--}} Други действия<span class="badge"></span></a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/batch_cartonbox') }}">{{--Cartonbox--}} Сканираните картонени кутии<span class="badge"></span></a></li>
 					</ul>
 					
 				@endif
@@ -141,10 +144,10 @@
 
 				@if(Auth::check() && ((Auth::user()->level() == 3)  OR (Auth::user()->level() == 1)))
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/batch') }}">Batch Table</a></li>
+						<li><a href="{{ url('/batch') }}">{{--Batch Table--}}Таблица за проверка</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/cb_to_repair') }}">Batch to repair</a></li>
+						<li><a href="{{ url('/cb_to_repair') }}">{{--Batch to repair--}} Таблица с бройки за ремонт</a></li>
 					</ul>
 					{{--
 					<ul class="nav navbar-nav">
@@ -164,17 +167,14 @@
 					</ul>
 					--}}
 					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/activity') }}">Activities <span class="badge"></span></a></li>
+						<li><a href="{{ url('/activity') }}">{{--Activities--}} Други действия<span class="badge"></span></a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="{{ url('/batch_cartonbox') }}">{{--Cartonbox--}} Сканираните картонени кутии<span class="badge"></span></a></li>
 					</ul>
 					
 				@endif
 				
-				@if (Auth::guest())
-				@else
-				<ul class="nav navbar-nav navoperator">
-					<li>Operator: <big><b><span style="color:red">{{ Auth::user()->username }}</span></b></big></li>
-				</ul>
-				@endif
 				
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
@@ -182,7 +182,7 @@
 						<!-- <li><a href="{{ url('/auth/register') }}">Register</a></li> -->
 					@else
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Operator: <big><b><span style="color:red">{{ Auth::user()->username }}</span></b></big><span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
 							</ul>

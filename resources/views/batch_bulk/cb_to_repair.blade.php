@@ -48,9 +48,11 @@
                                         <td><b>Batch Name</b></td>
                                         <td>SKU</td>
                                         <td>PO</td>
-                                        <td>Module</td>
-                                        <td>CB barcode</td>
-                                        <td>CB repaired</td>
+                                        <td>Producer</td>
+                                        <td>Producer Type</td>
+                                        <!-- <td>Batch barcode</td> -->
+                                        <td>Checked by</td>
+                                        <td>Batch repaired</td>
                                         <td></td>
                                         <!-- <td></td> -->
                                     </tr>
@@ -58,13 +60,14 @@
                                 <tbody class="searchable">
                                 @foreach ($batch as $req)
                                     <tr>
-                                        {{-- <td>{{ $req->id }}</td> --}}
+                                       {{-- <td>{{ $req->id }}</td> --}}
                                         <td>{{ $req->batch_name }}</td>
                                         <td>{{ $req->sku }}</td>
                                         <td>{{ $req->po  }}</td>
                                         <td>{{ $req->producer }}</td>
                                         <td>{{ $req->producer_type }}</td>
-                                        <td>{{ $req->cartonbox }}</td>
+                                        {{--<td>{{ $req->cartonbox }}</td> --}}
+                                        <td>{{ $req->checked_by_name }}</td>
                                         <td>{{ $req->repaired }}</td>
                                         <td>
                                         @if(Auth::check() && ((Auth::user()->level() == 2)))

@@ -6,22 +6,23 @@
         <div class="text-center col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-heading"><b>Select producer type</b></div>
-                
-                {!! Form::open(['url' => 'selectproducer_bulk']) !!}
-                <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
                 <div class="panel-body">
-                <p>Producer:</p>
-                    {!! Form::select('type', ['EXTERNAL' => 'EXTERNAL', 'INTERNAL' => 'INTERNAL'], null,['class' => 'form-control']) !!}
+                <br>
+                    
+                    <table class="table borderless">
+                        <tr>
+                            <td>
+                                <a href="{{url('/selectproducer_bulk/INTERNAL')}}" class="btn btn-default">INTERNAL</a><br>
+                            </td>
+                            <td>
+                                <a href="{{url('/selectproducer_bulk/EXTERNAL')}}" class="btn btn-default">EXTERNAL</a>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                <br>
                 </div>
-
-                <div class="panel-body">
-                    {!! Form::submit('Select', ['class' => 'btn btn-success btn-lg center-block']) !!}
-                </div>
-
-                @include('errors.list')
-
-                {!! Form::close() !!}
                 
             </div>
         </div>

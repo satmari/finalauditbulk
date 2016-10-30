@@ -26,7 +26,7 @@
                         </tr>
                       </thead>
                       <tbody class="searchable">
-                        <tr>
+                        <tr class="biggerfont">
                             <td>{{ $req->batch_name }}</td>
                             <td>{{ $req->sku }}</td>
                             <td>{{ $req->producer }}</td>
@@ -151,12 +151,12 @@
                   <br>
                   @foreach ($garment as $req)
                   <div class="row">
-                    <a href="{{url('/defect_new/'.$req->garment_name)}}" class="btn btn-info side-button"><br>New Defect</a>
+                    <a href="{{url('/defect_new/'.$req->garment_name)}}" class="btn btn-info side-button"><br>{{--New Defect--}}Нов Дефект</a>
                   </div>
                   @endforeach
                   @foreach ($batch as $req)
                   <div class="row">
-                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-warning side-button"><br>Back</a>
+                    <a href="{{ url('/garment/by_batch/'.$req->batch_name) }}" class="btn btn-warning side-button"><br>{{--Back--}}Назад</a>
                   </div>
                   @endforeach
               </div>  

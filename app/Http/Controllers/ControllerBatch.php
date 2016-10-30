@@ -1138,4 +1138,11 @@ class ControllerBatch extends Controller {
 			return Redirect::to('/cb_to_repair');
 		}
 	}
+
+	public function batch_cartonbox() {
+
+		$batch_cartonbox = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM batch_cartonboxes WHERE CAST(created_at AS DATE) = CAST(CURRENT_TIMESTAMP AS DATE) ORDER BY batch_name desc"));
+
+		return view('batch.batch_cartonbox', compact('batch_cartonbox'));
+	}
 }

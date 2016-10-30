@@ -26,7 +26,7 @@
                         </tr>
                       </thead>
                       <tbody class="searchable">
-                        <tr>
+                        <tr class="biggerfont">
                             <td>{{ $req->batch_name }}</td>
                             <td>{{ $req->sku }}</td>
                             <td>{{ $req->producer }}</td>
@@ -100,13 +100,18 @@
                           </thead>
                           <tbody class="searchable">
                           @foreach ($garments as $req)
-                              <tr>
+                              <tr class="biggerfont">
                                   {{-- <td>{{ $req->id }}</td> --}}
                                   <td>{{ $req->garment_name }}</td>
                                   {{-- <td>{{ $req->sku }}</td> --}}
                                   {{-- <td>{{ $req->po }}</td> --}}
                                   {{-- <td>{{ $req->brand }}</td> --}}
-                                  <td>{{ $req->garment_barcode_match }}</td>
+                                  <td>@if ($req->garment_barcode_match == "YES")
+                                      <b><span style="color:green">{{ $req->garment_barcode_match }}</span></b>
+                                      @elseif ($req->garment_barcode_match == "NO")
+                                      <b><span style="color:red">{{ $req->garment_barcode_match }}</span></b>
+                                      @endif
+                                  </td>
                                   <td>{{ $req->CountDefects }}</td> 
                                   <td>{{ $req->CountCriticalDefects }}</td>
                                   @if ($req->garment_status == "Rejected")
@@ -115,7 +120,7 @@
                                   <td><span style="color:green;">{{ $req->garment_status }}</span></td>
                                   @endif
                                   {{-- <td><a href="{{ url('/defect/by_garment/'.$req->garment_name) }}" class="btn btn-info btn-xs center-block">Edit</a></td> --}}
-                                  <td><a href="{{ url('/garment/checkbarcode/'.$req->garment_name) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                                  <td><a href="{{ url('/garment/checkbarcode/'.$req->garment_name) }}" class="btn btn-info btn-xs center-block">{{--Edit--}}Редакция</a></td>
                                   
                               </tr>
                           @endforeach
@@ -133,17 +138,17 @@
 
                       @foreach ($batch as $req)
                         <div class="row">
-                          <a href="{{url('/batch/suspend/'.$req->id)}}" class="btn btn-default side-button"><br>Suspend Batch <br><br></a>
+                          <a href="{{url('/batch/suspend/'.$req->id)}}" class="btn btn-default side-button"><br>{{--Suspend Batch--}} Задържане <p>на проверка </p><br><br></a>
                         </div>
 
                         @if ($req->to_check == "NO")
                         <div class="row">
-                          <a href="{{url('/batch/not_checked/'.$req->id)}}" class="btn btn-warning side-button"><br>Not checked<br><br></a>
+                          <a href="{{url('/batch/not_checked/'.$req->id)}}" class="btn btn-warning side-button"><br>{{--Not checked--}} Не е проверено<br><br></a>
                         </div>
                         @endif
 
                         <div class="row">
-                          <a href="{{ url('/batch/confirm/'.$req->id) }}" class="btn btn-success side-button"><br>Close Batch <br><br></a>
+                          <a href="{{ url('/batch/confirm/'.$req->id) }}" class="btn btn-success side-button"><br>{{--Close Batch--}} Приключване <p>на проверка </p><br><br></a>
                         </div>
                         {{-- 
                         <div class="row">

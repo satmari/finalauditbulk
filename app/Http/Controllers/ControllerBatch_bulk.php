@@ -256,13 +256,15 @@ class ControllerBatch_bulk extends Controller {
 
 	}
 
-	public function selectproducer_bulk(Request $request)
+	public function selectproducer_bulk($type)
 	{
 		//
-		$this->validate($request, ['type' => 'required']);
-		$input = $request->all();
+		// $this->validate($request, ['type' => 'required']);
+		// $input = $request->all();
+		
+		// dd($type);
 
-		$list_of_producers = Producer::orderBy('id')->where('producer_type','=',$input['type'])->lists('producer_name','id');
+		$list_of_producers = Producer::orderBy('id')->where('producer_type','=',$type)->lists('producer_name','id');
 		
 		try {
 			return view('batch_bulk.selectproducer_bulk', compact('list_of_producers'));

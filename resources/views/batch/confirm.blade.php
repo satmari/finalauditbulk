@@ -26,7 +26,7 @@
                             </tr>
                           </thead>
                           <tbody class="searchable">
-                            <tr>
+                            <tr class="biggerfont">
                                 <td>{{ $req->batch_name }}</td>
                                 <td>{{ $req->sku }}</td>
                                 <td>{{ $req->producer }}</td>
@@ -60,7 +60,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="searchable">
-                                        <tr>
+                                        <tr class="biggerfont">
                                             <td>{{ $total_defects }}</td>
                                             <td>{{ $total_rejected_defects }}</td>
                                             <td>{{ $total_rejected_garments }}</td>

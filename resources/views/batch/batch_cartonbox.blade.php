@@ -4,13 +4,13 @@
 <div class="container-fluid">
     <div class="row vertical-center-row">
         <div class="text-center">
-            
             <div class="panel panel-default">
-                <div class="panel-heading">Garment Table (All)</div>
+                <div class="panel-heading">Scanned Batch (today) and appropriate Carton Boxes</div>
+                
                 <div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">
                 </div>
-                
+
                 <table class="table table-striped table-bordered" id="sort" 
                 >
                 <!--
@@ -37,25 +37,20 @@
                 -->
                     <thead>
                         <tr>
-                            <td>Id</td>
-                            <td><b>Garment Name</b></td>
-                            <td>SKU</td>
-                            <td>Po</td>
-                            <td>Brand</td>
-                            <td><b>Final Status</b></td>
-                            <td></td>
+                            <!-- <td>Id</td> -->
+                            <td><b>Batch</b></td>
+                            <td><b>Cartonbox</b></td>
+                            <td>Scanned</td>
                         </tr>
                     </thead>
                     <tbody class="searchable">
-                    @foreach ($garments as $req)
-                        <tr class="biggerfont">
-                            <td>{{ $req->id }}</td>
-                            <td>{{ $req->garment_name }}</td>
-                            <td>{{ $req->sku }}</td>
-                            <td>{{ $req->po }}</td>
-                            <td>{{ $req->brand }}</td>
-                            <td>{{ $req->garment_status }}</td>
-                            <td><a href="{{ url('/garment/edit/'.$req->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+                    @foreach ($batch_cartonbox as $req)
+                        <tr>
+                           
+                            <td>{{ $req->batch_name }}</td>
+                            <td>{{ $req->cartonbox }}</td>
+                            <td>{{ $req->created_at }}</td>
+                            
                         </tr>
                     @endforeach
                     
