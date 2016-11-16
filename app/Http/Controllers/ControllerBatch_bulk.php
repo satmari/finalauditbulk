@@ -599,7 +599,7 @@ class ControllerBatch_bulk extends Controller {
 					$table = new BatchCartonbox;
 
 					$table->batch_name = $batch_name;
-					$table->cartonbox = $cartonbox;
+					$table->cartonbox = $cbcode;
 			
 					$table->save();
 				}
@@ -776,7 +776,6 @@ class ControllerBatch_bulk extends Controller {
 				$cartonbox_produced_existing = $batch[0]->cartonbox_produced;
 				$cartonbox_produced_new = $cartonbox_produced_existing + $cartonbox_produced;
 				
-
 		    	$batch_brand_table = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM ".$batch_brand." WHERE batch_min <= '".$cartonbox_produced_new."' AND batch_max >= '".$cartonbox_produced_new."'"));
 				// dd($batch_brand_table);
 
@@ -804,7 +803,7 @@ class ControllerBatch_bulk extends Controller {
 					$table = new BatchCartonbox;
 
 					$table->batch_name = $batch_name;
-					$table->cartonbox = $cartonbox;
+					$table->cartonbox = $cbcode;
 					
 					$table->save();
 				}

@@ -733,7 +733,7 @@ class ControllerBatch extends Controller {
 					$table->garment_name = $garment_name;
 					$table->garment_order = $garment_order;
 					$table->batch_name = $batch_name;
-					$table->cartonbox = $cartonbox;
+					$table->cartonbox = $cbcode;
 					$table->sku = $sku;
 					$table->po = $po;
 					$table->brand = $brand;
