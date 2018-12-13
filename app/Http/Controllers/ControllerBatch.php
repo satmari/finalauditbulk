@@ -47,7 +47,7 @@ class ControllerBatch extends Controller {
 																*,
 																(SELECT COUNT(garment.batch_name) FROM garment WHERE garment.batch_name = batch.batch_name AND garment.garment_status = 'Rejected') as RejectedCount
 																FROM batch 
-																WHERE (batch.deleted = 0) AND created_at >= DATEADD(day,-30,GETDATE())
+																WHERE (batch.deleted = 0) AND created_at >= DATEADD(day,-60,GETDATE())
 																ORDER BY batch.id desc"));
 
 			    $batch_date = date("Ymd");

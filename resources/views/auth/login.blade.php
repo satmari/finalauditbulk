@@ -33,7 +33,10 @@
 					      			
     									<option name="" value=""></option>
 						            	@foreach ($users as $user)
+						            		@if( ($user->username == 'Diana') OR  ($user->username == 'Venelina'))
+						            		@else
 						               		<option name="email" value="{{$user->name}}">{{$user->username}}</option>
+						               		@endif
 										@endforeach
 					            </select>
 

@@ -10,7 +10,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Batch Table 
                             @if (Auth::check() && (Auth::user()->level() == 3 OR Auth::user()->level() == 1))
-                            (Last 30 days)
+                            (Last 60 days)
                             @endif
 
                             </div>
