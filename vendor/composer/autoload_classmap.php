@@ -16,6 +16,8 @@ return array(
     'CreateBatchCartonboxesTable' => $baseDir . '/database/migrations/2016_09_07_215525_create_batch_cartonboxes_table.php',
     'CreateBatchCsBulksTable' => $baseDir . '/database/migrations/2016_09_07_195127_create_batch_cs_bulks_table.php',
     'CreateBatchCsTable' => $baseDir . '/database/migrations/2016_03_20_114137_create_batch_cs_table.php',
+    'CreateBatchFsBulksTable' => $baseDir . '/database/migrations/2020_11_27_162006_create_batch_fs_bulks_table.php',
+    'CreateBatchFsTable' => $baseDir . '/database/migrations/2020_11_27_160641_create_batch_fs_table.php',
     'CreateBatchIsBulksTable' => $baseDir . '/database/migrations/2016_09_07_195145_create_batch_is_bulks_table.php',
     'CreateBatchIsTable' => $baseDir . '/database/migrations/2016_03_20_114130_create_batch_is_table.php',
     'CreateBatchTable' => $baseDir . '/database/migrations/2016_03_29_122622_create_batch_table.php',

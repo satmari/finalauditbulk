@@ -76,11 +76,13 @@
 						    <li><a href="{{ url('/batch_t') }}">Batch Tezenis (Box)</a></li>
 						    <li><a href="{{ url('/batch_i') }}">Batch Intimissimi (Box)</a></li>
 						    <li><a href="{{ url('/batch_c') }}">Batch Calzedonia (Box)</a></li>
+						    <li><a href="{{ url('/batch_f') }}">Batch Falconeri (Box)</a></li>
 
 						    <li role="separator" class="divider"></li>
 						    <li><a href="{{ url('/batch_t_bulk') }}">Batch Tezenis (Bulk)</a></li>
 						    <li><a href="{{ url('/batch_i_bulk') }}">Batch Intimissimi (Bulk)</a></li>
 						    <li><a href="{{ url('/batch_c_bulk') }}">Batch Calzedonia (Bulk)</a></li>
+						    <li><a href="{{ url('/batch_f_bulk') }}">Batch Falconeri (Bulk)</a></li>
 
 						    <li role="separator" class="divider"></li>
 							<li><a href="{{ url('/activity_type') }}">Activity Types</a></li>

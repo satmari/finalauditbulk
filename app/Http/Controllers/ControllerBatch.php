@@ -422,7 +422,7 @@ class ControllerBatch extends Controller {
 	} elseif ($company == 'zalli') {
 
 // Zalli Navision ---------------------------------
-	    $inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
+	    $inteos = DB::connection('sqlsrv3')->select(DB::raw("SELECT 
 	      	[Barcode]
 	      	,[Item No_]
 	      	,[Variant Code]
@@ -436,7 +436,7 @@ class ControllerBatch extends Controller {
 	    	,[User ID]
 	    	,[Creation Date]
 	      
-	  		FROM [ZALLI_RESTORED].[dbo].[ZALLI_live\$Box Lables]
+	  		FROM [ZALLI_live\$Box Lables]
 	  		WHERE [Barcode] = :somevariable"), array(
 			'somevariable' => $cbcode,
 			));
@@ -544,7 +544,9 @@ class ControllerBatch extends Controller {
 				$batch_brand = "batch_is";
 			} elseif ($brand == "CALZEDONIA") {
 				$batch_brand = "batch_cs";
-			} 
+			} elseif ($brand == "FALCONERI") {
+				$batch_brand = "batch_fs";
+			}
 	    	
 	    	$batch_brand_table = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM ".$batch_brand." WHERE batch_min <= '".$cartonbox_produced."' AND batch_max >= '".$cartonbox_produced."'"));
 			// dd($batch_brand_table);

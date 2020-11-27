@@ -15,15 +15,15 @@ class CreateCartiglioTable extends Migration {
 		Schema::create('cartiglio', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('Cod_Bar');		
-			$table->string('Cod_Art_CZ');
-			$table->string('Cod_Col_CZ');
-			$table->string('Tgl_ITA');
-			$table->string('Tgl_ENG');
-			$table->string('Tgl_SPA');
-			$table->string('Tgl_EUR');
-			$table->string('Tgl_USA');
-			$table->string('Descr_Col_CZ');
+			$table->string('Cod_Bar')->nullable();		
+			$table->string('Cod_Art_CZ')->nullable();
+			$table->string('Cod_Col_CZ')->nullable();
+			$table->string('Tgl_ITA')->nullable();
+			$table->string('Tgl_ENG')->nullable();
+			$table->string('Tgl_SPA')->nullable();
+			$table->string('Tgl_EUR')->nullable();
+			$table->string('Tgl_USA')->nullable();
+			$table->string('Descr_Col_CZ')->nullable();
 
 			// $table->timestamps();
 		});
@@ -45,7 +45,6 @@ class CreateCartiglioTable extends Migration {
 /*
 USE [finalaudit]
 GO
-
 
 SET ANSI_NULLS ON
 GO
@@ -73,7 +72,6 @@ GO
 USE [finalaudit]
 GO
 
-
 SET ANSI_NULLS ON
 GO
 
@@ -81,16 +79,16 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[cartiglio](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[Cod_Bar] [nvarchar](255) NOT NULL,
-	[Cod_Art_CZ] [nvarchar](255) NOT NULL,
-	[Cod_Col_CZ] [nvarchar](255) NOT NULL,
-	[Tgl_ITA] [nvarchar](255) NOT NULL,
-	[Tgl_ENG] [nvarchar](255) NOT NULL,
-	[Tgl_SPA] [nvarchar](255) NOT NULL,
-	[Tgl_EUR] [nvarchar](255) NOT NULL,
-	[Tgl_USA] [nvarchar](255) NOT NULL,
-	[Descr_Col_CZ] [nvarchar](255) NOT NULL,
+	[id] [int] IDENTITY(1,1)  NULL,
+	[Cod_Bar] [nvarchar](255)  NULL,
+	[Cod_Art_CZ] [nvarchar](255)  NULL,
+	[Cod_Col_CZ] [nvarchar](255)  NULL,
+	[Tgl_ITA] [nvarchar](255) NULL,
+	[Tgl_ENG] [nvarchar](255)  NULL,
+	[Tgl_SPA] [nvarchar](255)  NULL,
+	[Tgl_EUR] [nvarchar](255)  NULL,
+	[Tgl_USA] [nvarchar](255)  NULL,
+	[Descr_Col_CZ] [nvarchar](255)  NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

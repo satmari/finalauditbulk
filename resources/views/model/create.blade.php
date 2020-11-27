@@ -21,7 +21,7 @@
 
 						<div class="panel-body">
 						<p>Model Brand: <span style="color:red;">*</span></p>
-							{!! Form::select('model_brand', array(''=>'','TEZENIS'=>'TEZENIS','INTIMISSIMI'=>'INTIMISSIMI','CALZEDONIA'=>'CALZEDONIA'), null, array('class' => 'form-control')); !!} 
+							{!! Form::select('model_brand', array(''=>'','TEZENIS'=>'TEZENIS','INTIMISSIMI'=>'INTIMISSIMI','CALZEDONIA'=>'CALZEDONIA','FALCONERI'=>'FALCONERI'), null, array('class' => 'form-control')); !!} 
 						</div>
 						
 						<div class="panel-body">

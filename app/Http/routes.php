@@ -108,6 +108,14 @@ Route::post('/batch_c/{id}', 'ControllerBatch_c@update');
 Route::get('/batch_c/delete/{id}', 'ControllerBatch_c@delete');
 Route::post('/batch_c/delete/{id}', 'ControllerBatch_c@delete');
 
+Route::get('/batch_f', 'ControllerBatch_f@index');
+Route::get('/batch_f_new', 'ControllerBatch_f@create');
+Route::post('/batch_f_insert', 'ControllerBatch_f@insert');
+Route::get('/batch_f/edit/{id}', 'ControllerBatch_f@edit');
+Route::post('/batch_f/{id}', 'ControllerBatch_f@update');
+Route::get('/batch_f/delete/{id}', 'ControllerBatch_f@delete');
+Route::post('/batch_f/delete/{id}', 'ControllerBatch_f@delete');
+
 Route::get('/batch_t_bulk', 'ControllerBatch_t_bulk@index');
 Route::get('/batch_t_bulk_new', 'ControllerBatch_t_bulk@create');
 Route::post('/batch_t_bulk_insert', 'ControllerBatch_t_bulk@insert');
@@ -131,6 +139,14 @@ Route::get('/batch_c_bulk/edit/{id}', 'ControllerBatch_c_bulk@edit');
 Route::post('/batch_c_bulk/{id}', 'ControllerBatch_c_bulk@update');
 Route::get('/batch_c_bulk/delete/{id}', 'ControllerBatch_c_bulk@delete');
 Route::post('/batch_c_bulk/delete/{id}', 'ControllerBatch_c_bulk@delete');
+
+Route::get('/batch_f_bulk', 'ControllerBatch_f_bulk@index');
+Route::get('/batch_f_bulk_new', 'ControllerBatch_f_bulk@create');
+Route::post('/batch_f_bulk_insert', 'ControllerBatch_f_bulk@insert');
+Route::get('/batch_f_bulk/edit/{id}', 'ControllerBatch_f_bulk@edit');
+Route::post('/batch_f_bulk/{id}', 'ControllerBatch_f_bulk@update');
+Route::get('/batch_f_bulk/delete/{id}', 'ControllerBatch_f_bulk@delete');
+Route::post('/batch_f_bulk/delete/{id}', 'ControllerBatch_f_bulk@delete');
 
 Route::get('/batch', 'ControllerBatch@index');
 Route::get('/selectproducertype', 'ControllerBatch@selectproducertype');
